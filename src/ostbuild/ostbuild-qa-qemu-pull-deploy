@@ -1,0 +1,81 @@
+#!/bin/bash
+# Copyright (C) 2012 Colin Walters <walters@verbum.org>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
+set -e
+set -x
+
+# See gsystem-file-utils.c
+export LIBGSYSTEM_ENABLE_GUESTFS_FUSE_WORKAROUND=1
+
+diskpath=$1
+shift
+srcrepo=$1
+shift
+osname=$1
+shift
+target="$1"
+
+workdir=$(pwd)
+mntdir=${workdir}/mnt
+ostreedir=${mntdir}/ostree
+
+test -n "$osname" || (echo 1>&2 "usage: $0: DISKPATH SRCREPO OSNAME TARGET"; exit 1)
+
+# This crap is from man guestmount
+cleanup() {
+  # Save the PID of guestmount *before* calling fusermount.
+  pid="$(cat ${workdir}/guestmount.pid)"
+  timeout=10
+  count=$timeout
+  
+  if test -n "$pid"; then
+    fusermount -u ${mntdir}
+  
+    while kill -0 "$pid" 2>/dev/null && [ $count -gt 0 ]; do
+      sleep 1
+      ((count--))
+    done
+    if [ $count -eq 0 ]; then
+        echo "$0: wait for guestmount to exit failed after $timeout seconds"
+        exit 1
+    fi
+  fi
+}
+
+die() {
+  echo "$@" 1>&2
+  cleanup
+  exit 1
+}
+
+mkdir -p ${mntdir}
+if ! test -f ${diskpath}; then
+fi
+
+guestmount --rw -o allow_root --pid-file ${workdir}/guestmount.pid -a ${diskpath} -m /dev/sda3 -m /dev/sda1:/boot ${mntdir}
+
+if ! test -d ${ostreedir}; then
+    ostree admin init-fs ${mntdir} || die "init-fs"
+fi
+
+ostree admin --ostree-dir=${ostreedir} os-init ${osname} || die "os-init"
+ostree --repo=${ostreedir}/repo pull-local ${srcrepo} ${target} || die "pull-local"
+ostree admin --ostree-dir=${ostreedir} --boot-dir=${mntdir}/boot deploy ${osname} ${target} || die "deploy"
+ostree admin --ostree-dir=${ostreedir} prune ${osname} || die "prune"
+
+cleanup

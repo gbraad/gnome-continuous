@@ -17,23 +17,37 @@
 
 const Format = imports.format;
 
-const BUILTINS = {'autobuilder': "Run resolve and build",
-                  'checkout': "Check out source tree",
-                  'prefix': "Display or modify \"prefix\" (build target)",
-                  'git-mirror': "Update internal git mirror for one or more components",
-                  'resolve': "Expand git revisions in source to exact targets",
-                  'build': "Build multiple components and generate trees",
-                  'shell': "Interactive JavaScript shell",
-                  'qa-make-disk': "Generate a bare disk image",
-                  'qa-build-disks': "Build disks",
-		  'qa-pull-deploy': "Copy OSTree repo into virtual disk and deploy it",
-		  'qa-smoketest': "Basic smoke testing via parsing serial console"};
+const BUILTINS = ['autobuilder',
+                  'checkout'
+                  'prefix',
+                  'git-mirror',
+                  'resolve',
+                  'build',
+                  'shell',
+                  'qa-make-disk',
+                  'qa-build-disks',
+		  'qa-pull-deploy',
+		  'qa-smoketest'];
+
+function getModule(unixName) {
+    return imports.builtins[unixName.replace(/-/g, '_')];
+}
+
+function getClass(unixName) {
+    let module = getModule(unixName);
+    let camelParts = unixName.split(/-/);
+    let camel = camelParts.map(function (part) {
+	return part[0].toLocaleUpperCase() + part.substr(1);
+    }).join('');
+    return module[camel];
+}
 
 function usage(ecode) {
     print("Builtins:");
-    for (let builtin in BUILTINS) {
-	let description = BUILTINS[builtin];
-        print(Format.vprintf("    %s - %s", [builtin, description]));
+    for (let i = 0; i < BUILTINS.length; i++) {
+	let unixName = BUILTINS[i];
+	let description = getClass(unixName).DESCRIPTION;
+        print(Format.vprintf("    %s - %s", [unixName, description]));
     }
     return ecode;
 }
@@ -49,7 +63,22 @@ if (ARGV.length < 1) {
     }
     let args = ARGV.concat();
     args.shift();
-    imports.builtins[name.replace(/-/g, '_')].main(args);
+
+    let ecode = 1;
+    let loop = GLib.MainLoop.new(null, true);
+    let instance = new getClass(name);
+    let cancellable = null;
+    GLib.idle_add(GLib.PRIORITY_DEFAULT,
+		  function() {
+		      try {
+			  instance.execute(args, loop, cancellable); ecode = 0;
+		      } finally {
+			  loop.quit();
+		      }
+		      return false;
+		  });
+    loop.run();
+    return ecode;
 }
     
     

@@ -22,6 +22,7 @@ const Format = imports.format;
 
 const GSystem = imports.gi.GSystem;
 
+const Builtin = imports.builtin;
 const Task = imports.task;
 const JsonDB = imports.jsondb;
 const ProcUtil = imports.procutil;
@@ -32,8 +33,6 @@ const Params = imports.params;
 const BuildUtil = imports.buildutil;
 const Vcs = imports.vcs;
 const ArgParse = imports.argparse;
-
-var loop = GLib.MainLoop.new(null, true);
 
 function _checkoutOneComponent(mirrordir, patchdir, component, cancellable, params) {
     params = Params.parse(params, { checkoutdir: null,
@@ -102,31 +101,28 @@ function _checkoutOneComponent(mirrordir, patchdir, component, cancellable, para
 
 const Checkout = new Lang.Class({
     Name: 'Checkout',
+    Extends: Builtin.Builtin,
 
     _init: function() {
+	this.parent._init();
+	this.parser.addArgument('--overwrite', {action:'storeTrue'});
+	this.parser.addArgument('--prefix');
+	this.parser.addArgument('--patches-path');
+	this.parser.addArgument('--metadata-path');
+	this.parser.addArgument('--snapshot');
+	this.parser.addArgument('--checkoutdir');
+	this.parser.addArgument('--clean', {action: 'storeTrue'});
+	this.parser.addArgument('component');
     },
 
-    execute: function(argv) {
-	let cancellable = null;
-	let parser = new ArgParse.ArgumentParser('Check out specified modules');
-	parser.addArgument('--overwrite', {action:'storeTrue'});
-	parser.addArgument('--prefix');
-	parser.addArgument('--patches-path');
-	parser.addArgument('--metadata-path');
-	parser.addArgument('--snapshot');
-	parser.addArgument('--checkoutdir');
-	parser.addArgument('--clean', {action: 'storeTrue'});
-	parser.addArgument('component');
-
-	let args = parser.parse(argv);
+    execute: function(argv, loop, cancellable) {
+	let args = this.parser.parse(argv);
         
-	this.config = Config.get();
-	this.workdir = Gio.File.new_for_path(this.config.getGlobal('workdir'));
-	this.mirrordir = Gio.File.new_for_path(this.config.getGlobal('mirrordir'));
 	this.patchdir = this.workdir.get_child('patches');
 	if (!this.mirrordir.query_exists(cancellable))
 	    throw new Error("Need mirrordir: "+ this.mirrordir.get_path());
-	this.prefix = args.prefix || this.config.getPrefix();
+
+	this._initFromArgs(args.prefix);
 	this._snapshotDir = this.workdir.get_child('snapshots');
 
 	this._srcDb = new JsonDB.JsonDB(this._snapshotDir, this.prefix + '-src-snapshot');
@@ -160,12 +156,3 @@ const Checkout = new Lang.Class({
 	}
     }
 });
-
-function main(argv) {
-    let ecode = 1;
-    var checkout = new Checkout();
-    GLib.idle_add(GLib.PRIORITY_DEFAULT,
-		  function() { try { checkout.execute(argv); ecode = 0; } finally { loop.quit(); }; return false; });
-    loop.run();
-    return ecode;
-}

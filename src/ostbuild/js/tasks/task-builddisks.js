@@ -25,6 +25,7 @@ const GSystem = imports.gi.GSystem;
 
 const Builtin = imports.builtin;
 const ArgParse = imports.argparse;
+const Task = imports.task;
 const ProcUtil = imports.procutil;
 const LibQA = imports.libqa;
 const JsonDB = imports.jsondb;
@@ -32,28 +33,37 @@ const Config = imports.config;
 const JsonUtil = imports.jsonutil;
 const GuestFish = imports.guestfish;
 
-const loop = GLib.MainLoop.new(null, true);
+const TaskBuildDisks = new Lang.Class({
+    Name: 'TaskBuildDisks',
+    Extends: Task.TaskDef,
 
-const BuildDisks = new Lang.Class({
-    Name: 'BuildDisks',
-    Extends: Builtin.Builtin,
+    TaskPattern: [/builddisks\/(.*?)$/, 'prefix'],
 
-    DESCRIPTION: "Generate disk images",
+    execute: function(cancellable) {
+        this.prefix = this.vars['prefix'];
 
-    execute: function(args, loop, cancellable) {
-        this._initPrefix(null);
+        this.subworkdir = Gio.File.new_for_path('.');
 
 	      this.imageDir = this.workdir.get_child('images').get_child(this.prefix);
 	      this.currentImageLink = this.imageDir.get_child('current');
 	      this.previousImageLink = this.imageDir.get_child('previous');
         GSystem.file_ensure_directory(this.imageDir, true, cancellable);
 
-	      let buildresultDir = this.workdir.get_child('builds').get_child(this.prefix);
-	      let builddb = new JsonDB.JsonDB(buildresultDir);
+	      let builddb = this._getResultDb('build/' + this.prefix);
 
         let latestPath = builddb.getLatestPath();
         let buildVersion = builddb.parseVersionStr(latestPath.get_basename());
         this._buildData = builddb.loadFromPath(latestPath, cancellable);
+
+        let targetImageDir = this.imageDir.get_child(buildVersion);
+
+        if (targetImageDir.query_exists(null)) {
+            print("Already created " + targetImageDir.get_path());
+            return;
+        }
+
+        let newImageDir = this.subworkdir.get_child('images');
+        GSystem.file_ensure_directory(newImageDir, true, cancellable);
 
 	      let targets = this._buildData['targets'];
 
@@ -63,43 +73,54 @@ const BuildDisks = new Lang.Class({
 	      // copying data via libguestfs repeatedly.
 	      let defaultTarget = this._buildData['snapshot']['default-target'];
         let defaultRevision = this._buildData['targets'][defaultTarget];
-	      this._defaultDiskPath = this._diskPathForTarget(defaultTarget, false);
+        let defaultTargetDiskName = this._diskNameForTarget(defaultTarget);
 
-        let tmppath = this._defaultDiskPath.get_parent().get_child(this._defaultDiskPath.get_basename() + '.tmp');
-        GSystem.shutil_rm_rf(tmppath, cancellable);
+        let currentDefaultDiskPath = this.currentImageLink.get_child(defaultTargetDiskName);
 
-	      if (!this._defaultDiskPath.query_exists(null)) {
-            LibQA.createDisk(tmppath, cancellable);
+        let tmpDefaultDiskPath = newImageDir.get_child(defaultTargetDiskName);
+        GSystem.shutil_rm_rf(tmpDefaultDiskPath, cancellable);
+
+	      if (!currentDefaultDiskPath.query_exists(null)) {
+            LibQA.createDisk(tmpDefaultDiskPath, cancellable);
 	      } else {
-            LibQA.copyDisk(this._defaultDiskPath, tmppath, cancellable);
+            LibQA.copyDisk(currentDefaultDiskPath, tmpDefaultDiskPath, cancellable);
         }
 
         let osname = this._buildData['snapshot']['osname'];
 
-	      ProcUtil.runSync(['ostbuild', 'qa-pull-deploy', tmppath.get_path(),
+	      ProcUtil.runSync(['ostbuild', 'qa-pull-deploy', tmpDefaultDiskPath.get_path(),
 			                    this.repo.get_path(), osname, defaultTarget, defaultRevision],
 			                   cancellable, { logInitiation: true });
         
-        GSystem.file_rename(tmppath, this._defaultDiskPath, cancellable);
-
         for (let targetName in targets) {
 	          if (targetName == defaultTarget)
 		            continue;
             let targetRevision = this._buildData['targets'][targetName];
-	          let diskPath = this._diskPathForTarget(targetName, true);
-            tmppath = diskPath.get_parent().get_child(diskPath.get_basename() + '.tmp');
+	          let diskName = this._diskNameForTarget(targetName, true);
+            let tmppath = newImageDir.get_child(diskName);
             GSystem.shutil_rm_rf(tmppath, cancellable);
-	          LibQA.createDiskSnapshot(this._defaultDiskPath, tmppath, cancellable);
+	          LibQA.createDiskSnapshot(tmpDefaultDiskPath, tmppath, cancellable);
 	          ProcUtil.runSync(['ostbuild', 'qa-pull-deploy', tmppath.get_path(), 
 			                        this.repo.get_path(), osname, targetName, targetRevision],
 			                       cancellable, { logInitiation: true });
 	      }
 
-        GSystem.file_linkcopy(latestPath, imageDir.get_child(latestPath.get_basename()),
-                              Gio.FileCopyFlags.OVERWRITE, cancellable);
+        GSystem.file_rename(newImageDir, this.imageDir.get_child(newImageDir.get_basename()),
+                            cancellable);
+
+        let tmpLinkPath = Gio.File.new_for_path(this.imageDir, 'current-new.tmp');
+        GSystem.shutil_rm_rf(tmpLinkPath, cancellable);
+        tmpLinkPath.make_symbolic_link(newImageDir.get_basename(), cancellable);
+        let currentInfo = currentImageLink.query_info('standard::symlink-target', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, cancellable);
+        let newPreviousTmppath = this.imageDir.get_child('previous-new.tmp');
+        GSystem.shutil_rm_rf(newPreviousTmppath, cancellable);
+        let currentLinkTarget = currentInfo.get_symlink_target();
+        newPreviousTmppath.make_symbolic_link(currentLinkTarget, cancellable);
+        GSystem.file_rename(newPreviousTmppath, previousImageLink);
+        GSystem.file_rename(tmpLinkPath, currentImageLink);
     },
 
-    _diskPathForTarget: function(targetName, isSnap) {
+    _diskNameForTarget: function(targetName, isSnap) {
 	      let squashedName = targetName.replace(/\//g, '_');
 	      let suffix;
 	      if (isSnap) {
@@ -107,6 +128,6 @@ const BuildDisks = new Lang.Class({
 	      } else {
 	          suffix = '-disk.qcow2';
         }
-	      return this.imageDir.get_child(this.prefix + '-' + squashedName + suffix);
+	      return this.prefix + '-' + squashedName + suffix;
     }
 });

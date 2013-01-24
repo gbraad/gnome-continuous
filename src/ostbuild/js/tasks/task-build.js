@@ -23,7 +23,7 @@ const Format = imports.format;
 const GSystem = imports.gi.GSystem;
 
 const Builtin = imports.builtin;
-const SubTask = imports.subtask;
+const DynTask = imports.dyntask;
 const JsonDB = imports.jsondb;
 const ProcUtil = imports.procutil;
 const StreamUtil = imports.streamutil;
@@ -35,13 +35,13 @@ const Vcs = imports.vcs;
 const ArgParse = imports.argparse;
 
 const OPT_COMMON_CFLAGS = {'i686': '-O2 -g -m32 -march=i686 -mtune=atom -fasynchronous-unwind-tables',
-                           'x86_64': '-O2 -g -m64 -mtune=generic'}
+                           'x86_64': '-O2 -g -m64 -mtune=generic'};
 
-const Build = new Lang.Class({
-    Name: "Build",
-    Extends: Builtin.Builtin,
+const TaskBuild = new Lang.Class({
+    Name: "TaskBuild",
+    Extends: DynTask.SubTaskDef,
 
-    DESCRIPTION: "Build multiple components and generate trees",
+    TaskPattern: [/build\/(.*)$/, 'PREFIX'],
 
     _resolveRefs: function(refs) {
         if (refs.length == 0)
@@ -290,6 +290,7 @@ const Build = new Lang.Class({
 
 	let prefix = this._snapshot.data['prefix'];
         let buildname = Format.vprintf('%s/%s/%s', [prefix, basename, architecture]);
+        let unixBuildname = buildname.replace(/\//g, '_');
         let buildRef = 'components/' + buildname;
 
         let currentVcsVersion = component['revision'];
@@ -320,16 +321,13 @@ const Build = new Lang.Class({
 	let patchdir;
         if (expandedComponent['patches']) {
             let patchesRevision = expandedComponent['patches']['revision'];
-            if (this.args.patches_path) {
-                patchdir = Gio.File.new_for_path(this.args.patches_path);
-            } else if (this._cachedPatchdirRevision == patchesRevision) {
+            if (this._cachedPatchdirRevision == patchesRevision) {
                 patchdir = this.patchdir;
             } else {
                 patchdir = Vcs.checkoutPatches(this.mirrordir,
                                                this.patchdir,
                                                expandedComponent,
-					       cancellable,
-                                               {patchesPath: this.args.patches_path});
+					       cancellable);
                 this._cachedPatchdirRevision = patchesRevision;
 	    }
             if ((previousMetadata != null) &&
@@ -366,33 +364,31 @@ const Build = new Lang.Class({
 	    }
 	}
 
-        let taskdir = this.workdir.get_child('tasks');
-        let buildTaskset = new SubTask.TaskSet(taskdir.get_child(buildname));
+	let cwd = Gio.File.new_for_path('.');
+	let buildWorkdir = cwd.get_child('tmp-' + unixBuildname);
+	GSystem.file_ensure_directory(buildWorkdir, true, cancellable);
 
-	let workdir = buildTaskset.prepare();
-
-        let tempMetadataPath = workdir.get_child('_ostbuild-meta.json');
+        let tempMetadataPath = buildWorkdir.get_child('_ostbuild-meta.json');
         JsonUtil.writeJsonFileAtomic(tempMetadataPath, expandedComponent, cancellable);
 
-        let componentSrc = workdir.get_child(basename);
+        let componentSrc = buildWorkdir.get_child(basename);
         let childArgs = ['ostbuild', 'checkout', '--snapshot=' + this._snapshot.path.get_path(),
 			 '--checkoutdir=' + componentSrc.get_path(),
 			 '--metadata-path=' + tempMetadataPath.get_path(),
 			 '--overwrite', basename];
-        if (this.args.patches_path)
-            childArgs.push('--patches-path=' + this.args.patches_path);
-        else if (patchdir)
+        if (patchdir) {
             childArgs.push('--patches-path=' + patchdir.get_path());
-        ProcUtil.runSync(childArgs, cancellable, { logInitiation: true });
+	}
+        ProcUtil.runSync(childArgs, cancellable);
 
         GSystem.file_unlink(tempMetadataPath, cancellable);
 
-        let componentResultdir = workdir.get_child('results');
+        let componentResultdir = buildWorkdir.get_child('results');
         GSystem.file_ensure_directory(componentResultdir, true, cancellable);
 
-        let rootdir = this._composeBuildroot(workdir, basename, architecture, cancellable);
+        let rootdir = this._composeBuildroot(buildWorkdir, basename, architecture, cancellable);
 
-        let tmpdir=workdir.get_child('tmp');
+        let tmpdir=buildWorkdir.get_child('tmp');
         GSystem.file_ensure_directory(tmpdir, true, cancellable);
 
         let srcCompileOnePath = this.libdir.get_child('ostree-build-compile-one');
@@ -424,26 +420,11 @@ const Build = new Lang.Class({
 
 	let context = new GSystem.SubprocessContext({ argv: childArgs });
 	context.set_environment(ProcUtil.objectToEnvironment(envCopy));
-
-	let mainContext = new GLib.MainContext();
-	mainContext.push_thread_default();
-	let loop = GLib.MainLoop.new(mainContext, true);
-	let t;
-	try {
-	    t = buildTaskset.start(context, cancellable, Lang.bind(this, this._onBuildComplete, loop));
-	    print("Started child process " + context.argv.map(GLib.shell_quote).join(' '));
-	    loop.run();
-	} finally {
-	    mainContext.pop_thread_default();
-	}
-	let buildSuccess = this._currentBuildSucceded;
-	let msg = this._currentBuildSuccessMsg;
-
-        if (!buildSuccess) {
-            this._analyzeBuildFailure(t, architecture, component, componentSrc,
-                                      currentVcsVersion, previousVcsVersion, cancellable);
-	    throw new Error("Build failure in component " + buildname + " : " + msg);
-	}
+	
+	let proc = new GSystem.Subprocess({ context: context });
+	proc.init(cancellable);
+	print("Started child process " + context.argv.map(GLib.shell_quote).join(' '));
+	proc.wait_sync_check(cancellable);
 
         let recordedMetaPath = componentResultdir.get_child('_ostbuild-meta.json');
         JsonUtil.writeJsonFileAtomic(recordedMetaPath, expandedComponent, cancellable);
@@ -472,7 +453,7 @@ const Build = new Lang.Class({
         if (statoverridePath != null)
             GSystem.file_unlink(statoverridePath, cancellable);
 
-        GSystem.shutil_rm_rf(tmpdir, cancellable);
+        GSystem.shutil_rm_rf(buildWorkdir, cancellable);
 
         let ostreeRevision = this._saveComponentBuild(buildname, expandedComponent, cancellable);
 
@@ -623,8 +604,7 @@ const Build = new Lang.Class({
 	Lang.copyProperties(BuildUtil.BUILD_ENV, env);
         env['DL_DIR'] = downloads.get_path();
         env['SSTATE_DIR'] = sstateDir.get_path();
-        ProcUtil.runSync(cmd, cancellable, { logInitiation: true,
-					     env:ProcUtil.objectToEnvironment(env) });
+        ProcUtil.runSync(cmd, cancellable, {env:ProcUtil.objectToEnvironment(env)});
 
 	let componentTypes = ['runtime', 'devel'];
         for (let i = 0; i < componentTypes.length; i++) {
@@ -642,26 +622,31 @@ const Build = new Lang.Class({
 	builtRevisionPath.replace_contents(basemeta['revision'], null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, cancellable);
     },
 
-    _init: function() {
-	this.parent();
-        this.parser.addArgument('--prefix');
-        this.parser.addArgument('--snapshot');
-        this.parser.addArgument('--patches-path');
+    executeSync: function(cancellable) {
+	let prefix = this.inputs.PREFIX;
 
         this.forceBuildComponents = {};
         this.cachedPatchdirRevision = null;
-    },
-        
-    execute: function(args, loop, cancellable) {
-	this._initSnapshot(args.prefix, args.snapshot, cancellable);
-	this.args = args;
+
+	this.prefix = prefix;
+	this.config = Config.get();
+	this.workdir = Gio.File.new_for_path(this.config.getGlobal('workdir'));
+	this.patchdir = this.workdir.get_child('patches');
+	this.mirrordir = Gio.File.new_for_path(this.config.getGlobal('mirrordir'));
+	this.libdir = Gio.File.new_for_path(GLib.getenv('OSTBUILD_LIBDIR'));
+	this.repo = this.workdir.get_child('repo');
+	let snapshotDir = this.workdir.get_child('snapshots');
+	let srcdb = new JsonDB.JsonDB(snapshotDir.get_child(prefix));
+	let snapshotPath = srcdb.getLatestPath();
+	let data = srcdb.loadFromPath(snapshotPath, cancellable);
+	this._snapshot = new Snapshot.Snapshot(data, snapshotPath);
 
         let components = this._snapshot.data['components'];
 
 	let buildresultDir = this.workdir.get_child('builds').get_child(this.prefix);
 	let builddb = new JsonDB.JsonDB(buildresultDir);
 
-	let targetSourceVersion = builddb.parseVersionStr(this._snapshot.path.get_basename())
+	let targetSourceVersion = builddb.parseVersionStr(this._snapshot.path.get_basename());
 
 	let haveLocalComponent = false;
         for (let i = 0; i < components.length; i++) {

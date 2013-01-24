@@ -22,9 +22,68 @@ const Lang = imports.lang;
 
 const GSystem = imports.gi.GSystem;
 const Params = imports.params;
+const JsonUtil = imports.jsonutil;
+const ProcUtil = imports.procutil;
+const BuildUtil = imports.buildutil;
 
 const VERSION_RE = /(\d+)\.(\d+)/;
 
+var _tasksetInstance = null;
+const TaskSet = new Lang.Class({
+    Name: 'TaskSet',
+    
+    _init: function() {
+	this._tasks = [];
+	let taskdir = Gio.File.new_for_path(GLib.getenv('OSTBUILD_DATADIR')).resolve_relative_path('js/tasks');
+	let denum = taskdir.enumerate_children('standard::*', 0, null);
+	let finfo;
+	
+	for (let taskname in imports.tasks) {
+	    let taskMod = imports.tasks[taskname];
+	    for (let defname in taskMod) {
+		if (defname.indexOf('Task') !== 0)
+		    continue;
+		let cls = taskMod[defname];
+		this.register(cls);
+	    }
+	}
+    },
+
+    register: function(taskdef) {
+	this._tasks.push(taskdef);
+    },
+
+    getAllTasks: function() {
+	return this._tasks;
+    },
+
+    getTask: function(taskName, params) {
+	params = Params.parse(params, { allowNone: false })
+	for (let i = 0; i < this._tasks.length; i++) {
+	    let taskDef = this._tasks[i];
+	    let pattern = taskDef.prototype.TaskPattern;
+	    let re = pattern[0];
+	    let match = re.exec(taskName);
+	    if (!match)
+		continue;
+	    let vars = {};
+	    for (let i = 1; i < pattern.length; i++) {
+		vars[pattern[i]] = match[i];
+	    }
+	    return [taskDef, vars];
+	}
+	if (!params.allowNone)
+	    throw new Error("No task definition matches " + taskName);
+	return null;
+    },
+
+    getInstance: function() {
+	if (!_tasksetInstance)
+	    _tasksetInstance = new TaskSet();
+	return _tasksetInstance;
+    }
+});
+    
 const TaskMaster = new Lang.Class({
     Name: 'TaskMaster',
 
@@ -36,80 +95,43 @@ const TaskMaster = new Lang.Class({
 	this._onEmpty = params.onEmpty;
 	this.cancellable = null;
 	this._idleRecalculateId = 0;
-	this._taskSerial = 1;
-	this._tasks = [];
 	this._executing = [];
 	this._pendingTasksList = [];
 	this._seenTasks = {};
 	this._completeTasks = {};
 	this._taskErrors = {};
+	this._caughtError = false;
 
-	let taskdir = Gio.File.new_for_path(GLib.getenv('OSTBUILD_DATADIR')).resolve_relative_path('js/tasks');
-	let denum = taskdir.enumerate_children('standard::*', 0, null);
-	let finfo;
-	
-	for (let taskname in imports.tasks) {
-	    let taskMod = imports.tasks[taskname];
-	    for (let defname in taskMod) {
-		if (defname.indexOf('Task') !== 0)
-		    continue;
-		let cls = taskMod[defname];
-		let instance = new cls;
-		this.register(instance);
-	    }
-	}
-    },
-
-    register: function(taskdef) {
-	this._tasks.push(taskdef);
+	this._taskset = TaskSet.prototype.getInstance();
     },
 
     _pushRecurse: function(taskName, seen) {
 	if (seen[taskName])
 	    return null;
-	let result = null;
-	for (let i = 0; i < this._tasks.length; i++) {
-	    let taskDef = this._tasks[i];
-	    let pattern = taskDef.getPattern();
-	    let re = pattern[0];
-	    let match = re.exec(taskName);
-	    if (!match)
-		continue;
-
-	    let serial = this._taskSerial;
-	    this._taskSerial++;
-	    let vars = {};
-	    for (let i = 1; i < pattern.length; i++) {
-		vars[pattern[i]] = match[i];
+	let [taskDef, inputs] = this._taskset.getTask(taskName);
+	let specifiedDependencies = taskDef.prototype.getDepends(inputs);
+	let waitingDependencies = {};
+	for (let j = 0; j < specifiedDependencies.length; j++) {
+	    let depName = specifiedDependencies[j];
+	    if (!this._completeTasks[depName]) {
+		let depTask = this._pushRecurse(depName, seen);
+		waitingDependencies[depName] = depTask;
 	    }
-	    let specifiedDependencies = taskDef.getDepends(vars);;
-	    let waitingDependencies = {};
-	    for (let j = 0; j < specifiedDependencies.length; j++) {
-		let depName = specifiedDependencies[j];
-		if (!this._completeTasks[depName]) {
-		    let depTask = this._pushRecurse(depName, seen);
-		    waitingDependencies[depName] = depTask;
-		}
-	    }
-	    result = {name: taskName,
-		      def: taskDef,
-		      vars: vars,
-		      dependencies: specifiedDependencies,
-		      waitingDependencies: waitingDependencies,
-		      serial: serial,
-		      result: null };
-	    this._pendingTasksList.push(result);
-	    seen[taskName] = true;
-	    break;
 	}
-	if (!result)
-	    throw new Error("No task definition matches " + taskName);
+	let instance = new taskDef(this, taskName, inputs);
+	instance.onComplete = Lang.bind(this, this._onComplete, instance);
+	instance.dependencies = specifiedDependencies;
+	instance.waitingDependencies = waitingDependencies;
+	this._pendingTasksList.push(instance);
+	seen[taskName] = true;
 	this._queueRecalculate();
-	return result;
+	return instance;
     },
 
-    push: function(taskName) {
-	return this._pushRecurse(taskName, {});
+    pushTasks: function(taskNames) {
+	let seen = {};
+	for (let i = 0; i < taskNames.length; i++)
+	    this._pushRecurse(taskNames[i], seen);
     },
 
     _queueRecalculate: function() {
@@ -137,7 +159,7 @@ const TaskMaster = new Lang.Class({
 
 	if (this._executing.length == 0 &&
 	    this._pendingTasksList.length == 0) {
-	    this._onEmpty();
+	    this._onEmpty(true, null);
 	    return;
 	} else if (this._pendingTasksList.length == 0) {
 	    return;
@@ -156,20 +178,24 @@ const TaskMaster = new Lang.Class({
     _onComplete: function(result, error, task) {
 	if (error) {
 	    print("TaskMaster: While executing " + task.name + ": " + error);
-	    this._taskErrors[task.name] = error;
+	    if (!this._caughtError) {
+		this._caughtError = true;
+		this._onEmpty(false, error);
+	    }
+	    return;
 	} else {
 	    print("TaskMaster: Completed: " + task.name + " : " + JSON.stringify(result));
 	}
 	let idx = -1;
 	for (let i = 0; i < this._executing.length; i++) {
 	    let executingTask = this._executing[i];
-	    if (executingTask.serial != task.serial)
+	    if (executingTask !== task)
 		continue;
 	    idx = i;
 	    break;
 	}
 	if (idx == -1)
-	    throw new Error("TaskMaster: Internal error - Failed to find completed task serial:" + task.serial);
+	    throw new Error("TaskMaster: Internal error - Failed to find completed task:" + task.name);
 	task.result = result;
 	this._completeTasks[task.name] = task;
 	this._executing.splice(idx, 1);
@@ -197,12 +223,8 @@ const TaskMaster = new Lang.Class({
 	       !this._hasDeps(this._pendingTasksList[0])) {
 	    let task = this._pendingTasksList.shift();
 	    print("TaskMaster: running: " + task.name);
-	    let depResults = [];
-	    for (let i = 0; i < task.dependencies.length; i++) {
-		let depName = task.dependencies[i];
-		depResults.push(this._completeTasks[depName].result);
-	    }
-	    task.def.execute(task.vars, depResults, this.cancellable, Lang.bind(this, this._onComplete, task));
+	    let cls = task.def;
+	    task.execute(this.cancellable);
 	    this._executing.push(task);
 	}
     }
@@ -211,19 +233,179 @@ const TaskMaster = new Lang.Class({
 const TaskDef = new Lang.Class({
     Name: 'TaskDef',
 
-    _init: function() {
-    },
+    TaskPattern: null,
 
-    getPattern: function() {
-	throw new Error("Not implemented");
+    _init: function(taskmaster, name, inputs) {
+	this.taskmaster = taskmaster;
+	this.name = name;
+	this.inputs = inputs;
     },
 
     getDepends: function(inputs) {
 	return [];
     },
 
-    execute: function(inputs, dependResults, cancellable, onComplete) {
+    execute: function(cancellable) {
 	throw new Error("Not implemented");
+    }
+});
+
+const SubTaskDef = new Lang.Class({
+    Name: 'SubTaskDef',
+    Extends: TaskDef,
+
+    PreserveStdout: true,
+    RetainFailed: 1,
+    RetainSuccess: 5,
+
+    _VERSION_RE: /(\d+\d\d\d\d)\.(\d+)/,
+
+    _loadVersionsFrom: function(dir, cancellable) {
+	let e = dir.enumerate_children('standard::*', Gio.FileQueryInfoFlags.NONE, cancellable);
+	let info;
+	let results = [];
+	while ((info = e.next_file(cancellable)) != null) {
+	    let name = info.get_name();
+	    let match = this._VERSION_RE.exec(name);
+	    if (!match)
+		continue;
+	    results.push(name);
+	}
+	results.sort(BuildUtil.compareVersions);
+	return results;
+    },
+
+    _cleanOldVersions: function(dir, retain, cancellable) {
+	let versions = this._loadVersionsFrom(dir, cancellable);
+	while (versions.length > retain) {
+	    let child = dir.get_child(versions.shift());
+	    GSystem.shutil_rm_rf(child, cancellable);
+	}
+    },
+
+    executeSync: function(cancellable) {
+	throw new Error("Not implemented");
+    },
+
+    execute: function(cancellable) {
+	this._asyncOutstanding = 0;
+	this._cancellable = cancellable;
+
+	this._subtaskdir = this.taskmaster.path.resolve_relative_path(this.name.substr(1));
+	GSystem.file_ensure_directory(this._subtaskdir, true, cancellable);
+	
+	let allVersions = [];
+
+	this._successDir = this._subtaskdir.get_child('successful');
+	GSystem.file_ensure_directory(this._successDir, true, cancellable);
+	let successVersions = this._loadVersionsFrom(this._successDir, cancellable);
+	for (let i = 0; i < successVersions.length; i++) {
+	    allVersions.push([true, successVersions[i]]);
+	}
+
+	this._failedDir = this._subtaskdir.get_child('failed');
+	GSystem.file_ensure_directory(this._failedDir, true, cancellable);
+	let failedVersions = this._loadVersionsFrom(this._failedDir, cancellable);
+	for (let i = 0; i < failedVersions.length; i++) {
+	    allVersions.push([false, failedVersions[i]]);
+	}
+
+	allVersions.sort(function (a, b) {
+	    let [successA, versionA] = a;
+	    let [successB, versionB] = b;
+	    return BuildUtil.compareVersions(versionA, versionB);
+	});
+
+	let currentTime = GLib.DateTime.new_now_utc();
+
+	let currentYmd = Format.vprintf('%d%02d%02d', [currentTime.get_year(),
+						       currentTime.get_month(),
+						       currentTime.get_day_of_month()]);
+	let version = null;
+	if (allVersions.length > 0) {
+	    let [lastSuccess, lastVersion] = allVersions[allVersions.length-1];
+	    let match = this._VERSION_RE.exec(lastVersion);
+	    if (!match) throw new Error();
+	    let lastYmd = match[1];
+	    let lastSerial = match[2];
+	    if (lastYmd == currentYmd) {
+		version = currentYmd + '.' + (parseInt(lastSerial) + 1);
+	    }
+	}
+	if (version === null) {
+	    version = currentYmd + '.0';
+	}
+
+	this._workdir = this._subtaskdir.get_child(version);
+	GSystem.shutil_rm_rf(this._workdir, cancellable);
+	GSystem.file_ensure_directory(this._workdir, true, cancellable);
+
+	let baseArgv = ['ostbuild', 'run-task', this.name];
+	let context = new GSystem.SubprocessContext({ argv: baseArgv });
+	context.set_cwd(this._workdir.get_path());
+	context.set_stdin_disposition(GSystem.SubprocessStreamDisposition.PIPE);
+	if (this.PreserveStdout) {
+	    let outPath = this._workdir.get_child('output.txt');
+	    context.set_stdout_file_path(outPath.get_path());
+	    context.set_stderr_disposition(GSystem.SubprocessStreamDisposition.STDERR_MERGE);
+	} else {
+	    context.set_stdout_disposition(GSystem.SubprocessStreamDisposition.NULL);
+	    let errPath = this._workdir.get_child('errors.txt');
+	    context.set_stderr_file_path(errPath.get_path());
+	}
+	let [success, resultpipe, fdno] = context.open_pipe_read(cancellable);
+	context.argv_append(''+fdno);
+	this._proc = new GSystem.Subprocess({ context: context });
+	this._proc.init(cancellable);
+
+	this._proc.wait(cancellable, Lang.bind(this, this._onChildExited));
+	this._asyncOutstanding += 1;
+	
+	this._result = null;
+	this._error = null;
+	JsonUtil.loadJsonFromStreamAsync(resultpipe, cancellable, Lang.bind(this, this._onResultRead));
+	this._asyncOutstanding += 1;
+    },
+    
+    _onAsyncOpComplete: function(error) {
+	this._asyncOutstanding--;
+	if (error && !this._error)
+	    this._error = error;
+	if (this._asyncOutstanding != 0)
+	    return;
+	if (this._error) {
+	    this.onComplete(null, this._error);
+	} else {
+	    this.onComplete(this._result, null);
+	}
+    },
+
+    _onChildExited: function(proc, result) {
+	let [success, errmsg] = ProcUtil.asyncWaitCheckFinish(proc, result);
+	let target;
+	if (!success) {
+	    target = this._failedDir.get_child(this._workdir.get_basename());
+	    GSystem.file_rename(this._workdir, target, null);
+	    this._cleanOldVersions(this._failedDir, this.RetainFailed, null);
+	    this._onAsyncOpComplete(new Error(errmsg));
+	} else {
+	    target = this._successDir.get_child(this._workdir.get_basename());
+	    GSystem.file_rename(this._workdir, target, null);
+	    this._cleanOldVersions(this._successDir, this.RetainSuccess, null);
+	    this._onAsyncOpComplete(null);
+	}
+	print("Stored results of " + this.name + " in " + target.get_path());
+    },
+
+    _onResultRead: function(result, error) {
+	if (!error) {
+	    let childResult = result['result'];
+	    if (childResult)
+		this._result = childResult;
+	    this._onAsyncOpComplete(null);
+	} else {
+	    this._onAsyncOpComplete(error);
+	}
     }
 });
 

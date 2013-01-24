@@ -127,3 +127,30 @@ function getBaseUserChrootArgs() {
     let path = findUserChrootPath();
     return [path.get_path(), '--unshare-pid', '--unshare-ipc', '--unshare-net'];
 }
+
+function compareVersions(a, b) {
+    let adot = a.indexOf('.');
+    while (adot != -1) {
+	let bdot = b.indexOf('.');
+	if (bdot == -1)
+	    return 1;
+	let aSub = parseInt(a.substr(0, adot));
+	let bSub = parseInt(b.substr(0, bdot));
+	if (aSub > bSub)
+	    return 1;
+	else if (aSub < bSub)
+	    return -1;
+	a = a.substr(adot + 1);
+	b = b.substr(bdot + 1);
+	adot = a.indexOf('.');
+    }
+    if (b.indexOf('.') != -1)
+	return -1;
+    let aSub = parseInt(a);
+    let bSub = parseInt(b);
+    if (aSub > bSub)
+	return 1;
+    else if (aSub < bSub)
+	return -1;
+    return 0;
+}

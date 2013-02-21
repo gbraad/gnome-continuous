@@ -44,8 +44,14 @@ AC_ARG_ENABLE(buildsystem,
 	    enable_buildsystem=yes)
 AM_CONDITIONAL(BUILDSYSTEM, test x$enable_buildsystem != xno)
 
-PKG_CHECK_MODULES(GIO_UNIX, [gio-unix-2.0 >= 2.34.0])
-GIO_UNIX_CFLAGS="$GIO_UNIX_CFLAGS -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_34 -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_34"
+gio_unix_dep_version=2.34.0
+PKG_CHECK_MODULES(GIO_UNIX, [gio-unix-2.0 >= ${gio_unix_dep_version}])
+PKG_CHECK_MODULES(OSTBUILD_DEP, [gio-unix-2.0 >= ${gio_unix_dep_version}])
+
+AC_CHECK_HEADER([libelf.h],,[AC_MSG_ERROR(libelf.h is required)])
+
+AC_DEFINE(GLIB_VERSION_MIN_REQUIRED, [GLIB_VERSION_2_34], [Define to GLib min version])
+AC_DEFINE(GLIB_VERSION_MAX_ALLOWED, [GLIB_VERSION_2_34], [Define to GLib max version])
 
 AC_CONFIG_FILES([
 Makefile

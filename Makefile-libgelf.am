@@ -1,0 +1,25 @@
+privlib_LTLIBRARIES += libgelf.la
+libgelf_la_SOURCES = src/libgelf/libgelf.h \
+	src/libgelf/gelf-file.c \
+	src/libgelf/gelf-file.h \
+	$(NULL)
+libgelf_la_CFLAGS = $(AM_CFLAGS) $(OSTBUILD_DEP_CFLAGS) -I$(top_srcdir)/src/libgelf
+libgelf_la_LDFLAGS = -avoid-version -Bsymbolic-functions -export-symbols-regex "^gelf_" -no-undefined -export-dynamic
+libgelf_la_LIBADD = $(OSTBUILD_DEP_LIBS) -lelf
+
+INTROSPECTION_GIRS += GElf-1.0.gir
+
+GElf-1.0.gir: libgelf.la Makefile
+GElf_1_0_gir_NAMESPACE = GElf
+GElf_1_0_gir_VERSION = 1.0
+GElf_1_0_gir_LIBS = libgelf.la
+GElf_1_0_gir_CFLAGS = $(OSTBUILD_DEP_CFLAGS) -I$(top_srcdir)/src/libgelf
+GElf_1_0_gir_SCANNERFLAGS =			\
+       --warn-all				\
+       --warn-error				\
+       --symbol-prefix=gelf_			\
+       --identifier-prefix=GElf			\
+        --c-include="libgelf.h"			\
+       $(NULL)
+GElf_1_0_gir_INCLUDES = Gio-2.0
+GElf_1_0_gir_FILES = $(libgelf_la_SOURCES)

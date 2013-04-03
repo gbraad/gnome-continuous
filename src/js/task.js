@@ -119,16 +119,59 @@ const TaskMaster = new Lang.Class({
 	this._taskset = TaskSet.prototype.getInstance();
 
 	this._taskVersions = {};
+
+	// string -> [ lastExecutedSecs, [timeoutId, parameters]]
+	this._scheduledTaskTimeouts = {};
+    },
+
+    _pushTaskDefImmediate: function(taskDef, parameters) {
+	let name = taskDef.prototype.TaskName;
+	let instance = new taskDef(this, name, [], parameters);
+	instance.onComplete = Lang.bind(this, this._onComplete, instance);
+	this._pendingTasksList.push(instance);
+	this._queueRecalculate();
     },
 
     _pushTaskDef: function(taskDef, parameters) {
 	let name = taskDef.prototype.TaskName;
 	if (!this._isTaskPending(name)) {
-	    let instance = new taskDef(this, name, [], parameters);
-	    instance.onComplete = Lang.bind(this, this._onComplete, instance);
-	    this._pendingTasksList.push(instance);
-	    this._queueRecalculate();
+	    let scheduleMinSecs = taskDef.prototype.TaskScheduleMinSecs;
+	    if (scheduleMinSecs > 0) {
+		let info = this._scheduledTaskTimeouts[name];
+		if (!info) {
+		    info = [ 0, [] ];
+		    this._scheduledTaskTimeouts[name] = info;
+		}
+		let lastExecutedSecs = info[0];
+		let pendingExecData = info[1];
+		let currentTime = GLib.get_monotonic_time();
+		if (lastExecutedSecs == 0) {
+		    print("Scheduled task " + name + " executing immediately");
+		    this._pushTaskDefImmediate(taskDef, parameters);
+		    info[0] = currentTime;
+		} else if (pendingExecData != null) {
+		    // Nothing, already scheduled
+		} else {
+		    let delta = (lastExecutedSecs + scheduleMinSecs) - currentTime;
+		    print("Scheduled task " + name + " delta=" + delta);
+		    let timeoutId = GLib.timeout_add_seconds(Math.max(delta, 0),
+							     Lang.bind(this, this._executeScheduledTask, taskDef));
+		    info[0] = currentTime;
+		    info[1] = [ timeoutId, parameters ];
+		}
+	    } else {
+		this._pushTaskDefImmediate(taskDef, parameters);
+	    }
 	}
+    },
+    
+    _executeScheduledTask: function(taskDef) {
+	let name = taskDef.prototype.TaskName;
+	print("Executing scheduled task " + name);
+	let info = this._scheduledTaskTimeouts[name];
+	let params = info[1][1];
+	info[1] = null;
+	this._pushTaskDefImmediate(name);
     },
 
     pushTask: function(taskName, parameters) {
@@ -259,6 +302,7 @@ const TaskDef = new Lang.Class({
 
     TaskPattern: null,
     TaskAfter: [],
+    TaskScheduleMinSecs: 0,
 
     PreserveStdout: true,
     RetainFailed: 1,

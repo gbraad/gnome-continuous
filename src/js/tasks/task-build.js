@@ -799,13 +799,26 @@ const TaskBuild = new Lang.Class({
 					       return;
 					   } else {
 					       let composeRootdir = result;
-					       let shareOstree = composeRootdir.resolve_relative_path('usr/share/ostree');
-					       GSystem.file_ensure_directory(shareOstree, true, cancellable);
-					       let triggersRunPath = shareOstree.get_child('triggers-run');
-					       triggersRunPath.create(Gio.FileCreateFlags.REPLACE_DESTINATION, cancellable).close(cancellable);
+					       
+					       this._postComposeTransform(composeRootdir, cancellable);
 					       callback([composeRootdir, relatedTmpPath], null);
 					   }
 				       }));
+    },
+
+    _postComposeTransform: function(composeRootdir, cancellable) {
+	// Create /usr/share/ostree/triggers-run; this is a temporary
+	// hack until the trigger functionality moves outside of ostree
+	// entirely.
+	let shareOstree = composeRootdir.resolve_relative_path('usr/share/ostree');
+	GSystem.file_ensure_directory(shareOstree, true, cancellable);
+	let triggersRunPath = shareOstree.get_child('triggers-run');
+	triggersRunPath.create(Gio.FileCreateFlags.REPLACE_DESTINATION, cancellable).close(cancellable);
+	
+	// Move /etc to /usr/etc, since it contains defaults.
+	let etc = composeRootdir.resolve_relative_path("etc");
+	let usrEtc = composeRootdir.resolve_relative_path("usr/etc");
+	GSystem.file_rename(etc, usrEtc, cancellable);
     },
     
     _commitComposedTreeAsync: function(targetName, composeRootdir, relatedTmpPath, cancellable, callback) {
@@ -856,7 +869,33 @@ const TaskBuild = new Lang.Class({
 					   })));
     },
 
-    _generateInitramfs: function(architecture, composeRootdir, initramfsDepends, cancellable) {
+    // Return a SHA256 checksum of the contents of the kernel and all
+    // modules; this is unlike an OSTree checksum in that we're just
+    // checksumming the contents, not the uid/gid/xattrs.
+    // Unfortunately, we can't rely on those for /boot anyways.
+    _getKernelChecksum: function(kernelPath, kernelRelease, composeRootdir, cancellable) {
+	let checksum = GLib.Checksum.new(GLib.ChecksumType.SHA256);
+	let contents = GSystem.file_map_readonly(kernelPath, cancellable);
+	checksum.update(contents.toArray());
+	contents = null;
+	let modulesPath = composeRootdir.resolve_relative_path('lib/modules/' + kernelRelease);
+	if (modulesPath.query_exists(null)) {
+	    // Only checksum .ko files; we don't want to pick up the
+	    // modules.order file and such that might contain
+	    // timestamps.
+	    FileUtil.walkDir(modulesPath, { fileType: Gio.FileType.REGULAR,
+					    nameRegex: /\.ko$/,
+					    sortByName: true },
+			     function (child, cancellable) {
+				 let contents = GSystem.file_map_readonly(child, cancellable);
+				 checksum.update(contents.toArray());
+				 contents = null;
+			     }, cancellable);
+	}
+	return checksum.get_string();
+    },
+
+    _prepareKernelAndInitramfs: function(architecture, composeRootdir, initramfsDepends, cancellable) {
 	let e = composeRootdir.get_child('boot').enumerate_children('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, cancellable);
 	let info;
 	let kernelPath = null;
@@ -875,6 +914,8 @@ const TaskBuild = new Lang.Class({
 	let releaseIdx = kernelName.indexOf('-');
 	let kernelRelease = kernelName.substr(releaseIdx + 1);
 
+	let kernelContentsChecksum = this._getKernelChecksum(kernelPath, kernelRelease, composeRootdir, cancellable);
+
         let initramfsCachedir = this.cachedir.resolve_relative_path('initramfs/' + architecture);
 	GSystem.file_ensure_directory(initramfsCachedir, true, cancellable);
 
@@ -883,51 +924,108 @@ const TaskBuild = new Lang.Class({
 	if (initramfsEpoch)
 	    initramfsEpochVersion = initramfsEpoch['version'];
 	let fullInitramfsDependsString = 'epoch:' + initramfsEpochVersion +
-	    ';kernel:' + kernelRelease + ';' +
+	    ';kernel:' + kernelContentsChecksum + ';' +
 	    initramfsDepends.join(';'); 
 	let dependsChecksum = GLib.compute_checksum_for_bytes(GLib.ChecksumType.SHA256,
 							      GLib.Bytes.new(fullInitramfsDependsString));
 
-	let cachedInitramfsPath = initramfsCachedir.get_child(dependsChecksum);
-	if (cachedInitramfsPath.query_exists(null)) {
-	    print("Reusing cached initramfs " + cachedInitramfsPath.get_path());
-	    return [kernelRelease, cachedInitramfsPath];
+	let cachedInitramfsDirPath = initramfsCachedir.get_child(dependsChecksum);
+	if (cachedInitramfsDirPath.query_file_type(Gio.FileQueryInfoFlags.NONE, null) == Gio.FileType.DIRECTORY) {
+	    print("Reusing cached initramfs " + cachedInitramfsDirPath.get_path());
 	} else {
 	    print("No cached initramfs matching " + fullInitramfsDependsString);
+
+	    // Clean out all old initramfs images
+	    GSystem.shutil_rm_rf(initramfsCachedir, cancellable);
+
+	    let cwd = Gio.File.new_for_path('.');
+	    let workdir = cwd.get_child('tmp-initramfs-' + architecture);
+	    let varTmp = workdir.resolve_relative_path('var/tmp');
+	    GSystem.file_ensure_directory(varTmp, true, cancellable);
+	    let varDir = varTmp.get_parent();
+	    let tmpDir = workdir.resolve_relative_path('tmp');
+	    GSystem.file_ensure_directory(tmpDir, true, cancellable);
+	    let initramfsTmp = tmpDir.get_child('initramfs-ostree.img');
+
+	    // HACK: Temporarily move /usr/etc to /etc to help dracut
+	    // find stuff, like the config file telling it to use the
+	    // ostree module.
+	    let etcDir = composeRootdir.resolve_relative_path('etc');
+	    let usrEtcDir = composeRootdir.resolve_relative_path('usr/etc');
+	    GSystem.file_rename(usrEtcDir, etcDir, cancellable);
+	    let args = ['linux-user-chroot', '--mount-readonly', '/',
+			'--mount-proc', '/proc',
+			'--mount-bind', '/dev', '/dev',
+			'--mount-bind', varDir.get_path(), '/var',
+			'--mount-bind', tmpDir.get_path(), '/tmp',
+			composeRootdir.get_path(),
+			'dracut', '--tmpdir=/tmp', '-f', '/tmp/initramfs-ostree.img',
+			kernelRelease];
+	    
+	    print("Running: " + args.map(GLib.shell_quote).join(' '));
+	    let context = new GSystem.SubprocessContext({ argv: args });
+	    let proc = new GSystem.Subprocess({ context: context });
+	    proc.init(cancellable);
+	    proc.wait_sync_check(cancellable);
+
+	    // HACK: Move /etc back to /usr/etc
+	    GSystem.file_rename(etcDir, usrEtcDir, cancellable);
+
+	    GSystem.file_chmod(initramfsTmp, 420, cancellable);
+
+	    let contents = GSystem.file_map_readonly(initramfsTmp, cancellable);
+	    let initramfsContentsChecksum = GLib.compute_checksum_for_bytes(GLib.ChecksumType.SHA256, contents);
+	    contents = null;
+
+	    let tmpCachedInitramfsDirPath = cachedInitramfsDirPath.get_parent().get_child(cachedInitramfsDirPath.get_basename() + '.tmp');
+	    GSystem.shutil_rm_rf(tmpCachedInitramfsDirPath, cancellable);
+	    GSystem.file_ensure_directory(tmpCachedInitramfsDirPath, true, cancellable);
+
+	    GSystem.file_rename(initramfsTmp, tmpCachedInitramfsDirPath.get_child('initramfs-' + kernelRelease + '-' + initramfsContentsChecksum), cancellable);
+	    GSystem.file_linkcopy(kernelPath, tmpCachedInitramfsDirPath.get_child('vmlinuz-' + kernelRelease + '-' + kernelContentsChecksum),
+				  Gio.FileCopyFlags.OVERWRITE, cancellable);
+	    
+	    GSystem.shutil_rm_rf(cachedInitramfsDirPath, cancellable);
+	    GSystem.file_rename(tmpCachedInitramfsDirPath, cachedInitramfsDirPath, cancellable);
 	}
 
-	// Clean out all old initramfs images
-	GSystem.shutil_rm_rf(initramfsCachedir, cancellable);
-	GSystem.file_ensure_directory(initramfsCachedir, true, cancellable);
+	let cachedKernelPath = null;
+	let cachedInitramfsPath = null;
+	FileUtil.walkDir(cachedInitramfsDirPath, { fileType: Gio.FileType.REGULAR },
+			 function (child, cancellable) {
+			     if (child.get_basename().indexOf('initramfs-') == 0)
+				 cachedInitramfsPath = child;
+			     else if (child.get_basename().indexOf('vmlinuz-') == 0)
+				 cachedKernelPath = child;
+			 }, cancellable);
+	if (cachedKernelPath == null || cachedInitramfsPath == null)
+	    throw new Error("Missing file in " + cachedInitramfsDirPath);
+	let cachedInitramfsPathName = cachedInitramfsPath.get_basename();
+	let initramfsContentsChecksum = cachedInitramfsPathName.substr(cachedInitramfsPathName.lastIndexOf('-') + 1);
 
-	let cwd = Gio.File.new_for_path('.');
-	let workdir = cwd.get_child('tmp-initramfs-' + architecture);
-	let varTmp = workdir.resolve_relative_path('var/tmp');
-	GSystem.file_ensure_directory(varTmp, true, cancellable);
-	let varDir = varTmp.get_parent();
-	let tmpDir = workdir.resolve_relative_path('tmp');
-	GSystem.file_ensure_directory(tmpDir, true, cancellable);
-	let initramfsTmp = tmpDir.get_child('initramfs-ostree.img');
-	let args = ['linux-user-chroot', '--mount-readonly', '/',
-		    '--mount-proc', '/proc',
-		    '--mount-bind', '/dev', '/dev',
-		    '--mount-bind', varDir.get_path(), '/var',
-		    '--mount-bind', tmpDir.get_path(), '/tmp',
-		    composeRootdir.get_path(),
-		    'dracut', '--tmpdir=/tmp', '-f', '/tmp/initramfs-ostree.img',
-		    kernelRelease];
-		    
-	print("Running: " + args.map(GLib.shell_quote).join(' '));
-	let context = new GSystem.SubprocessContext({ argv: args });
-	let proc = new GSystem.Subprocess({ context: context });
-	proc.init(cancellable);
-	proc.wait_sync_check(cancellable);
+	let ostreeBootChecksum = GLib.compute_checksum_for_string(GLib.ChecksumType.SHA256,
+								  kernelContentsChecksum + initramfsContentsChecksum,
+								  -1);
+	
+	return { kernelRelease: kernelRelease,
+		 kernelPath: cachedKernelPath,
+		 kernelChecksum: kernelContentsChecksum,
+		 initramfsPath: cachedInitramfsPath,
+	         initramfsContentsChecksum: initramfsContentsChecksum,
+		 ostreeBootChecksum: ostreeBootChecksum };
+    },
 
-	GSystem.file_chmod(initramfsTmp, 420, cancellable);
-
-	GSystem.file_rename(initramfsTmp, cachedInitramfsPath, cancellable);
-
-	return [kernelRelease, cachedInitramfsPath];
+    // Clear out the target's /boot directory, and replace it with
+    // kernel/initramfs that are named with the same
+    // ostreeBootChecksum, derived from individual checksums
+    _installKernelAndInitramfs: function(kernelInitramfsData, composeRootdir, cancellable) {
+	let bootDir = composeRootdir.get_child('boot');
+	GSystem.shutil_rm_rf(bootDir, cancellable);
+	GSystem.file_ensure_directory(bootDir, true, cancellable);
+	let targetKernelPath = bootDir.get_child('vmlinuz-' + kernelInitramfsData.kernelRelease + '-' + kernelInitramfsData.ostreeBootChecksum);
+	GSystem.file_linkcopy(kernelInitramfsData.kernelPath, targetKernelPath, Gio.FileCopyFlags.ALL_METADATA, cancellable);
+	let targetInitramfsPath = bootDir.get_child('initramfs-' + kernelInitramfsData.kernelRelease + '-' + kernelInitramfsData.ostreeBootChecksum);
+	GSystem.file_linkcopy(kernelInitramfsData.initramfsPath, targetInitramfsPath, Gio.FileCopyFlags.ALL_METADATA, cancellable);
     },
 
     /* Build the Yocto base system. */
@@ -1274,11 +1372,9 @@ const TaskBuild = new Lang.Class({
 					       return;
 					   }
 					   let [composeRootdir, relatedTmpPath] = result;
-					   let [kernelRelease, initramfsPath] = this._generateInitramfs(architecture, composeRootdir, initramfsDepends, cancellable);
-					   archInitramfsImages[architecture] = [kernelRelease, initramfsPath];
-					   let initramfsTargetName = 'initramfs-' + kernelRelease + '.img';
-					   let targetInitramfsPath = composeRootdir.resolve_relative_path('boot').get_child(initramfsTargetName);
-					   GSystem.file_linkcopy(initramfsPath, targetInitramfsPath, Gio.FileCopyFlags.ALL_METADATA, cancellable);
+					   let kernelInitramfsData = this._prepareKernelAndInitramfs(architecture, composeRootdir, initramfsDepends, cancellable);
+					   archInitramfsImages[architecture] = kernelInitramfsData;
+					   this._installKernelAndInitramfs(kernelInitramfsData, composeRootdir, cancellable);
 					   this._commitComposedTreeAsync(develTargetName, composeRootdir, relatedTmpPath, cancellable,
 									 Lang.bind(this, function(result, err) {
 									     if (err) {
@@ -1324,10 +1420,8 @@ const TaskBuild = new Lang.Class({
 					       }
 					       composeTreeTaskCount--;
 					       let [composeRootdir, relatedTmpPath] = result;
-					       let [kernelRelease, initramfsPath] = archInitramfsImages[architecture];
-					       let initramfsTargetName = 'initramfs-' + kernelRelease + '.img';
-					       let targetInitramfsPath = composeRootdir.resolve_relative_path('boot').get_child(initramfsTargetName);
-					       GSystem.file_linkcopy(initramfsPath, targetInitramfsPath, Gio.FileCopyFlags.ALL_METADATA, cancellable);
+					       let kernelInitramfsData = archInitramfsImages[architecture];
+					       this._installKernelAndInitramfs(kernelInitramfsData, composeRootdir, cancellable);
 					       composeTreeTaskCount++;
 					       this._commitComposedTreeAsync(runtimeTargetName, composeRootdir, relatedTmpPath, cancellable,
 									     Lang.bind(this, function(result, err) {

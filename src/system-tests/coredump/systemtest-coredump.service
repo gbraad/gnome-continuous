@@ -1,0 +1,5 @@
+[Unit]
+Description=Test a coredump
+
+[Service]
+ExecStart=/usr/bin/gnome-continuous-systemtest-coredump

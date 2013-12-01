@@ -1,0 +1,47 @@
+#!/usr/bin/env gjs
+// -*- mode: javascript -*-
+
+const GLib = imports.gi.GLib;
+const Gio = imports.gi.Gio;
+
+let running = true;
+let success = false;
+
+let sleepProc = Gio.Subprocess.new(['sleep', '1d'], 0);
+sleepProc.init(null);
+let pid = parseInt(sleepProc.get_identifier());
+
+let journalctlProc = Gio.Subprocess.new(['journalctl', '-o', 'json', '-f',
+					 'MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1'],
+					Gio.SubprocessFlags.STDOUT_PIPE);
+journalctlProc.init(null);
+let journalOut = Gio.DataInputStream.new(journalctlProc.get_stdout_pipe());
+function onJournalReadLine(src, result) {
+    let line, len;
+    try {
+	[line, len] = src.read_line_finish_utf8(result);
+    } catch (e) {
+	print("Caught " + e);
+	running = false;
+	return;
+    }
+    let msg = JSON.parse(line);
+    let coredumpExe = msg['COREDUMP_EXE'];
+    if (coredumpExe.indexOf('sleep') >= 0) {
+	print("Found COREDUMP_EXE=" + coredumpExe);
+	running = false;
+	success = true;
+    } else {
+	journalout.read_line_async(GLib.PRIORITY_DEFAULT, null, onJournalReadLine);
+    }
+}
+journalout.read_line_async(GLib.PRIORITY_DEFAULT, null, onJournalReadLine);
+
+let killProc = Gio.Subprocess.new(['kill', '-11', '' + pid], 0);
+killProc.init(null);
+
+let context = GLib.MainContext.default();
+while (running)
+    context.iteration(true);
+
+success ? 0 : 1;

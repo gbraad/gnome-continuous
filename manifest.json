@@ -96,6 +96,8 @@
 		 "initramfs-depends": true,
 		 "config-opts": ["--disable-manpages",
 				 "--disable-networkd",
+				 "--disable-kdbus",
+				 "--enable-compat-libs",
 				 "--with-sysvinit-path=",
 				 "--with-sysvrcnd-path="]},
 

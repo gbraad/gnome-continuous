@@ -48,6 +48,8 @@ const TaskBuildDisks = new Lang.Class({
     _inheritPreviousDisk: true,
     _onlyTreeSuffixes: ['-runtime', '-devel-debug'],
 
+    DefaultParameters: {targets: null},
+
     execute: function(cancellable) {
         let isLocal = this._buildName == 'local';
 	      let baseImageDir = this.workdir.resolve_relative_path(this._imageSubdir);
@@ -80,10 +82,19 @@ const TaskBuildDisks = new Lang.Class({
 
         for (let targetName in targets) {
             let matched = false;
-            for (let i = 0; i < this._onlyTreeSuffixes.length; i++) {
-                if (JSUtil.stringEndswith(targetName, this._onlyTreeSuffixes[i])) {
-                    matched = true;
-                    break;
+            if (this.parameters.targets !== null) {
+                for (let i = 0; i < this.parameters.targets.length; i++) {
+                    if (JSUtil.stringEndswith(targetName, '/' + this.parameters.targets[i])) {
+                        matched = true;
+                        break;
+                    }
+                }
+            } else {
+                for (let i = 0; i < this._onlyTreeSuffixes.length; i++) {
+                    if (JSUtil.stringEndswith(targetName, this._onlyTreeSuffixes[i])) {
+                        matched = true;
+                        break;
+                    }
                 }
             }
             if (!matched)

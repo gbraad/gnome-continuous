@@ -123,8 +123,13 @@ const TaskBuildDisks = new Lang.Class({
             } finally {
                 gfmnt.umount(cancellable);
             }
-            // Assume previous disks have successfully installed a bootloader
-            if (!doCloneDisk) {
+
+            // Assume previous disks have successfully installed a bootloader. We, however,
+            // always install a bootloader for minimal, since we want it to be bootable
+            // read-only and bootloader installation, by booting the disk read-write, has
+            // the positive side-effect of letting systemd-tempfiles run and create the
+            // necessary directories in /var that we depend on.
+            if (!doCloneDisk || targetName.endsWith("-minimal")) {
                 LibQA.bootloaderInstall(diskPath, Gio.File.new_for_path('.'), osname, cancellable);
                 print("Bootloader installation complete");
             }

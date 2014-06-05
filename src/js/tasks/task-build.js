@@ -1108,6 +1108,13 @@ const TaskBuild = new Lang.Class({
 	GSystem.file_linkcopy(kernelInitramfsData.initramfsPath, targetInitramfsPath, Gio.FileCopyFlags.ALL_METADATA, cancellable);
     },
 
+    _setHWTestTarget: function(composeRootdir, cancellable) {
+        let defaultTarget = composeRootdir.get_child('usr/lib/systemd/system/default.target');
+        if (defaultTarget.query_exists(cancellable))
+            defaultTarget.delete(cancellable);
+        defaultTarget.make_symbolic_link('gnome-hwtest.target', cancellable);
+    },
+
     /* Build the Yocto base system. */
     _buildBase: function(architecture, cancellable) {
         let basemeta = this._snapshot.getExpanded(this._snapshot.data['base']['name']);

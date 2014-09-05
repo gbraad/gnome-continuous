@@ -1348,6 +1348,8 @@ const TaskBuild = new Lang.Class({
         let componentToArches = {};
 
         let runtimeComponents = [];
+        let platformComponents = [];
+        let sdkComponents = [];
         let hwtestComponents = [];
         let develComponents = [];
         let testingComponents = [];
@@ -1374,6 +1376,23 @@ const TaskBuild = new Lang.Class({
 
             if (!isHWTestOnly) {
 	        develComponents.push(component);
+            }
+
+            if (!isHWTestOnly) {
+	        develComponents.push(component);
+            }
+
+            let tags = component['tags'] || [];
+            for (let j = 0; j < tags.length; j++) {
+	        let tag = tags[j];
+
+	        if (tag == 'platform') {
+	            platformComponents.push(component);
+	            sdkComponents.push(component);
+                }
+	        if (tag == 'sdk') {
+	            sdkComponents.push(component);
+                }
             }
 
 	    let isNoarch = component['noarch'] || false;
@@ -1435,7 +1454,7 @@ const TaskBuild = new Lang.Class({
 	}
 
         let targetsList = [];
-	let componentTypes = ['runtime', 'hwtest', 'devel-debug'];
+	let componentTypes = ['runtime', 'hwtest', 'devel-debug', 'platform', 'sdk'];
         for (let i = 0; i < componentTypes.length; i++) {
 	    let targetComponentType = componentTypes[i];
             for (let i = 0; i < architectures.length; i++) {
@@ -1459,6 +1478,10 @@ const TaskBuild = new Lang.Class({
 		let targetComponents;
                 if (targetComponentType == 'runtime') {
                     targetComponents = runtimeComponents;
+                } else if (targetComponentType == 'platform') {
+                    targetComponents = platformComponents;
+                } else if (targetComponentType == 'sdk') {
+                    targetComponents = sdkComponents;
                 } else if (targetComponentType == 'hwtest') {
                     targetComponents = hwtestComponents;
                 } else {
@@ -1478,8 +1501,10 @@ const TaskBuild = new Lang.Class({
 		    }
                     let binaryName = component['name'] + '/' + architecture;
                     let componentRef = {'name': binaryName};
-                    if (targetComponentType == 'runtime' || targetComponentType == 'hwtest') {
+                    if (targetComponentType == 'runtime' || targetComponentType == 'hwtest' || targetComponentType == 'platform') {
                         componentRef['trees'] = ['/runtime'];
+		    } else if (targetComponentType == 'sdk') {
+                        componentRef['trees'] = ['/runtime', '/devel', '/debug'];
 		    } else if (targetComponentType == 'devel-debug') {
                         componentRef['trees'] = ['/runtime', '/devel', '/tests', '/doc', '/debug'];
 		    }

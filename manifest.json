@@ -59,16 +59,19 @@
 
    		{"src": "gnome:gtk-doc-stub",
 		 "component": "devel",
-		 "noarch": true},
+		 "noarch": true,
+                 "tags": ["sdk"]},
 
 		{"src": "gnome:glib",
 		 "component": "minimal",
+                 "tags": ["platform"],
                  "requires": {"pkgconfig": ["libffi >= 3.0.10"]},
                  "config-opts": ["--disable-modular-tests",
 				 "--enable-installed-tests"]},
 
 		{"src": "gnome:gnome-common",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "savannah:gperf.git",
 		 "tag": "v3.0.4",
@@ -99,6 +102,7 @@
 
                 {"src": "gnome:gobject-introspection",
                  "component": "minimal",
+                 "tags": ["platform"],
 		 "config-opts": ["--disable-tests"]},
 
 		{"src": "gnome:vala-bootstrap",
@@ -130,116 +134,151 @@
 		 "setuid": ["/runtime/usr/bin/linux-user-chroot"]},
 
 		{"src": "gnome:libxml2",
-		 "component": "minimal"},
+		 "component": "minimal",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:libxslt"},
+		{"src": "gnome:libxslt",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:libgsystem",
 		 "component": "minimal"},
 
-   		{"src": "fd:pixman"},
+		{"src": "fd:pixman",
+                 "tags": ["platform"]},
 
    		{"src": "git:git://git.sv.nongnu.org/freetype/freetype2.git",
 		 "tag": "VER-2-4-8",
+                 "tags": ["platform"],
 		 "patches": ["freetype-autogen.patch"]},
 
    		{"src": "fd:fontconfig",
-		 "config-opts": ["--with-cache-dir=/usr/lib/fontconfig/cache"]},
+		 "config-opts": ["--with-cache-dir=/usr/lib/fontconfig/cache"],
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/util/macros",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/bigreqsproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/compositeproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/damageproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/dmxproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/dri2proto",
 		 "tag": "ead89ad84877551cc15d26b95cb19a3e205df71f",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/dri3proto",
 		 "component": "devel"},
 
 		{"src": "fd:xorg/proto/evieproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/fontsproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/glproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/inputproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/kbproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/presentproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/randrproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/recordproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/renderproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/resourceproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/scrnsaverproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/videoproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xcmiscproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xextproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xf86bigfontproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xf86dgaproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xf86driproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xf86miscproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xf86vidmodeproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xineramaproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/fixesproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/proto/xproto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/lib/libxtrans"},
 
-		{"src": "fd:xorg/lib/libXau"},
+		{"src": "fd:xorg/lib/libXau",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xcb/proto",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
 		{"src": "fd:xorg/font/util",
 		 "component": "devel"},
@@ -247,64 +286,87 @@
 		{"src": "fd:xorg/lib/libfontenc"},
 
 		{"src": "fd:xcb/pthread-stubs",
-		 "component": "devel"},
+		 "component": "devel",
+                 "tags": ["sdk"]},
 
-		{"src": "fd:xcb/libxcb"},
+		{"src": "fd:xcb/libxcb",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libX11"},
+		{"src": "fd:xorg/lib/libX11",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXrender"},
+		{"src": "fd:xorg/lib/libXrender",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXfixes"},
+		{"src": "fd:xorg/lib/libXfixes",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXext"},
+		{"src": "fd:xorg/lib/libXext",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/lib/libXfont"},
 
-		{"src": "fd:xorg/lib/libXft"},
+		{"src": "fd:xorg/lib/libXft",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXi"},
+		{"src": "fd:xorg/lib/libXi",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXinerama"},
+		{"src": "fd:xorg/lib/libXinerama",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libICE"},
+		{"src": "fd:xorg/lib/libICE",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libSM"},
+		{"src": "fd:xorg/lib/libSM",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/lib/libXt"},
 
 		{"src": "fd:xorg/lib/libXmu"},
 
-		{"src": "fd:xorg/lib/libXpm"},
+		{"src": "fd:xorg/lib/libXpm",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXrandr"},
+		{"src": "fd:xorg/lib/libXrandr",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/lib/libXRes"},
 
-		{"src": "fd:xorg/lib/libXtst"},
+		{"src": "fd:xorg/lib/libXtst",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXv"},
+		{"src": "fd:xorg/lib/libXv",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXvMC"},
+		{"src": "fd:xorg/lib/libXvMC",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/lib/libXxf86dga"},
 
-		{"src": "fd:xorg/lib/libXxf86vm"},
+		{"src": "fd:xorg/lib/libXxf86vm",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXdamage"},
+		{"src": "fd:xorg/lib/libXdamage",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXcursor"},
+		{"src": "fd:xorg/lib/libXcursor",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libXcomposite"},
+		{"src": "fd:xorg/lib/libXcomposite",
+                 "tags": ["platform"]},
 
-		{"src": "fd:xorg/lib/libxkbfile"},
+		{"src": "fd:xorg/lib/libxkbfile",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/lib/libFS"},
 
-		{"src": "fd:xorg/lib/libxshmfence"},
+		{"src": "fd:xorg/lib/libxshmfence",
+                 "tags": ["platform"]},
 
 		{"src": "fd-dbus:dbus",
 		 "component": "minimal",
+                 "tags": ["platform"],
 		 "config-opts": ["--with-dbus-user=dbus",
 		                 "--enable-inotify",
 				 "--enable-verbose-mode",
@@ -316,28 +378,34 @@
 		 "setuid": ["/runtime/usr/libexec/dbus-daemon-launch-helper"]},
 
 		{"src": "git:git://libpng.git.sourceforge.net/gitroot/libpng/libpng",
-		 "tag": "v1.5.18"},
+		 "tag": "v1.5.18",
+                 "tags": ["platform"]},
 
 		{"src": "fd:cairo",
-		 "config-opts": ["--disable-interpreter"]},
+		 "config-opts": ["--disable-interpreter"],
+                 "tags": ["platform"]},
 
                 {"src": "git:http://bitmath.org/git/mtdev.git"},
 
                 {"src": "fd:libevdev",
 		 "config-opts": ["--disable-gcov"]},
 
-		{"src": "fd:wayland/libinput"},
+		{"src": "fd:wayland/libinput",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/util/makedepend",
 		 "component": "devel"},
 
-		{"src": "fd:xorg/lib/libpciaccess"},
+		{"src": "fd:xorg/lib/libpciaccess",
+                 "tags": ["platform"]},
 
 		{"src": "fd-mesa:drm",
-		 "config-opts": ["--enable-nouveau-experimental-api"]},
+		 "config-opts": ["--enable-nouveau-experimental-api"],
+                 "tags": ["platform"]},
 
 		{"src": "fd-wayland:wayland",
-		 "config-opts": ["--disable-documentation"]},
+		 "config-opts": ["--disable-documentation"],
+                 "tags": ["platform"]},
 
                 {"src": "fd-mesa:mesa",
                  "cflags": {
@@ -364,7 +432,8 @@
                      "--with-gallium-drivers=svga,r300,r600,nouveau,swrast",
                      "--enable-gallium-llvm",
                      "--with-dri-drivers=nouveau,radeon,r200,i915,i965,swrast"
-                     ]},
+                     ],
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/app/xkbcomp"},
 
@@ -377,7 +446,8 @@
 		                 "--with-xkb-base=/usr/share/X11/xkb"],
 		 "patches": ["xkeyboard-config-autogen.patch"]},
 
-		{"src": "anholt:libepoxy"},
+		{"src": "anholt:libepoxy",
+                 "tags": ["platform"]},
 
 		{"src": "fd:xorg/xserver",
                  "config-opts": ["--enable-xwayland"]},
@@ -392,7 +462,8 @@
 
 		{"src": "fd:xorg/driver/xf86-video-modesetting"},
 
-                {"src": "git:git://github.com/xkbcommon/libxkbcommon"},
+                {"src": "git:git://github.com/xkbcommon/libxkbcommon",
+                 "tags": ["platform"]},
 
                 {"src": "git:git://git.xiph.org/celt.git"},
 
@@ -426,7 +497,8 @@
 
 		{"src": "fd-dbus:dbus-glib",
 		 "config-opts": ["--enable-tests",
-		                 "--disable-gtk-doc"]},
+		                 "--disable-gtk-doc"],
+                 "tags": ["platform"]},
 
 		{"src": "git:git://git.infradead.org/users/tgr/libnl.git",
 		 "tag": "libnl3_2_21",
@@ -453,7 +525,8 @@
                 {"src": "tarball:http://openjpeg.googlecode.com/files/openjpeg-1.5.1.tar.gz",
                  "name": "openjpeg",
                  "config-opts": ["--disable-doc"],
-                 "checksum": "6cfb3097a1c8e9550131b17663daf927f42707bc3f84196c1390642e87f3ab8d"},
+                 "checksum": "6cfb3097a1c8e9550131b17663daf927f42707bc3f84196c1390642e87f3ab8d",
+                 "tags": ["platform"]},
 
                 {"src": "tarball:http://downloads.ghostscript.com/public/ghostscript-9.10.tar.gz",
                  "name": "ghostscript",
@@ -463,14 +536,16 @@
 		 "component": "minimal",
 		 "config-opts": ["--without-lzo2"],
 		 "tag": "v3.1.2",
-		 "patches": ["libarchive-autogen.patch"]},
+		 "patches": ["libarchive-autogen.patch"],
+                 "tags": ["platform"]},
 
                 {"src": "fd-poppler:poppler",
                  "config-opts": ["--disable-poppler-cpp",
                                  "--disable-utils"]},
 
 		{"src": "git:git://github.com/mm2/Little-CMS.git",
-		 "tag": "lcms2.6"},
+		 "tag": "lcms2.6",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:libgxps"},
 
@@ -525,7 +600,8 @@
 
 	        {"src": "0pointer:libdaemon",
 		 "patches": ["libdaemon-build-sys-Modernize-by-renaming-bootstrap.sh-autogen.patch"],
-		 "config-opts": ["--disable-examples"]},
+		 "config-opts": ["--disable-examples"],
+                 "tags": ["platform"]},
 
 	        {"src": "0pointer:avahi",
 		 "config-opts": ["--with-distro=none",
@@ -539,7 +615,8 @@
 				 "--disable-qt4",
 				 "--disable-python",
 				 "--disable-gtk",
-				 "--disable-gtk3"]},
+				 "--disable-gtk3"],
+                 "tags": ["platform"]},
 
                 {"src": "git:git://gitorious.org/gusb/gusb.git"},
 		
@@ -557,30 +634,39 @@
 		 "patches": ["ragel-gcc-4.7.patch"],
 		 "tag": "0b17ee79bf5237ffdc3a2a7480023a7d61063788"},
 
-                {"src": "git:git://anongit.freedesktop.org/harfbuzz"},
+                {"src": "git:git://anongit.freedesktop.org/harfbuzz",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:pango",
-		 "config-opts": ["--enable-installed-tests"]},
+		 "config-opts": ["--enable-installed-tests"],
+                 "tags": ["platform"]},
 
-		{"src": "gnome:atk"},
+		{"src": "gnome:atk",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:at-spi2-core"},
+		{"src": "gnome:at-spi2-core",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:at-spi2-atk"},
+		{"src": "gnome:at-spi2-atk",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gdk-pixbuf",
-		 "config-opts": ["--enable-installed-tests"]},
+		 "config-opts": ["--enable-installed-tests"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gtk+",
 		 "name": "gtk2",
-		 "branch": "gtk-2-24"},
+		 "branch": "gtk-2-24",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gtk-engines",
-		 "branch": "gtk-engines-2-22"},
+		 "branch": "gtk-engines-2-22",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gtk+",
 		 "config-opts": ["--enable-installed-tests", "--enable-wayland-backend", "--enable-x11-backend"],
-		 "name": "gtk3"},
+		 "name": "gtk3",
+                 "tags": ["platform"]},
 
 	        {"src": "fd:plymouth",
 		 "initramfs-depends": true,
@@ -598,39 +684,49 @@
 		{"src": "git:git://pkgs.fedoraproject.org/ca-certificates.git",
 		 "tag": "8c27f267a89811f60b0cb442f637a01b2978e2c2",
                  "component": "minimal",
-		 "patches": ["ca-certs-build.patch"]},
+		 "patches": ["ca-certs-build.patch"],
+                 "tags": ["platform"]},
 
 		{"src": "fd-p11:p11-kit",
-                 "component": "minimal"},
+                 "component": "minimal",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gcr",
-		 "config-opts": ["--disable-valgrind"]},
+		 "config-opts": ["--disable-valgrind"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:libsecret",
-		 "config-opts": ["--disable-manpages"]},
+		 "config-opts": ["--disable-manpages"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gnome-keyring",
 		 "config-opts": ["--disable-doc"]},
 
 		{"src": "gnome:json-glib",
-                 "config-opts": ["--enable-installed-tests"]},
+                 "config-opts": ["--enable-installed-tests"],
+                 "tags": ["platform"]},
 
-		{"src": "gnome:libcroco"},
+		{"src": "gnome:libcroco",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:librsvg"},
+		{"src": "gnome:librsvg",
+                 "tags": ["platform"]},
 
 		{"src": "fd-gstreamer:orc",
-		 "config-opts": ["--disable-gtk-doc"]},
+		 "config-opts": ["--disable-gtk-doc"],
+                 "tags": ["platform"]},
 
 		{"src": "fd-gstreamer:gstreamer",
 		 "config-opts": ["--disable-tests",
-		                 "--disable-fatal-warnings"]},
+		                 "--disable-fatal-warnings"],
+                 "tags": ["platform"]},
 
 		{"src": "fd-gstreamer:gst-plugins-base",
 		 "config-opts": ["--with-gtk=3.0",
 		                 "--disable-tests",
 				 "--disable-gnome_vfs",
-				 "--disable-fatal-warnings"]},
+				 "--disable-fatal-warnings"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:cogl",
 		 "config-opts": ["--enable-wayland-egl-platform",
@@ -639,7 +735,8 @@
 				 "--enable-xlib-egl-platform",
 				 "--enable-cogl-gst",
 				 "--enable-installed-tests"],
-		 "branch": "cogl-1.18"},
+		 "branch": "cogl-1.18",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:clutter",
 		 "config-opts": ["--enable-installed-tests",
@@ -647,9 +744,11 @@
 				 "--enable-wayland-compositor",
 				 "--enable-egl-backend",
 				 "--enable-evdev-input"],
-		 "branch": "clutter-1.20"},
+		 "branch": "clutter-1.20",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:libnotify"},
+		{"src": "gnome:libnotify",
+                 "tags": ["platform"]},
 
 		{"src": "fd-spice:linux/vd_agent",
 		 "patches": ["vdagent-autogen.patch"],
@@ -659,7 +758,8 @@
 		 "rm-configure": true,
 		 "patches": ["iso-codes-autogen.patch",
 		             "iso-codes-no-builddir.patch",
-		             "iso-codes-builddir.patch"]},
+		             "iso-codes-builddir.patch"],
+                 "tags": ["platform"]},
 
 		{"src": "fd:libxklavier"},
 
@@ -667,7 +767,8 @@
 
 		{"src": "git:git://github.com/json-c/json-c.git",
 		 "tag": "381f77c5bccf20234a2bddae2b6ac43997faf0a2",
-		 "patches": ["json-c-autogen.patch"]},
+		 "patches": ["json-c-autogen.patch"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:mobile-broadband-provider-info"},
 
@@ -679,19 +780,25 @@
 		 "tag": "6d88a139fc932474af6c1bb27bcc504f0d737534",
 		 "tag-reason": "requires json-c 0.11",
 		 "config-opts": ["--disable-openssl"],
-		 "patches": ["pulseaudio-autogen.patch"]},
+		 "patches": ["pulseaudio-autogen.patch"],
+                 "tags": ["platform"]},
 
-		{"src": "0pointer:libcanberra"},
+		{"src": "0pointer:libcanberra",
+                 "tags": ["platform"]},
 
-                {"src": "git:git://gitorious.org/itstool/itstool.git"},
+                {"src": "git:git://gitorious.org/itstool/itstool.git",
+                 "tags": ["sdk"]},
 
 		{"src": "gnome:yelp-xsl",
-		 "config-opts": ["--disable-doc"]},
+		 "config-opts": ["--disable-doc"],
+                 "tags": ["sdk"]},
 
-		{"src": "gnome:yelp-tools"},
+		{"src": "gnome:yelp-tools",
+                 "tags": ["sdk"]},
 
 		{"src": "gnome:gsettings-desktop-schemas",
-                 "component": "minimal"},
+                 "component": "minimal",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gnome-desktop",
 		 "config-opts": [
@@ -710,25 +817,30 @@
 
 		{"src": "fd:sound-theme-freedesktop"},
 
-		{"src": "gnome:gnome-themes-standard"},
+		{"src": "gnome:gnome-themes-standard",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:adwaita-icon-theme"},
+		{"src": "gnome:adwaita-icon-theme",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gvfs",
 		 "config-opts": ["--disable-gphoto2",
-				 "--disable-documentation"]},
+				 "--disable-documentation"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gnome-menus"},
 
                 {"src": "gnome:glib-networking",
 		 "component": "minimal",
-		 "config-opts": ["--enable-installed-tests"]},
+		 "config-opts": ["--enable-installed-tests"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:libsoup",
 		 "component": "minimal",
 		 "config-args": [
 		 		"--disable-tls-check",
-		 		"--enable-installed-tests"]},
+				"--enable-installed-tests"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gnome-ostree-integration",
                  "component": "minimal"},
@@ -737,7 +849,8 @@
 		 "config-opts": ["--with-gtk=3.0",
 		                 "--disable-tests",
 				 "--disable-examples",
-				 "--disable-fatal-warnings"]},
+				 "--disable-fatal-warnings"],
+                 "tags": ["platform"]},
 
 		{"src": "tarball:https://github.com/maxmind/geoip-api-c/releases/download/v1.6.2/GeoIP-1.6.2.tar.gz",
 		 "rm-configure": true,
@@ -756,7 +869,8 @@
 		 "checksum": "58cbfc7e352ae1e1f5e383f9f766795794d88483e9a52377a295f56eedf53ab9",
 		 "config-opts": ["--enable-introspection",
 				 "--enable-debug-symbols=min",
-				 "--disable-maintainer-mode"]},
+				 "--disable-maintainer-mode"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:libgee",
 		 "patches": ["gee-builddir.patch"]},
@@ -816,9 +930,11 @@
 				 "--with-unicode-support=libicu"]},
 
 		{"src": "gnome:dconf",
-		 "config-opts": ["--disable-man", "--disable-editor"]},
+		 "config-opts": ["--disable-man", "--disable-editor"],
+                 "tags": ["platform"]},
 
-		{"src": "gnome:zenity"},
+		{"src": "gnome:zenity",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:mutter",
                  "irc_room": "gnome-shell",
@@ -835,7 +951,8 @@
 				 "--disable-strip",
 				 "--enable-ctypes",
 				 "--enable-system-ffi",
-				 "--disable-intl-api"]},
+				 "--disable-intl-api"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gjs",
                  "name": "gjs-minimal",
@@ -843,7 +960,8 @@
 		 "config-opts": ["--without-cairo", "--without-gtk"]},
 
 		{"src": "gnome:gjs",
-		 "config-opts": ["--enable-installed-tests"]},
+		 "config-opts": ["--enable-installed-tests"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:ostree",
                  "component": "minimal",
@@ -916,12 +1034,15 @@
 
 		{"src": "gnome:clutter-gst",
                  "name": "clutter-gst2",
-                 "branch": "clutter-gst-2.0"},
+                 "branch": "clutter-gst-2.0",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:clutter-gst",
-                 "name": "clutter-gst3"},
+                 "name": "clutter-gst3",
+                 "tags": ["platform"]},
 
-		{"src": "gnome:clutter-gtk"},
+		{"src": "gnome:clutter-gtk",
+                 "tags": ["platform"]},
 
 		{"src": "gnome:libpeas"},
 
@@ -961,20 +1082,24 @@
 
 		{"src": "fd-xdg:default-icon-theme",
 		 "patches": ["default-icon-theme-autogen.patch",
-		             "default-icon-theme-no-builddir.patch"]},
+		             "default-icon-theme-no-builddir.patch"],
+                 "tags": ["platform"]},
 
 		{"src": "fd-xdg:desktop-file-utils",
-		 "patches": ["desktop-file-utils-autogen.patch"]},
+		 "patches": ["desktop-file-utils-autogen.patch"],
+                 "tags": ["platform"]},
 
 		{"src": "fd-xdg:xdg-user-dirs",
 		 "config-opts": ["--disable-documentation"],
 		 "patches": ["xdg-user-dirs-autostart.patch"]},
 
 		{"src": "fd-xdg:shared-mime-info",
-		 "config-opts": ["--disable-default-make-check"]},
+		 "config-opts": ["--disable-default-make-check"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:cantarell-fonts",
-		 "config-opts": ["--disable-source-rebuild"]},
+		 "config-opts": ["--disable-source-rebuild"],
+                 "tags": ["platform"]},
 
 		{"src": "gnome:gnome-backgrounds"},
 
@@ -1037,7 +1162,8 @@
 		{"src": "gnome:libwnck"},
 
 		{"src": "gnome:vte",
-		 "config-opts": ["--disable-vala"]},
+		 "config-opts": ["--disable-vala"],
+                 "tags": ["platform"]},
 
 		{"src": "git:git://git.kernel.org/pub/scm/utils/dash/dash.git"},
 

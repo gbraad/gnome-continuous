@@ -1222,7 +1222,7 @@ const TaskBuild = new Lang.Class({
         env['SSTATE_DIR'] = sstateDir.get_path();
         ProcUtil.runSync(cmd, cancellable, {env:ProcUtil.objectToEnvironment(env)});
 
-	let componentTypes = ['runtime', 'devel'];
+	let componentTypes = ['runtime', 'devel', 'platform'];
         for (let i = 0; i < componentTypes.length; i++) {
 	    let componentType = componentTypes[i];
 	    let treename = Format.vprintf('%s/bases/%s/%s-%s', [this.osname, basename, architecture, componentType]);
@@ -1465,15 +1465,19 @@ const TaskBuild = new Lang.Class({
 
                 let baseRuntimeRef = baseName + '/' + architecture + '-runtime';
                 let buildrootRef = baseName + '/' + architecture + '-devel';
+                let platformRef = baseName + '/' + architecture + '-platform';
 		let baseRef;
                 if (targetComponentType == 'runtime' || targetComponentType == 'hwtest') {
                     baseRef = baseRuntimeRef;
+                } else if (targetComponentType == 'platform') {
+                    baseRef = platformRef;
                 } else {
                     baseRef = buildrootRef;
 		}
                 target['base'] = {'name': baseRef,
                                   'runtime': baseRuntimeRef,
-                                  'devel': buildrootRef};
+                                  'devel': buildrootRef,
+                                  'platform': platformRef};
 
 		let targetComponents;
                 if (targetComponentType == 'runtime') {

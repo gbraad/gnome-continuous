@@ -89,8 +89,8 @@ IMAGEDIR=${builddir}/tmp-eglibc/deploy/images
 mkdir -p "${IMAGEDIR}"
 ln -sf ${repo_path} ${IMAGEDIR}/repo
 
-bitbake gnomeos-contents-{runtime,devel}
+bitbake gnomeos-contents-{runtime,devel,platform}
 
-for basetype in runtime devel; do
+for basetype in runtime devel platform; do
     ln -sf ${builddir}/tmp-eglibc/deploy/images/gnomeos-contents-${basetype}-${MACHINE}.tar.gz gnomeos-contents-${basetype}-${architecture}.tar.gz
 done

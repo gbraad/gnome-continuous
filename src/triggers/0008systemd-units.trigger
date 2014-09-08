@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/bin/sh
 # Post-installation hook for systemd unit files; -*- mode: python; indent-tabs-mode: nil -*-
 #
 # Written by Colin Walters <walters@verbum.org>
@@ -18,6 +18,9 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+python --version  >/dev/null 2>&1 || { echo >&2 "No python installed, skipping."; exit 0; }
+
+python - << THEEND
 import os
 import sys
 import glob
@@ -59,3 +62,4 @@ if os.path.exists('/usr/bin/systemctl'):
             args = ['systemctl', '--' + unittype, 'preset', bn]
             print subprocess.list2cmdline(args)
             subprocess.check_call(args)
+THEEND

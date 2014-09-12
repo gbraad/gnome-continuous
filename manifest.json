@@ -6,8 +6,8 @@
   "architectures": ["x86_64"],
   "base": {
             "name": "yocto",
-	    "src": "cgwalters:poky",
-            "branch": "gnomeostree-3.10-dylan"
+	    "src": "alexlarsson:poky",
+            "branch": "gnomeostree-3.10-dylan-platform"
           },
 
   "config-opts": ["--disable-static", "--disable-silent-rules"],
@@ -41,6 +41,7 @@
                 "ipxe": "git:git://git.ipxe.org/",
                 "socat": "git:git://repo.or.cz/",
 		"cgwalters": "git:git://github.com/cgwalters/",
+		"alexlarsson": "git:git://github.com/alexlarsson/",
                 "anholt": "git:git://github.com/anholt/",
                 "fujita": "git:git://github.com/fujita/",
                 "mikechristie" : "git:git://github.com/mikechristie/"},

@@ -128,6 +128,25 @@
 				 "--with-sysvinit-path=",
 				 "--with-sysvrcnd-path="]},
 
+		{"src": "git:git://anongit.freedesktop.org/systemd/systemd",
+		 "name": "libudev",
+		 "component": "ignore",
+		 "initramfs-depends": true,
+		 "cflags": {
+		     "x86_64": "-O0 -g -m64 -mtune=generic",
+		     "i686": "-O0 -g -m32 -march=i686 -mtune=atom -fasynchronous-unwind-tables"},
+		 "config-opts": ["--disable-manpages",
+				 "--disable-networkd",
+				 "--disable-resolved",
+                                 "--disable-timesyncd",
+				 "--with-sysvinit-path=",
+				 "--with-sysvrcnd-path="],
+		 "keep-files": ["/usr/lib/libudev.so.1.6.0",
+				"/usr/lib/libudev.so.1",
+				"/usr/lib/libudev.so",
+				"/usr/include/libudev.h"],
+                 "tags": ["platform"]},
+
    		{"src": "git:git://git.fedorahosted.org/git/lvm2.git",
 		 "tag": "v2_02_106"},
 

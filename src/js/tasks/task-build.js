@@ -430,6 +430,31 @@ const TaskBuild = new Lang.Class({
 			     }), cancellable);
 	}
 
+	let keepFiles = component['keep-files'];
+	if (keepFiles && keepFiles.length > 0) {
+	    let keep = [];
+	    for (let i = 0; i < keepFiles.length; i++) {
+		let path = keepFiles[i];
+		if (path[0] == '/') {
+		    path = path.slice(1);
+		}
+		keep[i] = buildResultDir.resolve_relative_path(path);
+		print("BAARkeep: " + keep[i].get_path());
+	    }
+
+	    FileUtil.walkDir(buildResultDir, { matchDirs: true},
+			     Lang.bind(this, function(filePath, cancellable) {
+				 for (let i = 0; i < keep.length; i++) {
+				     if (filePath.has_prefix(keep[i]) ||
+					 filePath.equal(keep[i]) ||
+					 keep[i].has_prefix(filePath)) {
+					 return;
+				     }
+				 }
+				 GSystem.file_unlink(filePath, cancellable);
+			     }), cancellable);
+	}
+
 	if (libdir.query_exists(null)) {
 	    // Move symbolic links for shared libraries to devel
 	    FileUtil.walkDir(libdir, { nameRegex: /\.so$/,

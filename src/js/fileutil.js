@@ -20,7 +20,7 @@ const Gio = imports.gi.Gio;
 
 const Params = imports.params;
 
-function walkDirInternal(dir, matchParams, callback, cancellable, queryStr, depth, sortByName) {
+function walkDirInternal(dir, matchParams, callback, cancellable, queryStr, depth, sortByName, matchDirs) {
     let denum = dir.enumerate_children(queryStr, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
 				       cancellable);
     let info;
@@ -71,7 +71,11 @@ function walkDirInternal(dir, matchParams, callback, cancellable, queryStr, dept
 	});
     }
     for (let i = 0; i < subdirs.length; i++) {
-	walkDirInternal(subdirs[i], matchParams, callback, cancellable, queryStr, depth);
+	walkDirInternal(subdirs[i], matchParams, callback, cancellable, queryStr, depth, matchDirs);
+    }
+
+    if (matchDirs) {
+        callback(dir, cancellable);
     }
 }
 
@@ -80,10 +84,11 @@ function walkDir(dir, matchParams, callback, cancellable) {
 					      fileType: null,
 					      contentType: null,
 					      depth: -1,
-					      sortByName: false });
+					      sortByName: false,
+					      matchDirs: false});
     let queryStr = 'standard::name,standard::type,unix::mode';
     if (matchParams.contentType)
 	queryStr += ',standard::fast-content-type';
     let depth = matchParams.depth;
-    walkDirInternal(dir, matchParams, callback, cancellable, queryStr, depth, matchParams.sortByName);
+    walkDirInternal(dir, matchParams, callback, cancellable, queryStr, depth, matchParams.sortByName, matchParams.matchDirs);
 }

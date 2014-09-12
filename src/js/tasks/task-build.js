@@ -1389,6 +1389,7 @@ const TaskBuild = new Lang.Class({
             let isHWTestOnly = resolved == 'hwtest';
             let isRuntime = resolved == 'minimal' || resolved == 'runtime';
             let isTesting = resolved == 'testing';
+            let isIgnore = resolved == 'ignore';
 
             if (isRuntime) {
                 runtimeComponents.push(component);
@@ -1399,11 +1400,7 @@ const TaskBuild = new Lang.Class({
                 hwtestComponents.push(component);
             }
 
-            if (!isHWTestOnly) {
-	        develComponents.push(component);
-            }
-
-            if (!isHWTestOnly) {
+            if (!isHWTestOnly && !isIgnore) {
 	        develComponents.push(component);
             }
 

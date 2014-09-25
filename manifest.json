@@ -51,7 +51,7 @@
 
   "components": [
                 {"src": "gnome:gnome-continuous-kernel",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
                  "child-components": [
                      {"src": "kernel:stable/linux-stable",
                       "name": "linux",
@@ -59,17 +59,17 @@
                  ]},
 
    		{"src": "gnome:gtk-doc-stub",
-		 "component": "devel",
+                 "groups": ["devel"],
 		 "noarch": true},
 
 		{"src": "gnome:glib",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
                  "requires": {"pkgconfig": ["libffi >= 3.0.10"]},
                  "config-opts": ["--disable-modular-tests",
 				 "--enable-installed-tests"]},
 
 		{"src": "gnome:gnome-common",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "savannah:gperf.git",
 		 "tag": "v3.0.4",
@@ -95,11 +95,11 @@
 		 "patches": ["usbutils-autogen.patch"]},
 
                 {"src": "git:git://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
 		 "config-opts": ["--disable-manpages"]},
 
                 {"src": "gnome:gobject-introspection",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
 		 "config-opts": ["--disable-tests"]},
 
 		{"src": "gnome:vala-bootstrap",
@@ -111,7 +111,7 @@
 		 "config-opts": ["--enable-vapigen"]},
 
    		{"src": "git:git://anongit.freedesktop.org/systemd/systemd",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
 		 "initramfs-depends": true,
 		 "cflags": {
 		     "x86_64": "-O0 -g -m64 -mtune=generic",
@@ -133,12 +133,12 @@
 		 "setuid": ["/runtime/usr/bin/linux-user-chroot"]},
 
 		{"src": "gnome:libxml2",
-		 "component": "minimal"},
+		 "groups": ["runtime", "hwtest"]},
 
 		{"src": "gnome:libxslt"},
 
 		{"src": "gnome:libgsystem",
-		 "component": "minimal"},
+		 "groups": ["runtime", "hwtest"]},
 
    		{"src": "fd:pixman"},
 
@@ -150,107 +150,107 @@
 		 "config-opts": ["--with-cache-dir=/usr/lib/fontconfig/cache"]},
 
 		{"src": "fd:xorg/util/macros",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/bigreqsproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/compositeproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/damageproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/dmxproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/dri2proto",
 		 "tag": "ead89ad84877551cc15d26b95cb19a3e205df71f",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/dri3proto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/evieproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/fontsproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/glproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/inputproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/kbproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/presentproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/randrproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/recordproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/renderproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/resourceproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/scrnsaverproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/videoproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xcmiscproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xextproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xf86bigfontproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xf86dgaproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xf86driproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xf86miscproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xf86vidmodeproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xineramaproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/fixesproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/proto/xproto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/lib/libxtrans"},
 
 		{"src": "fd:xorg/lib/libXau"},
 
 		{"src": "fd:xcb/proto",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/font/util",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/lib/libfontenc"},
 
 		{"src": "fd:xcb/pthread-stubs",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xcb/libxcb"},
 
@@ -307,7 +307,7 @@
 		{"src": "fd:xorg/lib/libxshmfence"},
 
 		{"src": "fd-dbus:dbus",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
 		 "config-opts": ["--with-dbus-user=dbus",
 		                 "--enable-inotify",
 				 "--enable-verbose-mode",
@@ -332,7 +332,7 @@
 		{"src": "fd:wayland/libinput"},
 
 		{"src": "fd:xorg/util/makedepend",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:xorg/lib/libpciaccess"},
 
@@ -463,7 +463,7 @@
                  "checksum": "913fc974433238ffd4e0549ce11ba2a3360d1d159cf5c3b988d72a77acb74d04"},
 
                 {"src": "git:https://github.com/libarchive/libarchive.git",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
 		 "config-opts": ["--without-lzo2"],
 		 "tag": "v3.1.2",
 		 "patches": ["libarchive-autogen.patch"]},
@@ -599,7 +599,7 @@
 		{"src": "fd-fprint:fprintd"},
 
 		{"src": "fd-p11:p11-kit",
-                 "component": "minimal"},
+                 "groups": ["runtime", "hwtest"]},
 
 		{"src": "gnome:gcr",
 		 "config-opts": ["--disable-valgrind"]},
@@ -690,7 +690,7 @@
 		{"src": "gnome:yelp-tools"},
 
 		{"src": "gnome:gsettings-desktop-schemas",
-                 "component": "minimal"},
+                 "groups": ["runtime", "hwtest"]},
 
 		{"src": "gnome:gnome-desktop",
 		 "config-opts": [
@@ -705,7 +705,7 @@
 
 		{"src": "git:git://github.com/stephenc/tango-icon-naming.git",
 		 "patches": ["tango-icon-naming-python.patch"],
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "fd:sound-theme-freedesktop"},
 
@@ -716,11 +716,11 @@
 		{"src": "gnome:gnome-menus"},
 
                 {"src": "gnome:glib-networking",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
 		 "config-opts": ["--enable-installed-tests"]},
 
 		{"src": "gnome:libsoup",
-		 "component": "minimal",
+		 "groups": ["runtime", "hwtest"],
 		 "config-args": [
 		 		"--disable-tls-check",
 		 		"--enable-installed-tests"]},
@@ -731,7 +731,7 @@
 				 "--enable-installed-tests"]},
 
 		{"src": "gnome:gnome-ostree-integration",
-                 "component": "minimal"},
+                 "groups": ["runtime", "hwtest"]},
 
 		{"src": "fd-gstreamer:gst-plugins-good",
 		 "config-opts": ["--with-gtk=3.0",
@@ -824,7 +824,7 @@
 
                 {"src": "tarball:https://ftp.mozilla.org/pub/mozilla.org/js/mozjs-24.2.0.tar.bz2",
 		 "name": "js24",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
 		 "checksum": "e62f3f331ddd90df1e238c09d61a505c516fe9fd8c5c95336611d191d18437d8",
 		 "patches": ["js24-buildapi.patch", "js24-virtualenv.patch"],
 		 "config-opts": ["--enable-threadsafe",
@@ -837,25 +837,25 @@
 
 		{"src": "gnome:gjs",
                  "name": "gjs-minimal",
-                 "component": "hwtest",
+                 "groups": ["hwtest"],
 		 "config-opts": ["--without-cairo", "--without-gtk"]},
 
 		{"src": "gnome:gjs",
 		 "config-opts": ["--enable-installed-tests"]},
 
 		{"src": "gnome:ostree",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
 		 "initramfs-depends": true,
 		 "config-opts": ["--with-soup-gnome",
 		                 "--with-dracut",
 				 "--enable-installed-tests"]},
 
 		{"src": "gnome:gnome-hwtest",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
                  "initramfs-depends": true},
 
 		{"src": "mikechristie:open-iscsi",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
 		 "initramfs-depends": true,
 		 "patches": ["iscsi-no-iscsiuio.patch",
                              "iscsi-no-static-build.patch",
@@ -864,21 +864,21 @@
                              "iscsi-buildsys.patch"]},
 
                 {"src": "socat:socat.git",
-                 "component": "minimal",
+                 "groups": ["runtime", "hwtest"],
 		 "patches": ["socat-disable-man-pages.patch",
                              "socat-buildsys.patch"]},
 
                 {"src": "dnsmasq:dnsmasq.git",
-                 "component": "hwtest",
+                 "groups": ["hwtest"],
 		 "patches": ["dnsmasq-buildsys.patch"]},
 
                 {"src": "ipxe:ipxe.git",
-                 "component": "hwtest",
+                 "groups": ["hwtest"],
 		 "patches": ["ipxe-buildsys.patch",
                              "ipxe-disable-isos.patch"]},
 
 		{"src": "savannah:grub.git",
-                 "component": "hwtest",
+                 "groups": ["hwtest"],
                  "cflags": { "x86_64": "" },
                  "config-opts": ["--with-platform=pc",
                                  "--disable-grub-mkfont",
@@ -887,7 +887,7 @@
                                  "--enable-libzfs=no"]},
 
 		{"src": "fujita:tgt",
-                 "component": "hwtest",
+                 "groups": ["hwtest"],
 		 "patches": ["tgt-cflags.patch",
                              "tgt-buildsys.patch",
                              "tgt-disable-man.patch"],
@@ -897,7 +897,7 @@
                  "name": "lighttpd",
                  "rm-configure": true,
                  "checksum": "113e9b72ccbd1da5deb0774bf93cf0ca15dc82aad2da0f04e5ab27d37d3f30a3",
-                 "component": "hwtest",
+                 "groups": ["hwtest"],
 		 "config-opts": ["--without-pcre"]},
 
                 {"src": "ibus:ibus.git",
@@ -1088,14 +1088,14 @@
 
 		{"src": "gnome:glade",
 		 "config-opts": ["--disable-man-pages"],
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "gnome:jhbuild",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "git:git://git.fishsoup.net/git-bz",
 		 "config-opts": ["--disable-documentation"],
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "gnome:nautilus"},
 
@@ -1144,7 +1144,7 @@
 		{"src": "gnome:gdl"},
 
 		{"src": "gnome:anjuta",
-		 "component": "devel"},
+		 "groups": ["devel"]},
 
 		{"src": "gnome:gnome-font-viewer"},
 
@@ -1204,7 +1204,7 @@
 		{"src": "gnome:file-roller"},
 
 		{"src": "gnome:gnome-desktop-testing",
-		 "component": "testing"},
+		 "groups": ["testing"]},
 
 		{"src": "gnome:gnome-tweak-tool"},
 
@@ -1226,6 +1226,32 @@
 		{"src": "gnome:gnome-music"}
 
 	],
+
+    "targets": [
+                {"name": "runtime",
+                 "groups": ["runtime"],
+                 "trees": ["/runtime"],
+                 "base": "runtime"
+                },
+
+                {"name": "hwtest",
+                 "groups": ["hwtest"],
+                 "trees": ["/runtime"],
+                 "base": "runtime"
+                },
+
+                {"name": "devel-debug",
+                 "groups": ["runtime", "devel"],
+                 "trees": ["/runtime", "/devel", "/tests", "/doc", "/debug"],
+                 "base": "devel"
+                },
+
+                {"name": "testing",
+                 "groups": ["testing"],
+                 "trees": ["/runtime"],
+                 "base": "devel"
+                }
+    ],
 
     "installed-tests-components": [],
 

@@ -1328,6 +1328,7 @@ const TaskBuild = new Lang.Class({
 
 	this.patchdir = this.workdir.get_child('patches');
 
+        let targets = this._snapshot.data['targets'];
         let components = this._snapshot.data['components'];
 
 	// Pick up overrides from $workdir/overrides/$name
@@ -1354,33 +1355,31 @@ const TaskBuild = new Lang.Class({
 
         let componentToArches = {};
 
-        let runtimeComponents = [];
-        let hwtestComponents = [];
-        let develComponents = [];
-        let testingComponents = [];
+        let componentLists = {};
+
+        for (let j = 0; j < targets.length; j++) {
+            let target = targets[j];
+            let targetName = target['name'];
+            componentLists[targetName] = [];
+        }
 
         for (let i = 0; i < components.length; i++) {
 	    let component = components[i];
-            let name = component['name']
+            let name = component['name'];
 
-            let resolved = component['component'] || 'runtime';
-            let isMinimal = resolved == 'minimal';
-            let isHWTest = resolved == 'minimal' || resolved == 'hwtest';
-            let isHWTestOnly = resolved == 'hwtest';
-            let isRuntime = resolved == 'minimal' || resolved == 'runtime';
-            let isTesting = resolved == 'testing';
+            let groups = component['groups'] || ['runtime'];
 
-            if (isRuntime) {
-                runtimeComponents.push(component);
-	    } else if (isTesting) {
-		testingComponents.push(component);
-	    }
-            if (isHWTest) {
-                hwtestComponents.push(component);
-            }
+            for (let j = 0; j < targets.length; j++) {
+                let target = targets[j];
+                let targetName = target['name'];
+                let targetGroups = target['groups'];
 
-            if (!isHWTestOnly) {
-	        develComponents.push(component);
+                for (let k = 0; k < targetGroups.length; k++) {
+                    if (groups.indexOf(targetGroups[k]) != -1) {
+                        componentLists[targetName].push(component);
+                        break;
+                    }
+                }
             }
 
 	    let isNoarch = component['noarch'] || false;
@@ -1442,36 +1441,24 @@ const TaskBuild = new Lang.Class({
 	}
 
         let targetsList = [];
-	let componentTypes = ['runtime', 'hwtest', 'devel-debug'];
-        for (let i = 0; i < componentTypes.length; i++) {
-	    let targetComponentType = componentTypes[i];
+        for (let i = 0; i < targets.length; i++) {
+            let targetInfo = targets[i];
+            let targetName = targetInfo['name'];
             for (let i = 0; i < architectures.length; i++) {
 		let architecture = architectures[i];
                 let target = {};
                 targetsList.push(target);
-                target['name'] = 'buildmaster/' + architecture + '-' + targetComponentType;
+                target['name'] = 'buildmaster/' + architecture + '-' + targetName;
 
                 let baseRuntimeRef = baseName + '/' + architecture + '-runtime';
                 let buildrootRef = baseName + '/' + architecture + '-devel';
-		let baseRef;
-                if (targetComponentType == 'runtime' || targetComponentType == 'hwtest') {
-                    baseRef = baseRuntimeRef;
-                } else {
-                    baseRef = buildrootRef;
-		}
+                let baseRef = baseName + '/' + architecture + '-' + targetInfo['base'];
+
                 target['base'] = {'name': baseRef,
                                   'runtime': baseRuntimeRef,
                                   'devel': buildrootRef};
 
-		let targetComponents;
-                if (targetComponentType == 'runtime') {
-                    targetComponents = runtimeComponents;
-                } else if (targetComponentType == 'hwtest') {
-                    targetComponents = hwtestComponents;
-                } else {
-                    targetComponents = runtimeComponents;
-                    targetComponents = develComponents;
-		}
+                let targetComponents = componentLists[targetName];
 
                 let contents = [];
                 for (let i = 0; i < targetComponents.length; i++) {
@@ -1485,11 +1472,7 @@ const TaskBuild = new Lang.Class({
 		    }
                     let binaryName = component['name'] + '/' + architecture;
                     let componentRef = {'name': binaryName};
-                    if (targetComponentType == 'runtime' || targetComponentType == 'hwtest') {
-                        componentRef['trees'] = ['/runtime'];
-		    } else if (targetComponentType == 'devel-debug') {
-                        componentRef['trees'] = ['/runtime', '/devel', '/tests', '/doc', '/debug'];
-		    }
+                    componentRef['trees'] = targetInfo['trees'];
                     contents.push(componentRef);
 		}
                 target['contents'] = contents;
@@ -1542,13 +1525,14 @@ const TaskBuild = new Lang.Class({
 
 	// Now loop over the other targets per architecture, reusing
 	// the initramfs cached from -devel generation.
-	for (let i = 0; i < componentTypes.length; i++) {
-	    let target = componentTypes[i];
-	    if (target == 'devel-debug')
+        for (let i = 0; i < targets.length; i++) {
+            let targetInfo = targets[i];
+            let targetName = targetInfo['name'];
+	    if (targetName == 'devel-debug' || targetName == 'testing')
 		continue;
             for (let j = 0; j < architectures.length; j++) {
 		let architecture = architectures[j];
-		let runtimeTargetName = 'buildmaster/' + architecture + '-' + target;
+		let runtimeTargetName = 'buildmaster/' + architecture + '-' + targetName;
 		let runtimeTarget = this._findTargetInList(runtimeTargetName, targetsList);
 
 		let composeRootdir;
@@ -1558,7 +1542,7 @@ const TaskBuild = new Lang.Class({
 		let kernelInitramfsData = archInitramfsImages[architecture];
 		this._installKernelAndInitramfs(kernelInitramfsData, composeRootdir, cancellable);
 
-                if (target == 'hwtest')
+                if (targetName == 'hwtest')
                     this._setHWTestTarget(composeRootdir, cancellable);
 
 		this._cleanupGarbage(composeRootdir, cancellable);
@@ -1576,8 +1560,8 @@ const TaskBuild = new Lang.Class({
         for (let i = 0; i < architectures.length; i++) {
 	    installedTestContents[architectures[i]] = [];
 	}
-	for (let i = 0; i < testingComponents.length; i++) {
-	    let component = testingComponents[i];
+	for (let i = 0; i < componentLists['testing'].length; i++) {
+	    let component = componentLists['testing'][i];
 	    let name = component['name'];
             for (let j = 0; j < architectures.length; j++) {
 		let architecture = architectures[j];
@@ -1588,13 +1572,13 @@ const TaskBuild = new Lang.Class({
 		installedTestContents[architecture].push([rev, '/runtime']);
 	    }
 	}
-	for (let i = 0; i < runtimeComponents.length; i++) {
-	    let component = runtimeComponents[i];
+	for (let i = 0; i < componentLists['runtime'].length; i++) {
+	    let component = componentLists['runtime'][i];
 	    for (let j = 0; j < architectures.length; j++) {
 		let architecture = architectures[j];
 		let archname = component['name'] + '/' + architecture;
 		let rev = componentBuildRevs[archname];
-		installedTestContents[architecture].push([rev, '/tests'])
+		installedTestContents[architecture].push([rev, '/tests']);
 	    }
 	}
         for (let i = 0; i < installedTestComponentNames.length; i++) {

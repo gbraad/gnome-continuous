@@ -94,7 +94,7 @@ function newReadWriteMount(diskpath, cancellable) {
 }
 
 function createDisk(diskpath, params, cancellable) {
-    params = Params.parse(params, { sizeMB: 8 * 1024 });
+    params = Params.parse(params, { sizeMB: 16 * 1024 });
 
     let bootsizeMb = 200;
     let swapsizeMb = 64;

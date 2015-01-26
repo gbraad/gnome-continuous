@@ -283,7 +283,12 @@ const TestOneDisk = new Lang.Class({
             if (pixbuf != null) {
                 let outFilename = this._subworkdir.get_child(filename.replace(/ppm$/, 'png'));
                 screenshotPath = outFilename;
-                pixbuf.savev(outFilename.get_path(), "png", [], []);
+                if (pixbuf.save) {
+                    pixbuf.save(outFilename.get_path(), "png", [], []);
+                } else {
+                    pixbuf.savev(outFilename.get_path(), "png", [], []);
+                }
+
             }
             GSystem.file_unlink(filePath, this._cancellable);
         }

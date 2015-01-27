@@ -353,7 +353,7 @@ function pullDeploy(mntdir, srcrepo, osname, target, revision, originRepoUrl, ca
                      {logInitiation: true, env: adminEnv});
     if (originRepoUrl)
         ProcUtil.runSync(['ostree', repoArg,
-                          'remote', 'add', osname, originRepoUrl, target],
+                          'remote', 'add', '--if-not-exists', osname, originRepoUrl, target],
                          cancellable, { logInitiation: true });
     
     ProcUtil.runSync(['ostree', repoArg,

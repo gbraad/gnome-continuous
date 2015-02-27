@@ -27,7 +27,7 @@ const TaskZDisks = new Lang.Class({
 
     TaskDef: {
         TaskName: "zdisks",
-        TaskAfter: ['smoketest'],
+        TaskAfter: ['build'],
         TaskScheduleMinSecs: 3*60*60,  // Only do this every 3 hours
     },
 

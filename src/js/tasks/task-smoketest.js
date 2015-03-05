@@ -81,3 +81,15 @@ const TaskSmoketestWayland = new Lang.Class({
 
     GdmSession: 'gnome-wayland',
 });
+
+const TaskSmoketestTimed = new Lang.Class({
+    Name: 'TaskSmoketestTimed',
+    Extends: SmoketestBase,
+
+    TaskDef: {
+        TaskName: "smoketest-timed",
+        TaskAfter: ['builddisks'],
+    },
+
+    LoginType: 'Timed',
+});

@@ -140,6 +140,23 @@
           </span>
         </div>
 
+        <div ng-if="tasks.get('smoketest-timed').length > 0"
+             ng-init='task = tasks.get("smoketest-timed")[0]'>
+          <span ng-if='task.started'>
+              <span ng-if='task.complete'>
+                <span ng-if='task.success'>
+                  <span class='task-succeded'>Smoketest Timed Login</span><span> completed in {{ task.elapsed }}s</span> <a href="{{ buildRoot+task.name }}/work-gnome-continuous-x86_64-runtime/screenshot-final.png">screenshot</a>
+                </span>
+                <span ng-if='!task.success'>
+                  <span class='task-failed'>Smoketest Timed Login</span><span> <a href="{{ buildRoot+task.name }}">failed</a></span>
+                  </span>
+                </span>
+              <span ng-if='!task.complete'>
+                <span class='task-running'>Smoketest Timed Login</span><span> in progress</span>
+              </span>
+          </span>
+        </div>
+
         <div ng-if="tasks.get('integrationtest').length > 0"
              ng-init='task = tasks.get("integrationtest")[0]'>
           <span ng-if='task.started'>

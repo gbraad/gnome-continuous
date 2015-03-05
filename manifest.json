@@ -2545,13 +2545,12 @@
       "src": "git:git://git.gnome.org/babl",
       "name": "babl",
       "branch": "master",
-      "tag": "1a1177bf7b43eb971ab4ff49b1e4f7913aa73e7e"
+      "tag": "BABL_0_1_12"
     },
     {
       "src": "git:git://git.gnome.org/gegl",
       "name": "gegl2",
-      "branch": "gegl-0-2",
-      "tag": "b7132396aa44f6d751030ce8d21cb31da534d526"
+      "branch": "gegl-0-2"
     },
     {
       "src": "git:git://git.gnome.org/gnome-photos",

@@ -49,10 +49,10 @@
     "mikechristie": "git:git://github.com/mikechristie/"
   },
   "patches": {
-    "src": "git:git://git.gnome.org/gnome-continuous",
+    "src": "git:git://github.com/vrutkovs/gnome-continuous",
     "subdir": "patches",
     "name": "gnome-continuous",
-    "branch": "master"
+    "branch": "gnome-3-14"
   },
   "components": [
     {"src": "gnome:gnome-continuous-kernel",

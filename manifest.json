@@ -2662,8 +2662,7 @@
       "src": "git:git://git.gnome.org/gnome-desktop-testing",
       "component": "testing",
       "name": "gnome-desktop-testing",
-      "branch": "master",
-      "tag": "e0564f96d2f2722f105a40be99f7389902b3e9c5"
+      "branch": "master"
     },
     {
       "src": "git:git://git.gnome.org/gnome-tweak-tool",
@@ -2697,14 +2696,12 @@
     {
       "src": "git:git://git.gnome.org/gnome-screenshot",
       "name": "gnome-screenshot",
-      "branch": "gnome-3-14",
-      "tag": "e5b6612745b5c0dac4d25ca093c95aad95f6e24a"
+      "branch": "gnome-3-14"
     },
     {
       "src": "git:git://git.gnome.org/nautilus-sendto",
       "name": "nautilus-sendto",
-      "branch": "master",
-      "tag": "c69c0c93fcf8bf8a6dd4a8bb64814ab90a69b31b"
+      "branch": "master"
     },
     {
       "src": "git:git://git.gnome.org/yelp",

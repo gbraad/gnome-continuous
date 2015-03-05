@@ -1,1240 +1,2733 @@
 {
   "00ostbuild-manifest-version": 0,
-
   "osname": "gnome-continuous",
   "repo": "https://build.gnome.org/ostree/buildmaster/repo",
-  "architectures": ["x86_64"],
+  "architectures": [
+    "x86_64"
+  ],
   "base": {
-            "name": "yocto",
-	    "src": "gnome:gnome-continuous-yocto",
-            "branch": "gnomeostree-3.14-dizzy"
-          },
-
-  "config-opts": ["--disable-static", "--disable-silent-rules"],
-
-  "vcsconfig": {"gnome": "git:git://git.gnome.org/",
-                "fd": "git:git://anongit.freedesktop.org/git/",
-                "fd-dbus": "git:git://anongit.freedesktop.org/git/dbus/",
-                "fd-NM": "git:git://anongit.freedesktop.org/git/NetworkManager/",
-                "fd-MM": "git:git://anongit.freedesktop.org/git/ModemManager/",
-                "fd-mesa": "git:git://anongit.freedesktop.org/git/mesa/",
-                "fd-pulse": "git:git://anongit.freedesktop.org/git/pulseaudio/",
-                "fd-spice": "git:git://anongit.freedesktop.org/spice/",
-                "fd-xdg": "git:git://anongit.freedesktop.org/git/xdg/",
-                "fd-fprint": "git:git://anongit.freedesktop.org/git/libfprint/",
-                "fd-p11": "git:git://anongit.freedesktop.org/git/p11-glue/",
-                "fd-poppler": "git:git://anongit.freedesktop.org/poppler/",
-                "fd-gstreamer": "git:git://anongit.freedesktop.org/gstreamer/",
-                "fd-wayland": "git:git://anongit.freedesktop.org/wayland/",
-                "fd-telepathy": "git:git://anongit.freedesktop.org/telepathy/",
-                "fd-nice": "git:git://anongit.freedesktop.org/libnice/",
-                "kernel": "git:git://git.kernel.org/pub/scm/linux/kernel/git/",
-                "0pointer": "git:git://git.0pointer.de/",
-                "ibus": "git:git://github.com/ibus/",
-                "linuxwacom": "git:git://linuxwacom.git.sourceforge.net/gitroot/linuxwacom/",
-                "fedora": "git:git://git.fedorahosted.org/",
-                "savannah": "git:git://git.savannah.gnu.org/",
-                "debian": "git:git://anonscm.debian.org/",
-		"netfilter": "git:git://git.netfilter.org/",
-                "lighttpd": "git:git://git.lighttpd.net/",
-                "dnsmasq": "git:git://thekelleys.org.uk/",
-                "ipxe": "git:git://git.ipxe.org/",
-                "socat": "git:git://repo.or.cz/",
-		"cgwalters": "git:git://github.com/cgwalters/",
-		"alexlarsson": "git:git://github.com/alexlarsson/",
-                "anholt": "git:git://github.com/anholt/",
-                "fujita": "git:git://github.com/fujita/",
-                "mikechristie" : "git:git://github.com/mikechristie/"},
-
-  "patches": {"src": "gnome:gnome-continuous",
-              "subdir": "patches"},
-
+    "name": "yocto",
+    "src": "gnome:gnome-continuous-yocto",
+    "branch": "gnomeostree-3.14-dizzy"
+  },
+  "config-opts": [
+    "--disable-static",
+    "--disable-silent-rules"
+  ],
+  "vcsconfig": {
+    "gnome": "git:git://git.gnome.org/",
+    "fd": "git:git://anongit.freedesktop.org/git/",
+    "fd-dbus": "git:git://anongit.freedesktop.org/git/dbus/",
+    "fd-NM": "git:git://anongit.freedesktop.org/git/NetworkManager/",
+    "fd-MM": "git:git://anongit.freedesktop.org/git/ModemManager/",
+    "fd-mesa": "git:git://anongit.freedesktop.org/git/mesa/",
+    "fd-pulse": "git:git://anongit.freedesktop.org/git/pulseaudio/",
+    "fd-spice": "git:git://anongit.freedesktop.org/spice/",
+    "fd-xdg": "git:git://anongit.freedesktop.org/git/xdg/",
+    "fd-fprint": "git:git://anongit.freedesktop.org/git/libfprint/",
+    "fd-p11": "git:git://anongit.freedesktop.org/git/p11-glue/",
+    "fd-poppler": "git:git://anongit.freedesktop.org/poppler/",
+    "fd-gstreamer": "git:git://anongit.freedesktop.org/gstreamer/",
+    "fd-wayland": "git:git://anongit.freedesktop.org/wayland/",
+    "fd-telepathy": "git:git://anongit.freedesktop.org/telepathy/",
+    "fd-nice": "git:git://anongit.freedesktop.org/libnice/",
+    "kernel": "git:git://git.kernel.org/pub/scm/linux/kernel/git/",
+    "0pointer": "git:git://git.0pointer.de/",
+    "ibus": "git:git://github.com/ibus/",
+    "linuxwacom": "git:git://linuxwacom.git.sourceforge.net/gitroot/linuxwacom/",
+    "fedora": "git:git://git.fedorahosted.org/",
+    "savannah": "git:git://git.savannah.gnu.org/",
+    "debian": "git:git://anonscm.debian.org/",
+    "netfilter": "git:git://git.netfilter.org/",
+    "lighttpd": "git:git://git.lighttpd.net/",
+    "dnsmasq": "git:git://thekelleys.org.uk/",
+    "ipxe": "git:git://git.ipxe.org/",
+    "socat": "git:git://repo.or.cz/",
+    "cgwalters": "git:git://github.com/cgwalters/",
+    "anholt": "git:git://github.com/anholt/",
+    "fujita": "git:git://github.com/fujita/",
+    "mikechristie": "git:git://github.com/mikechristie/"
+  },
+  "patches": {
+    "src": "git:git://git.gnome.org/gnome-continuous",
+    "subdir": "patches",
+    "name": "gnome-continuous",
+    "branch": "master"
+  },
   "components": [
-                {"src": "gnome:gnome-continuous-kernel",
-                 "component": "minimal",
-                 "child-components": [
-                     {"src": "kernel:stable/linux-stable",
-                      "name": "linux",
-                      "branch": "linux-3.14.y"}
-                 ]},
-
-   		{"src": "gnome:gtk-doc-stub",
-		 "component": "devel",
-		 "noarch": true},
-
-		{"src": "gnome:glib",
-		 "component": "minimal",
-                 "requires": {"pkgconfig": ["libffi >= 3.0.10"]},
-                 "config-opts": ["--disable-modular-tests",
-				 "--enable-installed-tests"]},
-
-		{"src": "gnome:gnome-common",
-		 "component": "devel"},
-
-		{"src": "savannah:gperf.git",
-		 "tag": "v3.0.4",
-		 "patches": ["gperf-autotools.patch"]},
-
-		{"src": "fd-dbus:dbus",
-		 "name": "dbus-bootstrap",
-		 "bootstrap": true,
-		 "config-opts": ["--with-dbus-user=dbus",
-		                 "--enable-inotify",
-				 "--disable-xml-docs",
-				 "--disable-doxygen-docs",
-				 "--disable-tests",
-				 "--disable-systemd",
-				 "--with-system-pid-file=/run/dbus.pid"]},
-
-		{"src": "git:git://git.libusb.org/libusb.git",
-		 "tag": "1.0.9",
-		 "patches": ["libusb-autogen.patch"]},
-
-		{"src": "git:git://github.com/gregkh/usbutils.git",
-		 "tag": "v005",
-		 "patches": ["usbutils-autogen.patch"]},
-
-                {"src": "git:git://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git",
-		 "component": "minimal",
-		 "config-opts": ["--disable-manpages"]},
-
-                {"src": "gnome:gobject-introspection",
-                 "component": "minimal",
-		 "config-opts": ["--disable-tests"]},
-
-		{"src": "gnome:vala-bootstrap",
-		 "bootstrap": true,
-		 "config-opts": ["--disable-build-from-vala",
-		                 "--disable-vapigen"]},
-
-		{"src": "gnome:vala",
-		 "tag": "4fb521efd3ea9b38aba5ae599d55083d1c2f9a93",
-		 "tag-reason": "https://bugzilla.gnome.org/show_bug.cgi?id=655343",
-		 "config-opts": ["--enable-vapigen"]},
-
-   		{"src": "git:git://anongit.freedesktop.org/systemd/systemd",
-		 "component": "minimal",
-		 "initramfs-depends": true,
-		 "cflags": {
-		     "x86_64": "-O0 -g -m64 -mtune=generic",
-		     "i686": "-O0 -g -m32 -march=i686 -mtune=atom -fasynchronous-unwind-tables"},
-		 "config-opts": ["--disable-manpages",
-				 "--disable-networkd",
-				 "--disable-resolved",
-                                 "--disable-timesyncd",
-				 "--enable-compat-libs",
-				 "--with-sysvinit-path=",
-				 "--with-sysvrcnd-path="]
-		 },
-
-   		{"src": "git:git://git.fedorahosted.org/git/lvm2.git",
-		 "tag": "v2_02_106"},
-
-   		{"src": "gnome:linux-user-chroot",
-		 "setuid": ["/runtime/usr/bin/linux-user-chroot"]},
-
-		{"src": "gnome:libxml2",
-		 "component": "minimal"},
-
-		{"src": "gnome:libxslt"},
-
-		{"src": "gnome:libgsystem",
-		 "component": "minimal"},
-
-   		{"src": "fd:pixman"},
-
-   		{"src": "git:git://git.sv.nongnu.org/freetype/freetype2.git",
-		 "tag": "VER-2-4-8",
-		 "patches": ["freetype-autogen.patch"]},
-
-   		{"src": "fd:fontconfig",
-		 "config-opts": ["--with-cache-dir=/usr/lib/fontconfig/cache"]},
-
-		{"src": "fd:xorg/util/macros",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/bigreqsproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/compositeproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/damageproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/dmxproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/dri2proto",
-		 "tag": "ead89ad84877551cc15d26b95cb19a3e205df71f",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/dri3proto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/evieproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/fontsproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/glproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/inputproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/kbproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/presentproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/randrproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/recordproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/renderproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/resourceproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/scrnsaverproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/videoproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xcmiscproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xextproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xf86bigfontproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xf86dgaproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xf86driproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xf86miscproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xf86vidmodeproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xineramaproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/fixesproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/proto/xproto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/lib/libxtrans"},
-
-		{"src": "fd:xorg/lib/libXau"},
-
-		{"src": "fd:xcb/proto",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/font/util",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/lib/libfontenc"},
-
-		{"src": "fd:xcb/pthread-stubs",
-		 "component": "devel"},
-
-		{"src": "fd:xcb/libxcb"},
-
-		{"src": "fd:xorg/lib/libX11"},
-
-		{"src": "fd:xorg/lib/libXrender"},
-
-		{"src": "fd:xorg/lib/libXfixes"},
-
-		{"src": "fd:xorg/lib/libXext"},
-
-		{"src": "fd:xorg/lib/libXfont"},
-
-		{"src": "fd:xorg/lib/libXft"},
-
-		{"src": "fd:xorg/lib/libXi"},
-
-		{"src": "fd:xorg/lib/libXinerama"},
-
-		{"src": "fd:xorg/lib/libICE"},
-
-		{"src": "fd:xorg/lib/libSM"},
-
-		{"src": "fd:xorg/lib/libXt"},
-
-		{"src": "fd:xorg/lib/libXmu"},
-
-		{"src": "fd:xorg/lib/libXpm"},
-
-		{"src": "fd:xorg/lib/libXrandr"},
-
-		{"src": "fd:xorg/lib/libXRes"},
-
-		{"src": "fd:xorg/lib/libXtst"},
-
-		{"src": "fd:xorg/lib/libXv"},
-
-		{"src": "fd:xorg/lib/libXvMC"},
-
-		{"src": "fd:xorg/lib/libXxf86dga"},
-
-		{"src": "fd:xorg/lib/libXxf86vm"},
-
-		{"src": "fd:xorg/lib/libXdamage"},
-
-		{"src": "fd:xorg/lib/libXcursor"},
-
-		{"src": "fd:xorg/lib/libXcomposite"},
-
-		{"src": "fd:xorg/lib/libxkbfile"},
-
-		{"src": "fd:xorg/lib/libFS"},
-
-		{"src": "fd:xorg/lib/libxshmfence"},
-
-		{"src": "fd-dbus:dbus",
-		 "component": "minimal",
-		 "config-opts": ["--with-dbus-user=dbus",
-		                 "--enable-inotify",
-				 "--enable-verbose-mode",
-				 "--disable-xml-docs",
-				 "--disable-doxygen-docs",
-				 "--disable-tests",
-				 "--with-systemdsystemunitdir=/usr/lib/systemd/system",
-				 "--with-system-pid-file=/run/dbus.pid"],
-		 "setuid": ["/runtime/usr/libexec/dbus-daemon-launch-helper"]},
-
-		{"src": "git:git://libpng.git.sourceforge.net/gitroot/libpng/libpng",
-		 "tag": "v1.5.18"},
-
-		{"src": "fd:cairo",
-		 "config-opts": ["--disable-interpreter"]},
-
-                {"src": "git:http://bitmath.org/git/mtdev.git"},
-
-                {"src": "fd:libevdev",
-		 "config-opts": ["--disable-gcov"]},
-
-		{"src": "fd:wayland/libinput"},
-
-		{"src": "fd:xorg/util/makedepend",
-		 "component": "devel"},
-
-		{"src": "fd:xorg/lib/libpciaccess"},
-
-		{"src": "fd-mesa:drm",
-		 "config-opts": ["--enable-nouveau-experimental-api"]},
-
-		{"src": "fd-wayland:wayland",
-		 "config-opts": ["--disable-documentation"]},
-
-                {"src": "fd-mesa:mesa",
-                 "cflags": {
-                     "x86_64": "-g -m64 -mtune=generic -fno-rtti",
-                     "i686": "-g -m32 -march=i686 -mtune=atom -fasynchronous-unwind-tables -fno-rtti"
-                 },
-                 "patches": ["mesa-nv50-fix-build.patch"],
-                 "config-opts": [
-                     "--enable-pic",
-                     "--disable-asm",
-                     "--disable-glw",
-                     "--disable-glut",
-                     "--enable-osmesa",
-                     "--with-dri-driverdir=/usr/lib/dri",
-                     "--enable-egl",
-                     "--enable-gles1",
-                     "--enable-gles2",
-                     "--with-egl-platforms=wayland,x11,drm",
-                     "--enable-shared-glapi",
-                     "--enable-gbm",
-                     "--enable-gallium-gbm",
-                     "--enable-gallium-egl",
-                     "--enable-xa",
-                     "--with-gallium-drivers=svga,r300,r600,nouveau,swrast",
-                     "--enable-gallium-llvm",
-                     "--with-dri-drivers=nouveau,radeon,r200,i915,i965,swrast"
-                     ]},
-
-		{"src": "fd:xorg/app/xkbcomp"},
-
-		{"src": "fd:xorg/app/xrandr"},
-
-		{"src": "fd:xorg/app/xhost"},
-
-		{"src": "fd:xkeyboard-config",
-		 "config-opts": ["--with-xkb-rules-symlink=xorg",
-		                 "--with-xkb-base=/usr/share/X11/xkb"],
-		 "patches": ["xkeyboard-config-autogen.patch"]},
-
-		{"src": "anholt:libepoxy"},
-
-		{"src": "fd:xorg/xserver",
-                 "config-opts": ["--enable-xwayland"]},
-
-		{"src": "fd:xcb/util"},
-
-		{"src": "fd:xorg/driver/xf86-input-keyboard"},
-
-		{"src": "fd:xorg/driver/xf86-input-mouse"},
-
-		{"src": "fd:xorg/driver/xf86-input-evdev"},
-
-		{"src": "fd:xorg/driver/xf86-video-modesetting"},
-
-                {"src": "git:git://github.com/xkbcommon/libxkbcommon"},
-
-                {"src": "git:git://git.xiph.org/celt.git"},
-
-                {"src": "tarball:http://downloads.us.xiph.org/releases/celt/celt-0.5.1.3.tar.gz",
-                 "name": "celt051",
-                 "checksum": "fc2e5b68382eb436a38c3104684a6c494df9bde133c139fbba3ddb5d7eaa6a2e"},
-
-                {"src": "fd-spice:spice",
-		 "patches": ["spice-no-builddir.patch",
-		             "spice-stack-protector.patch"],
-		 "config-opts": ["--disable-smartcard"]},
-
-                {"src": "fd-spice:spice-protocol"},
-
-                {"src": "fd:xorg/driver/xf86-video-qxl",
-		 "patches": ["xorg-autogen-merged.patch"]},
-
-                {"src": "fd:xorg/driver/glamor",
-                 "name": "glamor"},
-
-		{"src": "fd:xorg/driver/xf86-video-ati"},
-
-		{"src": "fd:xorg/driver/xf86-video-intel"},
-
-		{"src": "fd:nouveau/xf86-video-nouveau"},
-
-		{"src": "fd:xorg/driver/xf86-video-vesa"},
-
-		{"src": "fd:startup-notification",
-		 "patches": ["startup-notification-autogen.patch"]},
-
-		{"src": "fd-dbus:dbus-glib",
-		 "config-opts": ["--enable-tests",
-		                 "--disable-gtk-doc"]},
-
-		{"src": "git:git://git.infradead.org/users/tgr/libnl.git",
-		 "tag": "libnl3_2_21",
-		 "name": "libnl3"},
-
-		{"src": "cgwalters:nss-tarballs-as-git",
-		 "tag": "v3.13.4"},
-
-		{"src": "git:git://ozlabs.org/~paulus/ppp.git",
-		 "patches": ["ppp-srcdir-builddir.patch", "ppp-destdir.patch"]},
-
-		{"src": "netfilter:iptables.git",
-		 "tag": "3e6fa55d5e28c93f417afeae7a7d4f349ddffcf4"},
-
-		{"src": "debian:pkg-dhcp/isc-dhcp.git",
-		 "name": "isc-dhcp",
-		 "tag": "upstream/4.2.2",
-		 "patches": ["isc-dhcp-autogen.patch",
-		             "isc-dhcp-delete-configure.patch",
-			     "isc-dhcp-no-builddir.patch",
-		             "isc-dhcp-no-werror.patch",
-			     "isc-dhcp-no-conf-file.patch"]},
-
-                {"src": "tarball:http://openjpeg.googlecode.com/files/openjpeg-1.5.1.tar.gz",
-                 "name": "openjpeg",
-                 "config-opts": ["--disable-doc"],
-                 "checksum": "6cfb3097a1c8e9550131b17663daf927f42707bc3f84196c1390642e87f3ab8d"},
-
-                {"src": "tarball:http://downloads.ghostscript.com/public/ghostscript-9.10.tar.gz",
-                 "name": "ghostscript",
-                 "checksum": "913fc974433238ffd4e0549ce11ba2a3360d1d159cf5c3b988d72a77acb74d04"},
-
-                {"src": "git:https://github.com/libarchive/libarchive.git",
-		 "component": "minimal",
-		 "config-opts": ["--without-lzo2"],
-		 "tag": "v3.1.2",
-		 "patches": ["libarchive-autogen.patch"]},
-
-                {"src": "fd-poppler:poppler",
-                 "config-opts": ["--disable-poppler-cpp",
-                                 "--disable-utils"]},
-
-		{"src": "git:git://github.com/mm2/Little-CMS.git",
-		 "tag": "lcms2.6"},
-
-		{"src": "gnome:libgxps"},
-
-		{"src": "cgwalters:spidermonkey-tarballs-as-git",
-		 "name": "js17",
-		 "branch": "js-17",
-		 "config-opts": ["--enable-threadsafe",
-		                 "--with-system-nspr"]},
-
-		{"src": "fd:polkit",
-		 "config-opts": ["--disable-man-pages",
-				 "--enable-libsystemd-login",
-		                 "--with-os-type=suse",
-				 "--with-mozjs=mozjs-17.0"],
-		 "setuid": ["/runtime/usr/bin/pkexec",
-                            "/runtime/usr/lib/polkit-1/polkit-agent-helper-1"]},
-
-                {"src": "git:git://git.kernel.org/pub/scm/bluetooth/bluez.git",
-		 "config-opts": ["--disable-cups", "--disable-obex", "--disable-usb", "--disable-tools"],
-		 "patches": ["bluez-autogen.patch"]},
-
-                {"src": "git:git://github.com/jpirko/libndp.git"},
-
-		{"src": "fd-NM:NetworkManager",
-		 "config-opts": ["--with-dhclient=yes",
-		                 "--with-session-tracking=systemd",
-				 "--with-crypto=nss",
-				 "--disable-doc",
-				 "--enable-more-warnings=yes",
-				 "--enable-modify-system"]},
-
-		{"src": "fd:libqmi"},
-
-		{"src": "fd:libmbim/libmbim",
-		 "name": "libmbim"},
-
-		{"src": "fd-MM:ModemManager.git",
-		 "config-opts": ["--with-udev-base-dir=/usr/lib/udev",
-		                 "--disable-more-warnings"]},
-
-		{"src": "0pointer:libatasmart.git"},
-
-		{"src": "fd:udisks",
-		 "config-opts": ["--disable-man"]},
-
-                {"src": "fd:pm-utils"},
-
-	        {"src": "fd:upower",
-		 "config-opts": ["--disable-man-pages",
-		                 "--disable-strict"],
-		 "patches": ["upower-no-builddir.patch"]},
-
-	        {"src": "0pointer:libdaemon",
-		 "patches": ["libdaemon-build-sys-Modernize-by-renaming-bootstrap.sh-autogen.patch"],
-		 "config-opts": ["--disable-examples"]},
-
-	        {"src": "0pointer:avahi",
-		 "config-opts": ["--with-distro=none",
-				 "--enable-gobject",
-				 "--with-xml=expat",
-				 "--enable-libdaemon",
-				 "--disable-core-docs",
-		                 "--disable-manpages",
-				 "--disable-mono",
-				 "--disable-qt3",
-				 "--disable-qt4",
-				 "--disable-python",
-				 "--disable-gtk",
-				 "--disable-gtk3"]},
-
-                {"src": "git:git://gitorious.org/gusb/gusb.git"},
-		
-		{"src": "git:git://github.com/hughsie/colord.git",
-		 "config-opts": ["--disable-print-profiles",
-				 "--disable-bash-completion",
-				 "--disable-installed-tests"]},
-
-		{"src": "gnome:gconf",
-		 "config-opts": ["--disable-orbit",
-		                 "--disable-gtk",
-				 "--disable-documentation"]},
-
-                {"src": "cgwalters:ragel-tarballs-as-git",
-		 "patches": ["ragel-gcc-4.7.patch"],
-		 "tag": "0b17ee79bf5237ffdc3a2a7480023a7d61063788"},
-
-                {"src": "git:git://anongit.freedesktop.org/harfbuzz"},
-
-		{"src": "gnome:pango",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:atk"},
-
-		{"src": "gnome:at-spi2-core"},
-
-		{"src": "gnome:at-spi2-atk"},
-
-		{"src": "gnome:gdk-pixbuf",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:gtk+",
-		 "name": "gtk2",
-		 "branch": "gtk-2-24"},
-
-		{"src": "gnome:gtk-engines",
-		 "branch": "gtk-engines-2-22"},
-
-		{"src": "gnome:gtk+",
-		 "config-opts": ["--enable-installed-tests", "--enable-wayland-backend", "--enable-x11-backend"],
-		 "name": "gtk3"},
-
-	        {"src": "fd:plymouth",
-		 "initramfs-depends": true,
-		 "config-opts": ["--enable-pango",
-		                 "--enable-gdm-transition",
-		                 "--disable-libdrm_nouveau",
-		                 "--disable-documentation",
-				 "--enable-systemd-integration",
-				 "--with-system-root-install=yes"]},
-
-		{"src": "fd-fprint:libfprint"},
-
-		{"src": "fd-fprint:fprintd"},
-
-		{"src": "fd-p11:p11-kit",
-                 "component": "minimal"},
-
-		{"src": "gnome:gcr",
-		 "config-opts": ["--disable-valgrind"]},
-
-		{"src": "gnome:libsecret",
-		 "config-opts": ["--disable-manpages"]},
-
-		{"src": "gnome:gnome-keyring",
-		 "config-opts": ["--disable-doc"]},
-
-		{"src": "gnome:json-glib",
-                 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:libcroco"},
-
-		{"src": "gnome:librsvg"},
-
-		{"src": "fd-gstreamer:orc",
-		 "config-opts": ["--disable-gtk-doc"]},
-
-		{"src": "fd-gstreamer:gstreamer",
-		 "config-opts": ["--disable-tests",
-		                 "--disable-fatal-warnings"]},
-
-		{"src": "fd-gstreamer:gst-plugins-base",
-		 "config-opts": ["--with-gtk=3.0",
-		                 "--disable-tests",
-				 "--disable-gnome_vfs",
-				 "--disable-fatal-warnings"]},
-
-		{"src": "gnome:cogl",
-		 "config-opts": ["--enable-wayland-egl-platform",
-				 "--enable-wayland-egl-server",
-				 "--enable-kms-egl-platform",
-				 "--enable-xlib-egl-platform",
-				 "--enable-cogl-gst",
-				 "--enable-installed-tests"],
-		 "branch": "cogl-1.18"},
-
-		{"src": "gnome:clutter",
-		 "config-opts": ["--enable-installed-tests",
-				 "--enable-wayland-backend",
-				 "--enable-wayland-compositor",
-				 "--enable-egl-backend",
-				 "--enable-evdev-input"],
-		 "branch": "clutter-1.20"},
-
-		{"src": "gnome:libnotify"},
-
-		{"src": "fd-spice:linux/vd_agent",
-		 "patches": ["vdagent-autogen.patch"],
-		 "config-opts": ["--with-init-script=systemd"]},
-
-		{"src": "cgwalters:iso-codes",
-		 "rm-configure": true,
-		 "patches": ["iso-codes-autogen.patch",
-		             "iso-codes-no-builddir.patch",
-		             "iso-codes-builddir.patch"]},
-
-		{"src": "fd:libxklavier"},
-
-                {"src": "gnome:libgnomekbd"}, 
-
-		{"src": "git:git://github.com/json-c/json-c.git",
-		 "tag": "381f77c5bccf20234a2bddae2b6ac43997faf0a2",
-		 "patches": ["json-c-autogen.patch",
-                             "json-c-Fix-build-failure-by-adding-Wno-error-unused-value.patch"]},
-
-		{"src": "gnome:mobile-broadband-provider-info"},
-
-		{"src": "gnome:network-manager-applet",
-		 "config-opts": ["--enable-more-warnings=no",
-		                 "--disable-migration"]},
-
-		{"src": "fd-pulse:pulseaudio",
-		 "tag": "6d88a139fc932474af6c1bb27bcc504f0d737534",
-		 "tag-reason": "requires json-c 0.11",
-		 "config-opts": ["--disable-openssl"],
-		 "patches": ["pulseaudio-autogen.patch"]},
-
-		{"src": "0pointer:libcanberra"},
-
-                {"src": "git:git://gitorious.org/itstool/itstool.git"},
-
-		{"src": "gnome:yelp-xsl",
-		 "config-opts": ["--disable-doc"]},
-
-		{"src": "gnome:yelp-tools"},
-
-		{"src": "gnome:gsettings-desktop-schemas",
-                 "component": "minimal"},
-
-		{"src": "gnome:gnome-desktop",
-		 "config-opts": [
-		 		"--disable-desktop-docs",
-		 		"--enable-installed-tests"]},
-
-		{"src": "linuxwacom:libwacom",
-		 "patches": ["libwacom-autogen.patch"]},
-
-		{"src": "linuxwacom:xf86-input-wacom",
-		 "patches": ["libwacom-autogen.patch"]},
-
-		{"src": "git:git://github.com/stephenc/tango-icon-naming.git",
-		 "patches": ["tango-icon-naming-python.patch"],
-		 "component": "devel"},
-
-		{"src": "fd:sound-theme-freedesktop"},
-
-		{"src": "gnome:gnome-themes-standard"},
-
-		{"src": "gnome:adwaita-icon-theme"},
-
-		{"src": "gnome:gnome-menus"},
-
-                {"src": "gnome:glib-networking",
-		 "component": "minimal",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:libsoup",
-		 "component": "minimal",
-		 "config-args": [
-		 		"--disable-tls-check",
-		 		"--enable-installed-tests"]},
-
-		{"src": "gnome:gvfs",
-		 "config-opts": ["--disable-gphoto2",
-				 "--disable-documentation",
-				 "--enable-installed-tests"]},
-
-		{"src": "gnome:gnome-ostree-integration",
-                 "component": "minimal"},
-
-		{"src": "fd-gstreamer:gst-plugins-good",
-		 "config-opts": ["--with-gtk=3.0",
-		                 "--disable-tests",
-				 "--disable-examples",
-				 "--disable-fatal-warnings"]},
-
-		{"src": "tarball:https://github.com/maxmind/geoip-api-c/releases/download/v1.6.2/GeoIP-1.6.2.tar.gz",
-		 "rm-configure": true,
-		 "name": "geoip",
-		 "config-opts": ["--enable-static"],
-		 "checksum": "8ef059ee3680b39db967248331ec41188f4b45f86a4a77e39247ff41b61efd7c"},
-
-		{"src": "gnome:geocode-glib"},
-
-		{"src": "fd:geoclue"},
-      
-                {"src": "git:http://git.chromium.org/webm/libwebp.git"},
-
-		{"src": "tarball:http://www.webkitgtk.org/releases/webkitgtk-2.4.4.tar.xz",
-		 "name": "webkitgtk",
-		 "checksum": "58cbfc7e352ae1e1f5e383f9f766795794d88483e9a52377a295f56eedf53ab9",
-		 "config-opts": ["--enable-introspection",
-				 "--enable-debug-symbols=min",
-				 "--disable-maintainer-mode"]},
-
-		{"src": "gnome:libgee",
-		 "patches": ["gee-builddir.patch"]},
-
-		{"src": "git:git://github.com/hughsie/PackageKit.git",
-		 "config-opts": ["--disable-strict",
-				 "--enable-NetworkManager",
-				 "--enable-systemd",
-				 "--disable-man-pages",
-				 "--disable-bash-completion",
-				 "--disable-tests",
-				 "--disable-browser-plugin",
-				 "--disable-cron",
-				 "--disable-systemd-updates"]},
-
-                {"src": "gnome:gtksourceview",
-                 "config-opts": ["--enable-compile-warnings=maximum",
-                                 "--disable-maintainer-mode",
-                                 "--enable-installed-tests"]},
-
-                {"src": "fd:exempi",
-		 "tag": "82aa3670838622e6ee645ebecfe2abd93ec56836",
-		 "patches": ["exempi-autogen.patch"]},
-
-		{"src": "gnome:gnome-packagekit"},
-
-		{"src": "gnome:librest"},
-
-		{"src": "fd-telepathy:telepathy-glib",
-		 "config-opts": ["--enable-vala-bindings",
-                                 "--disable-fatal-warnings"]},
-
-		{"src": "gnome:gnome-online-accounts",
-		 "config-opts": ["--disable-documentation"]},
-
-		{"src": "gnome:gnome-bluetooth",
-		 "config-opts": ["--disable-documentation",
-		                 "--disable-scrollkeeper"]},
-
-		{"src": "gnome:libmediaart",
-		 "config-opts": ["--enable-vala",
-		                 "--disable-gtk-doc",
-                                 "--enable-installed-tests"]},
-
-		{"src": "gnome:tracker",
-		 "config-opts": ["--enable-miner-firefox=no",
-				 "--enable-miner-thunderbird=no",
-				 "--enable-miner-evolution=no",
-				 "--disable-nautilus-extension",
-				 "--disable-tracker-needle",
-				 "--disable-tracker-preferences",
-				 "--disable-tracker-search-bar",
-				 "--disable-tracker-explorer",
-				 "--with-unicode-support=libicu"]},
-
-		{"src": "gnome:dconf",
-		 "config-opts": ["--disable-man", "--disable-editor"]},
-
-		{"src": "gnome:zenity"},
-
-		{"src": "gnome:mutter",
-                 "irc_room": "gnome-shell",
-		 "config-opts": ["--enable-compile-warnings=maximum",
-				 "--enable-installed-tests"]},
-
-                {"src": "tarball:https://ftp.mozilla.org/pub/mozilla.org/js/mozjs-24.2.0.tar.bz2",
-		 "name": "js24",
-                 "component": "minimal",
-		 "checksum": "e62f3f331ddd90df1e238c09d61a505c516fe9fd8c5c95336611d191d18437d8",
-		 "patches": ["js24-buildapi.patch", "js24-virtualenv.patch"],
-		 "config-opts": ["--enable-threadsafe",
-		                 "--with-system-nspr",
-				 "--disable-tests",
-				 "--disable-strip",
-				 "--enable-ctypes",
-				 "--enable-system-ffi",
-				 "--disable-intl-api"]},
-
-		{"src": "gnome:gjs",
-                 "name": "gjs-minimal",
-                 "component": "hwtest",
-		 "config-opts": ["--without-cairo", "--without-gtk"]},
-
-		{"src": "gnome:gjs",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:ostree",
-                 "component": "minimal",
-		 "initramfs-depends": true,
-		 "config-opts": ["--with-soup-gnome",
-		                 "--with-dracut",
-				 "--enable-installed-tests"]},
-
-		{"src": "gnome:gnome-hwtest",
-                 "component": "minimal",
-                 "initramfs-depends": true},
-
-		{"src": "mikechristie:open-iscsi",
-                 "component": "minimal",
-		 "initramfs-depends": true,
-		 "patches": ["iscsi-no-iscsiuio.patch",
-                             "iscsi-no-static-build.patch",
-                             "iscsi-assume-netlink-number.patch",
-                             "iscsi-install-iscsistart.patch",
-                             "iscsi-buildsys.patch"]},
-
-                {"src": "socat:socat.git",
-                 "component": "minimal",
-		 "patches": ["socat-disable-man-pages.patch",
-                             "socat-buildsys.patch"]},
-
-                {"src": "dnsmasq:dnsmasq.git",
-                 "component": "hwtest",
-		 "patches": ["dnsmasq-buildsys.patch"]},
-
-                {"src": "ipxe:ipxe.git",
-                 "component": "hwtest",
-		 "patches": ["ipxe-buildsys.patch",
-                             "ipxe-disable-isos.patch"]},
-
-		{"src": "savannah:grub.git",
-                 "component": "hwtest",
-                 "cflags": { "x86_64": "" },
-                 "config-opts": ["--with-platform=pc",
-                                 "--disable-grub-mkfont",
-                                 "--enable-liblzma=no",
-                                 "--enable-device-mapper=no",
-                                 "--enable-libzfs=no"]},
-
-		{"src": "fujita:tgt",
-                 "component": "hwtest",
-		 "patches": ["tgt-cflags.patch",
-                             "tgt-buildsys.patch",
-                             "tgt-disable-man.patch"],
-                 "config-opts": ["--disable-man"]},
-
-		{"src": "tarball:http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.35.tar.xz",
-                 "name": "lighttpd",
-                 "rm-configure": true,
-                 "checksum": "113e9b72ccbd1da5deb0774bf93cf0ca15dc82aad2da0f04e5ab27d37d3f30a3",
-                 "component": "hwtest",
-		 "config-opts": ["--without-pcre"]},
-
-                {"src": "ibus:ibus.git",
-		 "patches": ["ibus-builddir.patch"],
-		 "config-opts": ["--disable-tests", 
-				 "--disable-gconf",
-				 "--enable-dconf",
-				 "--enable-introspection",
-				 "--enable-vala",
-				 "--disable-ui",
-				 "--disable-setup"]},
-
-		{"src": "gnome:libgweather"},
-
-		{"src": "gnome:clutter-gst",
-                 "name": "clutter-gst2",
-                 "branch": "clutter-gst-2.0"},
-
-		{"src": "gnome:clutter-gst",
-                 "name": "clutter-gst3"},
-
-		{"src": "gnome:clutter-gtk"},
-
-		{"src": "gnome:libpeas"},
-
-		{"src": "cgwalters:liboauth-tarballs-as-git",
-		 "rm-configure": true,
-		 "config-opts": ["--enable-nss"],
-		 "patches": ["liboauth-tarballs-as-git-autogen.patch"]},
-
-		{"src": "git:https://git.gitorious.org/uhttpmock/uhttpmock.git"},
-
-		{"src": "gnome:libgdata"},
-
-                {"src": "gnome:gmime"},
-
-		{"src": "gnome:totem-pl-parser"},
-
-                {"src": "gnome:grilo",
-		 "config-opts": ["--disable-vala"]},
-
-                {"src": "gnome:grilo-plugins"},
-
-		{"src": "gnome:libzapojit"},
-
-                {"src": "gnome:libgfbgraph"},
-
-                {"src": "gnome:libchamplain"},
-
-		{"src": "gnome:gnome-online-miners"},
-
-		{"src": "cgwalters:libical-tarballs-as-git"},
-
-		{"src": "gnome:evolution-data-server",
-		 "irc_room": "evolution",
-		 "config-opts": ["--enable-installed-tests",
-				 "--enable-vala-bindings",
-				 "--disable-uoa"]},
-
-		{"src": "fd-xdg:default-icon-theme",
-		 "patches": ["default-icon-theme-autogen.patch",
-		             "default-icon-theme-no-builddir.patch"]},
-
-		{"src": "fd-xdg:desktop-file-utils",
-		 "patches": ["desktop-file-utils-autogen.patch"]},
-
-		{"src": "fd-xdg:xdg-user-dirs",
-		 "config-opts": ["--disable-documentation"],
-		 "patches": ["xdg-user-dirs-autostart.patch"]},
-
-		{"src": "fd-xdg:shared-mime-info",
-		 "config-opts": ["--disable-default-make-check"]},
-
-		{"src": "gnome:cantarell-fonts",
-		 "config-opts": ["--disable-source-rebuild"]},
-
-		{"src": "gnome:gnome-backgrounds"},
-
-		{"src": "fd:accountsservice",
-		 "config-opts": ["--enable-admin-group=sudo",
-				 "--disable-vala"]},
-
-		{"src": "gnome:gdm",
-		 "config-opts": ["--disable-documentation",
-		                 "--disable-split-authentication",
-		                 "--with-default-pam-config=openembedded",
-		                 "--without-console-kit",
-		                 "--with-plymouth",
-		                 "--with-systemd",
-				 "--enable-systemd-journal"]},
-
-		{"src": "fd-telepathy:telepathy-logger",
-		 "config-opts": ["--disable-Werror"],
-		 "patches": ["telepathy-logger-autogen.patch"]},
-
-		{"src": "fd-nice:libnice",
-                 "tag": "5f2a2dd6fc5869689d6bdb72b1ddfb91cd1aa138",
-                 "tag-reason": "broken build"},
-
-		{"src": "fd-telepathy:telepathy-gabble",
-		 "config-opts": ["--disable-Werror"]},
-
-		{"src": "fd-telepathy:telepathy-idle"},
-
-		{"src": "fd-telepathy:telepathy-mission-control",
-		 "config-opts": ["--disable-gtk-doc",
-		                 "--disable-Werror",
-				 "--disable-upower"]},
-
-		{"src": "gnome:gnome-session",
-		 "config-opts": ["--disable-docbook-docs",
-				 "--disable-man"]},
-
-		{"src": "gnome:gnome-settings-daemon",
-		 "config-opts": ["--disable-packagekit",
-		                 "--disable-cups",
-		                 "--enable-systemd",
-				 "--disable-man"]},
-
-		{"src": "gnome:libgtop"},
-
-                {"src": "tarball:https://fedorahosted.org/releases/l/i/libpwquality/libpwquality-1.2.2.tar.bz2",
-		 "name": "libpwquality",
-		 "checksum": "9689627283b43d20ca74ca822404ee486242e3e528fa95bf7016d37ff46e0696",
-                 "config-opts": ["--disable-python-bindings"]}, 
-
-		{"src": "git:git://github.com/hughsie/colord-gtk.git"},
-
-		{"src": "gnome:gnome-control-center",
-		 "config-opts": ["--disable-documentation",
-				 "--disable-cups"]},
-
-		{"src": "gnome:gnome-initial-setup",
-		 "config-opts": ["--disable-welcome-tour"]},
-
-		{"src": "gnome:libwnck"},
-
-		{"src": "gnome:vte",
-		 "config-opts": ["--disable-vala"]},
-
-		{"src": "git:git://git.kernel.org/pub/scm/utils/dash/dash.git"},
-
-                {"src": "git:git://git.kernel.org/pub/scm/boot/dracut/dracut.git",
-         "tag": "9efb74a32d34533f7ccb201160ea0e40adc13987",
-         "tag-reason": "requires gzip with --rsyncable option",
-		 "config-opts": ["--disable-documentation",
-		                 "--systemdsystemunitdir=/usr/lib/systemd/system"],
-		 "initramfs-depends": true},
-
-		{"src": "git:git://git.cairographics.org/git/py2cairo",
-		 "patches": ["py2cairo-autogen.patch"]},
-
-		{"src": "gnome:pygobject",
-		 "config-opts": ["--with-python=python2"]},
-
-		{"src": "gnome:pyatspi2"},
-
-		{"src": "gnome:caribou"},
-
-		{"src": "gnome:gnome-shell",
-                 "irc_room": "gnome-shell",
-		 "config-opts": ["--enable-compile-warnings=maximum",
-                                 "--disable-man"]},
-
-		{"src": "gnome:gnome-shell-extensions",
-		 "config-opts": ["--enable-extensions=classic-mode"]},
-
-
-		{"src": "git:git://github.com/hughsie/appstream-glib.git",
-		 "config-opts": ["--disable-dep11"]},
-
-                {"src": "git:https://github.com/hughsie/appdata-tools.git"},
-
-                {"src": "git:git://git.fedorahosted.org/git/dogtail.git"},
-
-		{"src": "git:git://github.com/r1chardj0n3s/parse.git",
-		"patches": ["parse-buildsys.patch"]},
-
-		{"src": "git:git://github.com/vrutkovs/behave.git",
-		"branch": "html_formatter",
-		"tag": "044f3bc27634beac049de546a7cb9d25973d002c",
-		"patches": ["behave-buildsys.patch"]},
-
-		{"src": "gnome:gnome-terminal",
-		 "config-opts": ["--without-nautilus-extension"]},
-
-		{"src": "gnome:gnome-clocks"},
-
-		{"src": "gnome:glade",
-		 "config-opts": ["--disable-man-pages"],
-		 "component": "devel"},
-
-		{"src": "gnome:jhbuild",
-		 "component": "devel"},
-
-		{"src": "git:git://git.fishsoup.net/git-bz",
-		 "config-opts": ["--disable-documentation"],
-		 "component": "devel"},
-
-		{"src": "gnome:nautilus"},
-
-		{"src": "gnome:gedit",
-		 "config-opts": ["--enable-python=no",
-				 "--disable-spell"]},
-
-		{"src": "gnome:gnome-software",
-		 "config-opts": ["--disable-man",
-                                 "--disable-offline-appstream-data",
-                                 "--enable-installed-tests"]},
-
-		{"src": "gnome:epiphany",
-		 "tag": "9e8e34a398788754ce76119b502eb8e458f1aec8",
-		 "tag-reason": "requires webkitgtk 2.5.1"},
-
-		{"src": "gnome:gnome-calculator",
-                 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:gnome-weather",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:polari"},
-
-		{"src": "gnome:baobab"},
-
-		{"src": "gnome:gnome-maps"},
-
-		{"src": "gnome:gnome-sound-recorder"},
-
-		{"src": "gnome:gnome-logs"},
-
-		{"src": "gnome:gucharmap"},
-
-		{"src": "gnome:seahorse"},
-
-		{"src": "gnome:geary",
-		 "config-opts": ["--disable-documentation"]},
-
-		{"src": "gnome:totem",
-		 "config-opts": ["--disable-vala"]},
-
-		{"src": "gnome:libgda",
-		 "branch": "LIBGDA_5.2"},
-
-		{"src": "gnome:gdl"},
-
-		{"src": "gnome:anjuta",
-		 "component": "devel"},
-
-		{"src": "gnome:gnome-font-viewer"},
-
-		{"src": "gnome:babl"},
-
-		{"src": "gnome:gegl",
-		 "name": "gegl2",
-		 "branch": "gegl-0-2"},
-
-		{"src": "gnome:gnome-photos",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:d-feet",
-		 "config-opts": ["--disable-tests"]},
-
-		{"src": "gnome:evince",
-		 "config-opts": ["--enable-introspection"]},
-
-		{"src": "gnome:gnome-documents",
-		 "config-opts": ["--disable-documentation"]},
-
-                {"src": "tarball:http://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz",
-		 "name": "enchant",
-		 "checksum": "2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f"}, 
-
-                {"src": "tarball:http://downloads.sourceforge.net/project/gtkspell/3.0.4/gtkspell3-3.0.4.tar.gz",
-		 "name": "gtkspell3",
-		 "rm-configure": true,
-		 "checksum": "fabf8e670c99c1a91996e0e33fa78b7c023f77efb3e11355cf5aa9bcdc43e4a7",
-		 "patches": ["gtkspell-autogen.patch"],
-		 "config-opts": ["--disable-maintainer-mode"]},
-
-		{"src": "gnome:gtkhtml"},
-
-		{"src": "gnome:evolution",
-		 "irc_room": "evolution",
-		 "config-opts": ["--enable-installed-tests",
-		 		 "--disable-bogofilter",
-				 "--disable-spamassassin",
-				 "--disable-text-highlight",
-				 "--disable-pst-import",
-				 "--disable-libcryptui",
-				 "--disable-autoar"]},
-
-		{"src": "gnome:evolution-ews",
-		 "irc_room": "evolution",
-		 "config-opts": ["--with-internal-lzx"]},
-
-		{"src": "git:git://git.libssh.org/projects/libssh.git",
-		 "tag": "c520d97dd9d58a11284cbd28c9d1fef026d94f45",
-		 "patches": ["libssh-cmake-buildapi.patch"]},
-
-		{"src": "gnome:libgssh"},
-
-		{"src": "gnome:hotssh"},
-
-		{"src": "gnome:file-roller"},
-
-		{"src": "gnome:gnome-desktop-testing",
-		 "component": "testing"},
-
-		{"src": "gnome:gnome-tweak-tool"},
-
-		{"src": "gnome:eog",
-		 "config-opts": ["--enable-installed-tests"]},
-
-		{"src": "gnome:brasero"},
-
-		{"src": "gnome:devhelp"},
-
-		{"src": "gnome:gnome-dictionary"},
-
-		{"src": "gnome:gnome-screenshot"},
-
-		{"src": "gnome:nautilus-sendto"},
-
-		{"src": "gnome:yelp"},
-
-		{"src": "gnome:gnome-music"}
-
-	],
-
-    "installed-tests-components": [],
-
-    "installed-tests-xfail": [],
-
-    "initramfs-build-epoch": {"version": 0},
-    
-	"build-epoch": {"version": 66,
-		        "all": true,
-		        "component-names": []}
+    {"src": "gnome:gnome-continuous-kernel",
+      "component": "minimal",
+      "child-components": [
+        {"src": "kernel:stable/linux-stable",
+         "name": "linux",
+         "branch": "linux-3.18.y"}
+      ]},
+    {
+      "src": "git:git://git.gnome.org/gtk-doc-stub",
+      "component": "devel",
+      "noarch": true,
+      "name": "gtk-doc-stub",
+      "branch": "master",
+      "tag": "3dfd0a09de696ec8c544762747f8a0f77153622e"
+    },
+    {
+      "src": "git:git://git.gnome.org/glib",
+      "component": "minimal",
+      "requires": {
+        "pkgconfig": [
+          "libffi >= 3.0.10"
+        ]
+      },
+      "config-opts": [
+        "--disable-modular-tests",
+        "--enable-installed-tests"
+      ],
+      "name": "glib",
+      "branch": "glib-2-42"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-common",
+      "component": "devel",
+      "name": "gnome-common",
+      "branch": "master",
+      "tag": "1f60e9536dd8ac71a799d60eb128c6c928c67639"
+    },
+    {
+      "src": "git:git://git.savannah.gnu.org/gperf.git",
+      "tag": "v3.0.4",
+      "patches": [
+        "gperf-autotools.patch"
+      ],
+      "name": "gperf",
+      "tag": "2adc7253aef58fdafa6cd9bddf740611c64ba582"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/dbus/dbus",
+      "name": "dbus-bootstrap",
+      "bootstrap": true,
+      "config-opts": [
+        "--with-dbus-user=dbus",
+        "--enable-inotify",
+        "--disable-xml-docs",
+        "--disable-doxygen-docs",
+        "--disable-tests",
+        "--disable-systemd",
+        "--with-system-pid-file=/run/dbus.pid"
+      ],
+      "branch": "master",
+      "tag": "5392058c25d425934ee13570d40d04acab5df832"
+    },
+    {
+      "src": "git:git://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git",
+      "component": "minimal",
+      "config-opts": [
+        "--disable-manpages"
+      ],
+      "name": "kmod",
+      "branch": "master",
+      "tag": "419b7003af06329cf7336b298fba08f962631184"
+    },
+    {
+      "src": "git:git://git.gnome.org/gobject-introspection",
+      "component": "minimal",
+      "config-opts": [
+        "--disable-tests"
+      ],
+      "name": "gobject-introspection",
+      "branch": "master",
+      "tag": "1.42.0"
+    },
+    {
+      "src": "git:git://git.gnome.org/vala-bootstrap",
+      "bootstrap": true,
+      "config-opts": [
+        "--disable-build-from-vala",
+        "--disable-vapigen"
+      ],
+      "name": "vala-bootstrap",
+      "branch": "master",
+      "tag": "b2beeaccdf2307ced172646c2ada9765e1747b28"
+    },
+    {
+      "src": "git:git://git.gnome.org/vala",
+      "config-opts": [
+        "--enable-vapigen"
+      ],
+      "name": "vala",
+      "branch": "0.26"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/systemd/systemd",
+      "component": "minimal",
+      "initramfs-depends": true,
+      "cflags": {
+        "x86_64": "-O0 -g -m64 -mtune=generic",
+        "i686": "-O0 -g -m32 -march=i686 -mtune=atom -fasynchronous-unwind-tables"
+      },
+      "config-opts": [
+        "--disable-manpages",
+        "--disable-networkd",
+        "--disable-resolved",
+        "--disable-timesyncd",
+        "--enable-compat-libs",
+        "--with-sysvinit-path=",
+        "--with-sysvrcnd-path="
+      ],
+      "tag": "b1604b341bcd190d67894f416d842990a082a4a4",
+      "tag-reason": "breaks smoketest, http://build.gnome.org/#/build/20140918.54",
+      "name": "systemd"
+    },
+    {
+      "src": "git:git://github.com/libusb/libusb.git",
+      "tag": "v1.0.19",
+      "name": "libusb"
+    },
+    {
+      "src": "git:git://github.com/gregkh/usbutils.git",
+      "patches": [
+        "usbutils-autogen.patch"
+      ],
+      "name": "usbutils",
+      "tag": "e229882d4c8c81812777ea7c3f33431586679450"
+    },
+    {
+      "src": "git:git://git.fedorahosted.org/git/lvm2.git",
+      "tag": "v2_02_106",
+      "name": "lvm2"
+    },
+    {
+      "src": "git:git://git.gnome.org/linux-user-chroot",
+      "setuid": [
+        "/runtime/usr/bin/linux-user-chroot"
+      ],
+      "name": "linux-user-chroot",
+      "branch": "master",
+      "tag": "5d23708442b16138b800a4e4e9daf20eda50ba46"
+    },
+    {
+      "src": "git:git://git.gnome.org/libxml2",
+      "component": "minimal",
+      "name": "libxml2",
+      "branch": "master",
+      "tag": "33f658c969501bb246f8d4c6d21772948c7bc965"
+    },
+    {
+      "src": "git:git://git.gnome.org/libxslt",
+      "name": "libxslt",
+      "branch": "master",
+      "tag": "ab5810bf27cd63b6914143d084f7cdb7d08b03da"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgsystem",
+      "component": "minimal",
+      "name": "libgsystem",
+      "branch": "master"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/pixman",
+      "name": "pixman",
+      "branch": "master",
+      "tag": "f078727f392bc9f235df916e75634ed87177b9b4"
+    },
+    {
+      "src": "git:git://git.sv.nongnu.org/freetype/freetype2.git",
+      "tag": "VER-2-4-8",
+      "patches": [
+        "freetype-autogen.patch"
+      ],
+      "name": "freetype2"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/fontconfig",
+      "config-opts": [
+        "--with-cache-dir=/usr/lib/fontconfig/cache"
+      ],
+      "name": "fontconfig",
+      "branch": "master",
+      "tag": "286cdc9c10b0453c25950103b6a1f7170d15bfdc"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/util/macros",
+      "component": "devel",
+      "name": "xorg-util-macros",
+      "branch": "master",
+      "tag": "9a54b858601bd305de2737b06e609084a2a114c2"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/bigreqsproto",
+      "component": "devel",
+      "name": "xorg-proto-bigreqsproto",
+      "branch": "master",
+      "tag": "bigreqsproto-1.1.2-4-g869dca17f1fb15a824c4e1a78fefe9a13f640291"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/compositeproto",
+      "component": "devel",
+      "name": "xorg-proto-compositeproto",
+      "branch": "master",
+      "tag": "ef261dc0ce04fcb1f8d17a337abb82e03cf6833f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/damageproto",
+      "component": "devel",
+      "name": "xorg-proto-damageproto",
+      "branch": "master",
+      "tag": "ddfcf5636ffef9d68298e98b65f6e7f9bb2b1588"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/dmxproto",
+      "component": "devel",
+      "name": "xorg-proto-dmxproto",
+      "branch": "master",
+      "tag": "395f6fcc0a5635907b5e45829e86b29431316184"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/dri2proto",
+      "tag": "ead89ad84877551cc15d26b95cb19a3e205df71f",
+      "component": "devel",
+      "name": "xorg-proto-dri2proto"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/dri3proto",
+      "component": "devel",
+      "name": "xorg-proto-dri3proto",
+      "branch": "master",
+      "tag": "91df0f88b70c268f3580385a7b37543ab8c544c8"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/evieproto",
+      "component": "devel",
+      "name": "xorg-proto-evieproto",
+      "branch": "master",
+      "tag": "051657739d4b7f25774e7f0400b6f5a3434f2e54"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/fontsproto",
+      "component": "devel",
+      "name": "xorg-proto-fontsproto",
+      "branch": "master",
+      "tag": "df8c05f7c0253a36589d96efa52938215eff9d4d"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/glproto",
+      "component": "devel",
+      "name": "xorg-proto-glproto",
+      "branch": "master",
+      "tag": "bd3d751e1eb17efb39f65093271bb4ac071aa9e0"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/inputproto",
+      "component": "devel",
+      "name": "xorg-proto-inputproto",
+      "branch": "master",
+      "tag": "81378a1e7139af9d476d90df8737c0c1a58670f3"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/kbproto",
+      "component": "devel",
+      "name": "xorg-proto-kbproto",
+      "branch": "master",
+      "tag": "5e40da736ffc87f5cafaaa67d745e20ef67a9f4a"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/presentproto",
+      "component": "devel",
+      "name": "xorg-proto-presentproto",
+      "branch": "master",
+      "tag": "ef84007fc4a23d3897b4776906139de9d0698c2a"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/randrproto",
+      "component": "devel",
+      "name": "xorg-proto-randrproto",
+      "branch": "master",
+      "tag": "a4a6694c059d74247c16527eef4a0ec9f56bbef6"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/recordproto",
+      "component": "devel",
+      "name": "xorg-proto-recordproto",
+      "branch": "master",
+      "tag": "c414387db7d8c575ff4165dca7045ed8c285a52f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/renderproto",
+      "component": "devel",
+      "name": "xorg-proto-renderproto",
+      "branch": "master",
+      "tag": "9c2a89681abcbbb7bde4d43ceb29872b149b419a"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/resourceproto",
+      "component": "devel",
+      "name": "xorg-proto-resourceproto",
+      "branch": "master",
+      "tag": "ada91f54c98b5a61d3e116fca6bf239a8604730f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/scrnsaverproto",
+      "component": "devel",
+      "name": "xorg-proto-scrnsaverproto",
+      "branch": "master",
+      "tag": "5cf94552cd7118ebb4ae7b12ce1c002b8f8be8e5"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/videoproto",
+      "component": "devel",
+      "name": "xorg-proto-videoproto",
+      "branch": "master",
+      "tag": "384150812b93fef48109582bb53e9580f16f9602"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xcmiscproto",
+      "component": "devel",
+      "name": "xorg-proto-xcmiscproto",
+      "branch": "master",
+      "tag": "c27c82576531db6117d8a389a9b1c75702ea67b4"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xextproto",
+      "component": "devel",
+      "name": "xorg-proto-xextproto",
+      "branch": "master",
+      "tag": "66afec3f49e8eb0d4c2e9af7088fc3116d4bafd7"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xf86bigfontproto",
+      "component": "devel",
+      "name": "xorg-proto-xf86bigfontproto",
+      "branch": "master",
+      "tag": "b7640197a0086e7c96a20bbe7ff221a8258342d3"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xf86dgaproto",
+      "component": "devel",
+      "name": "xorg-proto-xf86dgaproto",
+      "branch": "master",
+      "tag": "199f7ae6380c6839223274f6b0d9dea7fa3dc8c9"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xf86driproto",
+      "component": "devel",
+      "name": "xorg-proto-xf86driproto",
+      "branch": "master",
+      "tag": "c856293011d3fe3e15db8a59f6ad0460baf84143"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xf86miscproto",
+      "component": "devel",
+      "name": "xorg-proto-xf86miscproto",
+      "branch": "master",
+      "tag": "dfc102af65775466ae4cb61e8425500bc37afdd4"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xf86vidmodeproto",
+      "component": "devel",
+      "name": "xorg-proto-xf86vidmodeproto",
+      "branch": "master",
+      "tag": "c4ef27e48ab2ee8157cbc6dd3b69d2d06e121e80"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xineramaproto",
+      "component": "devel",
+      "name": "xorg-proto-xineramaproto",
+      "branch": "master",
+      "tag": "441b8d83713ef2480180de98f184222b17a245ac"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/fixesproto",
+      "component": "devel",
+      "name": "xorg-proto-fixesproto",
+      "branch": "master",
+      "tag": "67ccebd2cb05a329273546060df70ad1433bbb16"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/proto/xproto",
+      "component": "devel",
+      "name": "xorg-proto-xproto",
+      "branch": "master",
+      "tag": "ffd4a13042d24cb5c913207585191801a9a1603e"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libxtrans",
+      "name": "xorg-lib-libxtrans",
+      "branch": "master",
+      "tag": "7cbad9fe2e61cd9d5caeaf361826a6f4bd320f03"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXau",
+      "name": "xorg-lib-libXau",
+      "branch": "master",
+      "tag": "1e4635be11154dd8262f37b379511bd627defa2a"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xcb/proto",
+      "component": "devel",
+      "name": "xcb-proto",
+      "branch": "master",
+      "tag": "dc0c544fe044ddeb4917bba0c2fed66c70e6db43"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/font/util",
+      "component": "devel",
+      "name": "xorg-font-util",
+      "branch": "master",
+      "tag": "1a0f701dbd33a10151a87a6ff6bd6a63682fc356"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libfontenc",
+      "name": "xorg-lib-libfontenc",
+      "branch": "master",
+      "tag": "0037a42107b952c9d903719615747e760e4e7247"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xcb/pthread-stubs",
+      "component": "devel",
+      "name": "xcb-pthread-stubs",
+      "branch": "master",
+      "tag": "431d2c0be218d878b9dd3862e4232243c599df4b"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xcb/libxcb",
+      "name": "xcb-libxcb",
+      "branch": "master",
+      "tag": "b0e6c2de09c7474868dd7185674fa113a5c2e0aa"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libX11",
+      "name": "xorg-lib-libX11",
+      "branch": "master",
+      "tag": "6101b967b641355dd863fd1ce52c6a7d58bcbe68"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXrender",
+      "name": "xorg-lib-libXrender",
+      "branch": "master",
+      "tag": "7887382e59b7a06d6b02501205d543fdf76c8249"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXfixes",
+      "name": "xorg-lib-libXfixes",
+      "branch": "master",
+      "tag": "1702cdfe45c9bdd7dacfc8f27a49f89fcd1d02c3"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXext",
+      "name": "xorg-lib-libXext",
+      "branch": "master",
+      "tag": "efdcbb7634501e1117d422636a0a75d7ea84b16b"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXfont",
+      "name": "xorg-lib-libXfont",
+      "branch": "master",
+      "tag": "ad4f4d8a2d0730c0ea3c09210bf921638b4682bc"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXft",
+      "name": "xorg-lib-libXft",
+      "branch": "master",
+      "tag": "214f9b5306d833e2787c75fe41dfdc9228fcb738"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXi",
+      "name": "xorg-lib-libXi",
+      "branch": "master",
+      "tag": "8c255b30f3a4ed8bf67e6bb76df47cbd480735f8"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXinerama",
+      "name": "xorg-lib-libXinerama",
+      "branch": "master",
+      "tag": "edd95182b26eb5d576d4878c559e0f17dddaa909"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libICE",
+      "name": "xorg-lib-libICE",
+      "branch": "master",
+      "tag": "fd22b62ae6380ddb00fa4c750f5ce175d2a6e76f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libSM",
+      "name": "xorg-lib-libSM",
+      "branch": "master",
+      "tag": "f2dd6934c38414bc448ee49b47604f135f5487ea"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXt",
+      "name": "xorg-lib-libXt",
+      "branch": "master",
+      "tag": "51d63a9d82dc4f2407862131bbf3e5d72b4505d3"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXmu",
+      "name": "xorg-lib-libXmu",
+      "branch": "master",
+      "tag": "22d9c590901e121936f50dee97dc60c4f7defb63"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXpm",
+      "name": "xorg-lib-libXpm",
+      "branch": "master",
+      "tag": "42ca8d956276bc00bec09e410d76daf053ae35f9"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXrandr",
+      "name": "xorg-lib-libXrandr",
+      "branch": "master",
+      "tag": "bc00b4fb0b52ed2f6f8544fa3b5da9693ee7ed90"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXRes",
+      "name": "xorg-lib-libXRes",
+      "branch": "master",
+      "tag": "ae0ddaa9c960aee1b7845da01270b00177f95f3d"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXtst",
+      "name": "xorg-lib-libXtst",
+      "branch": "master",
+      "tag": "48d2656fa1dd98e9d88b31211fa4f09f813e7b30"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXv",
+      "name": "xorg-lib-libXv",
+      "branch": "master",
+      "tag": "cf8cc328f1e370a548b71581bada7e1ee073c756"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXvMC",
+      "name": "xorg-lib-libXvMC",
+      "branch": "master",
+      "tag": "0ac79f0132dfd268bc6e9ff2dcdea55e00b65a92"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXxf86dga",
+      "name": "xorg-lib-libXxf86dga",
+      "branch": "master",
+      "tag": "7fad129032e7b4be67a27e31c660ca10b44444f6"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXxf86vm",
+      "name": "xorg-lib-libXxf86vm",
+      "branch": "master",
+      "tag": "f3cdbabadd4626a030e3ac139a333450a462e055"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXdamage",
+      "name": "xorg-lib-libXdamage",
+      "branch": "master",
+      "tag": "41cc41d5deee6b4f79ddaebbb058951a5a9f1f7f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXcursor",
+      "name": "xorg-lib-libXcursor",
+      "branch": "master",
+      "tag": "2e6bda49d062d5064efe66a066558f7d1eec7e78"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libXcomposite",
+      "name": "xorg-lib-libXcomposite",
+      "branch": "master",
+      "tag": "514ae7c502cccdaec4786e8394ca5b17d02c2156"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libxkbfile",
+      "name": "xorg-lib-libxkbfile",
+      "branch": "master",
+      "tag": "3b460259d0d21f9876cacd7e1f305d77b76724f7"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libFS",
+      "name": "xorg-lib-libFS",
+      "branch": "master",
+      "tag": "aef4c4f1330dc01d535cd88b9805c3d5d164b070"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libxshmfence",
+      "name": "xorg-lib-libxshmfence",
+      "branch": "master",
+      "tag": "9c4f070e1304a3503cfab08f68573443025fc4c9"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/dbus/dbus",
+      "component": "minimal",
+      "config-opts": [
+        "--with-dbus-user=dbus",
+        "--enable-inotify",
+        "--enable-verbose-mode",
+        "--disable-xml-docs",
+        "--disable-doxygen-docs",
+        "--disable-tests",
+        "--with-systemdsystemunitdir=/usr/lib/systemd/system",
+        "--with-system-pid-file=/run/dbus.pid"
+      ],
+      "setuid": [
+        "/runtime/usr/libexec/dbus-daemon-launch-helper"
+      ],
+      "name": "dbus",
+      "branch": "master",
+      "tag": "5392058c25d425934ee13570d40d04acab5df832"
+    },
+    {
+      "src": "git:git://libpng.git.sourceforge.net/gitroot/libpng/libpng",
+      "tag": "v1.5.18",
+      "name": "libpng"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/cairo",
+      "config-opts": [
+        "--disable-interpreter"
+      ],
+      "name": "cairo",
+      "branch": "master",
+      "tag": "fbb0a260b707cb5f02a14cc368c6f2f0d63564c3"
+    },
+    {
+      "src": "git:http://bitmath.org/git/mtdev.git",
+      "name": "mtdev",
+      "branch": "master",
+      "tag": "4381b78fea54de0e775bf54952b2f95e5a06c57d"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/libevdev",
+      "config-opts": [
+        "--disable-gcov"
+      ],
+      "name": "libevdev",
+      "branch": "master",
+      "tag": "74c3ed650492089c4cb004a38c75b3e3dc8e9b7f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/wayland/libinput",
+      "name": "wayland-libinput",
+      "branch": "master",
+      "tag": "4dce0648f668d416d88a3835c29667cd4fdb5850"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/util/makedepend",
+      "component": "devel",
+      "name": "xorg-util-makedepend",
+      "branch": "master",
+      "tag": "9da873c5a036c95aa24a7dc3562d405609262381"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/lib/libpciaccess",
+      "name": "xorg-lib-libpciaccess",
+      "branch": "master",
+      "tag": "b7e42643d2ee6521cf23e6dfe49a8369ba4bf9bb"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/mesa/drm",
+      "config-opts": [
+        "--enable-nouveau-experimental-api"
+      ],
+      "name": "drm",
+      "branch": "master",
+      "tag": "666788a6062de62aa0b3560760fbb0903167a319"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/wayland/wayland",
+      "config-opts": [
+        "--disable-documentation"
+      ],
+      "name": "wayland",
+      "branch": "master",
+      "tag": "9dba854547ebdf78276e15003b89f404998c4fca"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/mesa/mesa",
+      "cflags": {
+        "x86_64": "-g -m64 -mtune=generic -fno-rtti",
+        "i686": "-g -m32 -march=i686 -mtune=atom -fasynchronous-unwind-tables -fno-rtti"
+      },
+      "patches": [
+        "mesa-nv50-fix-build.patch"
+      ],
+      "config-opts": [
+        "--enable-pic",
+        "--disable-asm",
+        "--disable-glw",
+        "--disable-glut",
+        "--enable-osmesa",
+        "--with-dri-driverdir=/usr/lib/dri",
+        "--enable-egl",
+        "--enable-gles1",
+        "--enable-gles2",
+        "--with-egl-platforms=wayland,x11,drm",
+        "--enable-shared-glapi",
+        "--enable-gbm",
+        "--enable-gallium-gbm",
+        "--enable-gallium-egl",
+        "--enable-xa",
+        "--with-gallium-drivers=svga,r300,r600,nouveau,swrast",
+        "--enable-gallium-llvm",
+        "--with-dri-drivers=nouveau,radeon,r200,i915,i965,swrast"
+      ],
+      "name": "mesa",
+      "branch": "master",
+      "tag": "ba0c0a186de65869030e80efeab6cf374c0911b9"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/app/xkbcomp",
+      "name": "xorg-app-xkbcomp",
+      "branch": "master",
+      "tag": "d4e02a09258063c6d024c3ccd42d6b22212e6e18"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/app/xrandr",
+      "name": "xorg-app-xrandr",
+      "branch": "master",
+      "tag": "9887ed4989e0abd48004598be0eb5cb06fa40bd1"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/app/xhost",
+      "name": "xorg-app-xhost",
+      "branch": "master",
+      "tag": "f59d9aaba7ba73533998cb6cc5bd74e6f4d75715"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xkeyboard-config",
+      "config-opts": [
+        "--with-xkb-rules-symlink=xorg",
+        "--with-xkb-base=/usr/share/X11/xkb"
+      ],
+      "patches": [
+        "xkeyboard-config-autogen.patch"
+      ],
+      "name": "xkeyboard-config",
+      "branch": "master",
+      "tag": "48e1c0b351b6711edc0f167cbb81e4424b75291a"
+    },
+    {
+      "src": "git:git://github.com/anholt/libepoxy",
+      "name": "libepoxy",
+      "branch": "master",
+      "tag": "b2ae054b3aa0d6796b6936c7a89b8cce7cefe7ba"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/xserver",
+      "config-opts": [
+        "--enable-xwayland"
+      ],
+      "name": "xorg-xserver",
+      "branch": "master",
+      "tag": "cc59be38b7eff52a1d003b390f2994c73ee0b3e9"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xcb/util",
+      "name": "xcb-util",
+      "branch": "master",
+      "tag": "030c7a864d4ec775261ae1eab7682ba2540245c1"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-input-keyboard",
+      "name": "xorg-driver-xf86-input-keyboard",
+      "branch": "master",
+      "tag": "d0c9619675d26284f03ef428ff76cc09bdd4ace3"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-input-mouse",
+      "name": "xorg-driver-xf86-input-mouse",
+      "branch": "master",
+      "tag": "6886084b192e681739fc55892f30681efb4f79f0"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-input-evdev",
+      "name": "xorg-driver-xf86-input-evdev",
+      "branch": "master",
+      "tag": "8ce06c96e469139bb12065d80fe4abb6173e2855"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-video-modesetting",
+      "name": "xorg-driver-xf86-video-modesetting",
+      "branch": "master",
+      "tag": "91571cce03adc58a10b5d76307629efc7c994c3e"
+    },
+    {
+      "src": "git:git://github.com/xkbcommon/libxkbcommon",
+      "name": "libxkbcommon",
+      "branch": "master",
+      "tag": "9c088df3b344d9ef9a85f565fffeba3dd0e810db"
+    },
+    {
+      "src": "git:git://git.xiph.org/celt.git",
+      "name": "celt",
+      "branch": "master",
+      "tag": "e18de7747fb1655e66bf8d291560587036bfe53c"
+    },
+    {
+      "src": "tarball:http://downloads.us.xiph.org/releases/celt/celt-0.5.1.3.tar.gz",
+      "name": "celt051",
+      "checksum": "fc2e5b68382eb436a38c3104684a6c494df9bde133c139fbba3ddb5d7eaa6a2e"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/spice/spice",
+      "patches": [
+        "spice-no-builddir.patch",
+        "spice-stack-protector.patch"
+      ],
+      "config-opts": [
+        "--disable-smartcard"
+      ],
+      "name": "spice",
+      "branch": "master",
+      "tag": "e270edcbfd958d764e84cdbca6d403ff24fef610"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/spice/spice-protocol",
+      "name": "spice-protocol",
+      "branch": "master",
+      "tag": "1f6f9097c306704b2be3a34fdbb9ec93e6c3f229"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-video-qxl",
+      "patches": [
+        "xorg-autogen-merged.patch"
+      ],
+      "name": "xorg-driver-xf86-video-qxl",
+      "branch": "master",
+      "tag": "1df926cae94cbd9e677209fa164e38af9cbaeead"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/glamor",
+      "name": "glamor",
+      "branch": "master",
+      "tag": "347ef4f01edba49820eefaf4b25522fc260d118c"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-video-ati",
+      "name": "xorg-driver-xf86-video-ati",
+      "branch": "master",
+      "tag": "56c7fb8ada4cd9cf096c6b06a8d368d286d74e68"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-video-intel",
+      "name": "xorg-driver-xf86-video-intel",
+      "branch": "master",
+      "tag": "911a0ad8d0520554dc55883997dd59dc3f5f9139"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/nouveau/xf86-video-nouveau",
+      "name": "nouveau-xf86-video-nouveau",
+      "branch": "master",
+      "tag": "3cd4c8494c296c7583dfa7f0823a272c9e932e03"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xorg/driver/xf86-video-vesa",
+      "name": "xorg-driver-xf86-video-vesa",
+      "branch": "master",
+      "tag": "e36a0a8bcfd2bfa0b3878068f16361b3fd34b5d4"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/startup-notification",
+      "name": "startup-notification",
+      "branch": "master",
+      "tag": "07237ff25d6171e1b548118442ddba4259a53ba5"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/dbus/dbus-glib",
+      "config-opts": [
+        "--enable-tests",
+        "--disable-gtk-doc"
+      ],
+      "name": "dbus-glib",
+      "branch": "master",
+      "tag": "40ae208c3309cfa0be27ef458e6947433ff3841e"
+    },
+    {
+      "src": "git:git://git.infradead.org/users/tgr/libnl.git",
+      "tag": "libnl3_2_21",
+      "name": "libnl3"
+    },
+    {
+      "src": "git:git://github.com/cgwalters/nss-tarballs-as-git",
+      "tag": "v3.13.4",
+      "name": "nss-tarballs-as-git"
+    },
+    {
+      "src": "git:git://ozlabs.org/~paulus/ppp.git",
+      "patches": [
+        "ppp-srcdir-builddir.patch",
+        "ppp-destdir.patch"
+      ],
+      "name": "ppp",
+      "branch": "master",
+      "tag": "6e8eaa7a78b31cdab2edf140a9c8afdb02ffaca5"
+    },
+    {
+      "src": "git:git://git.netfilter.org/iptables.git",
+      "tag": "3e6fa55d5e28c93f417afeae7a7d4f349ddffcf4",
+      "name": "iptables",
+      "tag": "3e6fa55d5e28c93f417afeae7a7d4f349ddffcf4"
+    },
+    {
+      "src": "git:git://anonscm.debian.org/pkg-dhcp/isc-dhcp.git",
+      "name": "isc-dhcp",
+      "tag": "upstream/4.2.2",
+      "patches": [
+        "isc-dhcp-autogen.patch",
+        "isc-dhcp-delete-configure.patch",
+        "isc-dhcp-no-builddir.patch",
+        "isc-dhcp-no-werror.patch",
+        "isc-dhcp-no-conf-file.patch"
+      ]
+    },
+    {
+      "src": "tarball:http://openjpeg.googlecode.com/files/openjpeg-1.5.1.tar.gz",
+      "name": "openjpeg",
+      "config-opts": [
+        "--disable-doc"
+      ],
+      "checksum": "6cfb3097a1c8e9550131b17663daf927f42707bc3f84196c1390642e87f3ab8d"
+    },
+    {
+      "src": "tarball:http://downloads.ghostscript.com/public/ghostscript-9.10.tar.gz",
+      "name": "ghostscript",
+      "checksum": "913fc974433238ffd4e0549ce11ba2a3360d1d159cf5c3b988d72a77acb74d04"
+    },
+    {
+      "src": "git:https://github.com/libarchive/libarchive.git",
+      "component": "minimal",
+      "config-opts": [
+        "--without-lzo2"
+      ],
+      "tag": "v3.1.2",
+      "patches": [
+        "libarchive-autogen.patch"
+      ],
+      "name": "libarchive"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/poppler/poppler",
+      "config-opts": [
+        "--disable-poppler-cpp",
+        "--disable-utils"
+      ],
+      "name": "poppler",
+      "branch": "master",
+      "tag": "4589ce17caf94e7c5fa856906d3a8cc08e999d73"
+    },
+    {
+      "src": "git:git://github.com/mm2/Little-CMS.git",
+      "tag": "lcms2.6",
+      "name": "Little-CMS"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgxps",
+      "name": "libgxps",
+      "branch": "master",
+      "tag": "b70d5077cf8a3a5a732d4c0da075f51d3d32048f"
+    },
+    {
+      "src": "git:git://github.com/cgwalters/spidermonkey-tarballs-as-git",
+      "name": "js17",
+      "branch": "js-17",
+      "config-opts": [
+        "--enable-threadsafe",
+        "--with-system-nspr"
+      ]
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/polkit",
+      "config-opts": [
+        "--disable-man-pages",
+        "--enable-libsystemd-login",
+        "--with-os-type=suse",
+        "--with-mozjs=mozjs-17.0"
+      ],
+      "setuid": [
+        "/runtime/usr/bin/pkexec",
+        "/runtime/usr/lib/polkit-1/polkit-agent-helper-1"
+      ],
+      "name": "polkit",
+      "branch": "master",
+      "tag": "6c992bc8aefa195a41eaa41c07f46f17de18e25c"
+    },
+    {
+      "src": "git:git://git.kernel.org/pub/scm/bluetooth/bluez.git",
+      "config-opts": [
+        "--disable-cups",
+        "--disable-obex",
+        "--disable-usb",
+        "--disable-tools"
+      ],
+      "patches": [
+        "bluez-autogen.patch"
+      ],
+      "name": "bluez",
+      "branch": "master",
+      "tag": "6fc3527720b5538eb20d4a0fc68e9edfc58ab742"
+    },
+    {
+      "src": "git:git://github.com/jpirko/libndp.git",
+      "name": "libndp",
+      "branch": "master",
+      "tag": "f3a3a63d5b5abced8f75731d7b995606933c6e33"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/NetworkManager/NetworkManager",
+      "tag": "fb7b08388e9de5440962337e20a823bbf9d019ae",
+      "tag-reason": "https://bugzilla.gnome.org/show_bug.cgi?id=737273",
+      "config-opts": [
+        "--with-dhclient=yes",
+        "--with-session-tracking=systemd",
+        "--with-crypto=nss",
+        "--disable-doc",
+        "--enable-more-warnings=yes",
+        "--enable-modify-system"
+      ],
+      "name": "NetworkManager"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/libqmi",
+      "name": "libqmi",
+      "branch": "master",
+      "tag": "0cf3aa3adf0a9940b1d37eb46f54d6af013ac5fe"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/libmbim/libmbim",
+      "name": "libmbim",
+      "branch": "master",
+      "tag": "a735809afb8f1ae6adc17f3ae308706047275a88"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/ModemManager/ModemManager.git",
+      "config-opts": [
+        "--with-udev-base-dir=/usr/lib/udev",
+        "--disable-more-warnings"
+      ],
+      "name": "ModemManager",
+      "branch": "master",
+      "tag": "8718ed53bee53519fb11f313dfbe55be527f6d76"
+    },
+    {
+      "src": "git:git://git.0pointer.de/libatasmart.git",
+      "name": "libatasmart",
+      "branch": "master",
+      "tag": "de6258940960443038b4c1651dfda3620075e870"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/udisks",
+      "config-opts": [
+        "--disable-man"
+      ],
+      "name": "udisks",
+      "branch": "master",
+      "tag": "a243eed9f452813d4e8f84f5481e1cf732ee139d"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/pm-utils",
+      "name": "pm-utils",
+      "branch": "master",
+      "tag": "7017b46d105261697f94b1ae476ed6e3ddf88a76"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/upower",
+      "config-opts": [
+        "--disable-man-pages",
+        "--disable-strict"
+      ],
+      "patches": [
+        "upower-no-builddir.patch"
+      ],
+      "name": "upower",
+      "branch": "master",
+      "tag": "5ddfe0dba19c069b16a1b38cac2fa9dc8372862d"
+    },
+    {
+      "src": "git:git://git.0pointer.de/libdaemon",
+      "patches": [
+        "libdaemon-build-sys-Modernize-by-renaming-bootstrap.sh-autogen.patch"
+      ],
+      "config-opts": [
+        "--disable-examples"
+      ],
+      "name": "libdaemon",
+      "branch": "master",
+      "tag": "0630da04e575213229f695bdc3dc90aa92ca4f55"
+    },
+    {
+      "src": "git:git://git.0pointer.de/avahi",
+      "config-opts": [
+        "--with-distro=none",
+        "--enable-gobject",
+        "--with-xml=expat",
+        "--enable-libdaemon",
+        "--disable-core-docs",
+        "--disable-manpages",
+        "--disable-mono",
+        "--disable-qt3",
+        "--disable-qt4",
+        "--disable-python",
+        "--disable-gtk",
+        "--disable-gtk3"
+      ],
+      "name": "avahi",
+      "branch": "master",
+      "tag": "147cdce70b22ae7cee9fb4fe123db40952f31c9e"
+    },
+    {
+      "src": "git:git://github.com/hughsie/libgusb.git",
+      "name": "gusb",
+      "branch": "master",
+      "tag": "53226a15a627b20fde38303c2141a17985d741ae"
+    },
+    {
+      "src": "git:git://github.com/hughsie/colord.git",
+      "config-opts": [
+        "--disable-print-profiles",
+        "--disable-bash-completion",
+        "--disable-installed-tests"
+      ],
+      "name": "colord",
+      "branch": "master",
+      "tag": "82c74caf242a4a3c0c470955186a438775ce4227"
+    },
+    {
+      "src": "git:git://git.gnome.org/gconf",
+      "config-opts": [
+        "--disable-orbit",
+        "--disable-gtk",
+        "--disable-documentation"
+      ],
+      "name": "gconf",
+      "branch": "master",
+      "tag": "750686cf423f46a64ad1f7ca2a77626c5ff4927e"
+    },
+    {
+      "src": "git:git://github.com/cgwalters/ragel-tarballs-as-git",
+      "patches": [
+        "ragel-gcc-4.7.patch"
+      ],
+      "tag": "0b17ee79bf5237ffdc3a2a7480023a7d61063788",
+      "name": "ragel-tarballs-as-git"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/harfbuzz",
+      "name": "harfbuzz",
+      "branch": "master",
+      "tag": "22f0de5025aeeef4c8b3ca876d291d4c8e558d94"
+    },
+    {
+      "src": "git:git://git.gnome.org/pango",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "pango",
+      "branch": "master",
+      "tag": "e0a21abf52a0b7588b1aa3357818948816ed9103"
+    },
+    {
+      "src": "git:git://git.gnome.org/atk",
+      "name": "atk",
+      "branch": "master",
+      "tag": "fe7573fff3021b4aae1825efd02a20b3c525873c"
+    },
+    {
+      "src": "git:git://git.gnome.org/at-spi2-core",
+      "name": "at-spi2-core",
+      "branch": "master",
+      "tag": "e31793b83c7b9aabc7c3e72f2ace86b3418503fc"
+    },
+    {
+      "src": "git:git://git.gnome.org/at-spi2-atk",
+      "name": "at-spi2-atk",
+      "branch": "master",
+      "tag": "e9ef7ada37e9621a3b1e83dca7cdade7bc6af0bb"
+    },
+    {
+      "src": "git:git://git.gnome.org/gdk-pixbuf",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "gdk-pixbuf",
+      "branch": "master",
+      "tag": "bceed63c0a2f4e3bf674dd0fd979732f7a73cf5f"
+    },
+    {
+      "src": "git:git://git.gnome.org/gtk+",
+      "name": "gtk2",
+      "branch": "gtk-2-24",
+      "tag": "03c53357f682f26bd94deae28d9e27acb8045c9e"
+    },
+    {
+      "src": "git:git://git.gnome.org/gtk-engines",
+      "branch": "gtk-engines-2-22",
+      "name": "gtk-engines",
+      "tag": "52a07050ad3c6d23976d08470bbed60bd752ab89"
+    },
+    {
+      "src": "git:git://git.gnome.org/gtk+",
+      "config-opts": [
+        "--enable-installed-tests",
+        "--enable-wayland-backend",
+        "--enable-x11-backend"
+      ],
+      "name": "gtk3",
+      "branch": "gtk-3-14"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/plymouth",
+      "initramfs-depends": true,
+      "config-opts": [
+        "--enable-pango",
+        "--enable-gdm-transition",
+        "--disable-libdrm_nouveau",
+        "--disable-documentation",
+        "--enable-systemd-integration",
+        "--with-system-root-install=yes"
+      ],
+      "name": "plymouth",
+      "branch": "master",
+      "tag": "2c65fc7c2295cd07342bea08761b09c169594d4f"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/libfprint/libfprint",
+      "name": "libfprint",
+      "branch": "master",
+      "tag": "35e356f625d254f44c14f720c0eb9216297d35c2"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/libfprint/fprintd",
+      "name": "fprintd",
+      "branch": "master",
+      "tag": "f94c8727d2e98098adafbbd95e9bcc9bf339676b"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/p11-glue/p11-kit",
+      "component": "minimal",
+      "name": "p11-kit",
+      "tag": "c41e0e1d9a4a9a4533bc6f370e5eebe1d6b9752c"
+    },
+    {
+      "src": "git:git://git.gnome.org/gcr",
+      "config-opts": [
+        "--disable-valgrind"
+      ],
+      "name": "gcr",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/libsecret",
+      "config-opts": [
+        "--disable-manpages"
+      ],
+      "name": "libsecret",
+      "branch": "master",
+      "tag": "d205542ba37d7222112953b44a03c7ea337482fa"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-keyring",
+      "config-opts": [
+        "--disable-doc"
+      ],
+      "name": "gnome-keyring",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/json-glib",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "json-glib",
+      "branch": "master",
+      "tag": "4ccb9ab6119b81dde81b04208b98c89fc3a7884c"
+    },
+    {
+      "src": "git:git://git.gnome.org/libcroco",
+      "name": "libcroco",
+      "branch": "master",
+      "tag": "670e3ee116f48118985f38c5ae97df5a42808822"
+    },
+    {
+      "src": "git:git://git.gnome.org/librsvg",
+      "name": "librsvg",
+      "branch": "master",
+      "tag": "bef6571e361f5c306b993c7755606d4918851792"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/gstreamer/orc",
+      "config-opts": [
+        "--disable-gtk-doc"
+      ],
+      "name": "orc",
+      "branch": "master",
+      "tag": "9bf0679ede472ef9b1a9bc3365d7fd7ef06f1356"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/gstreamer/gstreamer",
+      "config-opts": [
+        "--disable-tests",
+        "--disable-fatal-warnings"
+      ],
+      "name": "gstreamer",
+      "branch": "master",
+      "tag": "f978e9eb56a3968d332235d44f7c3f5f83f3dcf7"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/gstreamer/gst-plugins-base",
+      "config-opts": [
+        "--with-gtk=3.0",
+        "--disable-tests",
+        "--disable-gnome_vfs",
+        "--disable-fatal-warnings"
+      ],
+      "name": "gst-plugins-base",
+      "branch": "master",
+      "tag": "98c42dc5e43e5b4e211519cd52ec1a8957e98166"
+    },
+    {
+      "src": "git:git://git.gnome.org/cogl",
+      "config-opts": [
+        "--enable-wayland-egl-platform",
+        "--enable-wayland-egl-server",
+        "--enable-kms-egl-platform",
+        "--enable-xlib-egl-platform",
+        "--enable-cogl-gst",
+        "--enable-installed-tests"
+      ],
+      "branch": "cogl-1.18",
+      "name": "cogl",
+      "tag": "2dd2a3d9e7f2ec9d22a40e61a57d38faa1d33e67"
+    },
+    {
+      "src": "git:git://git.gnome.org/clutter",
+      "config-opts": [
+        "--enable-installed-tests",
+        "--enable-wayland-backend",
+        "--enable-wayland-compositor",
+        "--enable-egl-backend",
+        "--enable-evdev-input"
+      ],
+      "branch": "clutter-1.20",
+      "name": "clutter",
+      "tag": "317a54f9fbba526233a91d4d45bf6963c97d0b0f"
+    },
+    {
+      "src": "git:git://git.gnome.org/libnotify",
+      "name": "libnotify",
+      "branch": "master",
+      "tag": "2f2c5649ef210b1dffeb46cddf062d20e1518ccf"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/spice/linux/vd_agent",
+      "patches": [
+        "vdagent-autogen.patch"
+      ],
+      "config-opts": [
+        "--with-init-script=systemd"
+      ],
+      "name": "linux-vd_agent",
+      "branch": "master",
+      "tag": "4e9b291773ebcd27b9eed266c5bc113cddbe9214"
+    },
+    {
+      "src": "git:git://github.com/cgwalters/iso-codes",
+      "rm-configure": true,
+      "patches": [
+        "iso-codes-autogen.patch",
+        "iso-codes-no-builddir.patch",
+        "iso-codes-builddir.patch"
+      ],
+      "name": "iso-codes",
+      "branch": "master",
+      "tag": "0a995560029d7fd9723843d909cfd9a8dd8c0f70"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/libxklavier",
+      "name": "libxklavier",
+      "branch": "master",
+      "tag": "65c132a65e90a42e898f07243ef544109ada53c9"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgnomekbd",
+      "name": "libgnomekbd",
+      "branch": "master",
+      "tag": "486694742eff9dd7279c55299631a36d57cc9009"
+    },
+    {
+      "src": "git:git://github.com/json-c/json-c.git",
+      "patches": [
+        "json-c-autogen.patch",
+        "json-c-Fix-build-failure-by-adding-Wno-error-unused-value.patch"
+      ],
+      "name": "json-c",
+      "tag": "381f77c5bccf20234a2bddae2b6ac43997faf0a2"
+    },
+    {
+      "src": "git:git://git.gnome.org/mobile-broadband-provider-info",
+      "name": "mobile-broadband-provider-info",
+      "branch": "master",
+      "tag": "ff85988112119ecdd85d57deff4d0705a29a3615"
+    },
+    {
+      "src": "git:git://git.gnome.org/network-manager-applet",
+      "config-opts": [
+        "--enable-more-warnings=no",
+        "--disable-migration"
+      ],
+      "name": "network-manager-applet",
+      "branch": "master",
+      "tag": "b23887621c5971045e75c571d83904e49ad63cdb"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/pulseaudio/pulseaudio",
+      "tag": "6d88a139fc932474af6c1bb27bcc504f0d737534",
+      "tag-reason": "requires json-c 0.11",
+      "config-opts": [
+        "--disable-openssl"
+      ],
+      "patches": [
+        "pulseaudio-autogen.patch"
+      ],
+      "name": "pulseaudio",
+      "tag": "6d88a139fc932474af6c1bb27bcc504f0d737534"
+    },
+    {
+      "src": "git:git://git.0pointer.de/libcanberra",
+      "name": "libcanberra",
+      "branch": "master",
+      "tag": "c0620e432650e81062c1967cc669829dbd29b310"
+    },
+    {
+      "src": "git:git://gitorious.org/itstool/itstool.git",
+      "name": "itstool",
+      "branch": "master",
+      "tag": "359be5c350fc3d869807f663cee2b028adf1f5d7"
+    },
+    {
+      "src": "git:git://git.gnome.org/yelp-xsl",
+      "config-opts": [
+        "--disable-doc"
+      ],
+      "name": "yelp-xsl",
+      "tag": "3.14.0"
+    },
+    {
+      "src": "git:git://git.gnome.org/yelp-tools",
+      "name": "yelp-tools",
+      "tag": "3.14.0"
+    },
+    {
+      "src": "git:git://git.gnome.org/gsettings-desktop-schemas",
+      "component": "minimal",
+      "name": "gsettings-desktop-schemas",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-desktop",
+      "config-opts": [
+        "--disable-desktop-docs",
+        "--enable-installed-tests"
+      ],
+      "name": "gnome-desktop",
+      "branch": "gnome-3-14",
+      "tag": "3.14.0-0-gcc788731c06f847e2b8d10678002c530bb911e6f"
+    },
+    {
+      "src": "git:git://linuxwacom.git.sourceforge.net/gitroot/linuxwacom/libwacom",
+      "patches": [
+        "libwacom-autogen.patch"
+      ],
+      "name": "libwacom",
+      "branch": "master",
+      "tag": "f056e52933486d2684976b406c29712426221e89"
+    },
+    {
+      "src": "git:git://linuxwacom.git.sourceforge.net/gitroot/linuxwacom/xf86-input-wacom",
+      "patches": [
+        "libwacom-autogen.patch"
+      ],
+      "name": "xf86-input-wacom",
+      "branch": "master",
+      "tag": "018c632ada56d8e07a11ce89ec589e3a2dc36293"
+    },
+    {
+      "src": "git:git://github.com/stephenc/tango-icon-naming.git",
+      "patches": [
+        "tango-icon-naming-python.patch"
+      ],
+      "component": "devel",
+      "name": "tango-icon-naming",
+      "branch": "master",
+      "tag": "558408413249f1401607e267d655e0a018af385c"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/sound-theme-freedesktop",
+      "name": "sound-theme-freedesktop",
+      "branch": "master",
+      "tag": "5bf2359c5e72408567310b7d7d31e88cf165247d"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-themes-standard",
+      "name": "gnome-themes-standard",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/adwaita-icon-theme",
+      "name": "adwaita-icon-theme",
+      "branch": "master",
+      "tag": "3.14.0-2-g89020824c324e9e05f8e5d1eda90eb455f45736b"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-menus",
+      "name": "gnome-menus",
+      "branch": "master",
+      "tag": "9608b5d8f642d9e48de3b0b54f0399cfc0a4babc"
+    },
+    {
+      "src": "git:git://git.gnome.org/glib-networking",
+      "component": "minimal",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "glib-networking",
+      "branch": "master",
+      "tag": "89d7dad1731bff7e3983454dedd0b7087c6aea0b"
+    },
+    {
+      "src": "git:git://git.gnome.org/libsoup",
+      "component": "minimal",
+      "config-args": [
+        "--disable-tls-check",
+        "--enable-installed-tests"
+      ],
+      "name": "libsoup",
+      "branch": "master",
+      "tag": "de5e1a69dfc01f0224f580ac7d6d1d0422ad52cc"
+    },
+    {
+      "src": "git:git://git.gnome.org/gvfs",
+      "config-opts": [
+        "--disable-gphoto2",
+        "--disable-documentation",
+        "--enable-installed-tests"
+      ],
+      "name": "gvfs",
+      "branch": "master",
+      "tag": "1a1cd88c3d91937cc48abf80d586e60654f5ca8e"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-ostree-integration",
+      "component": "minimal",
+      "name": "gnome-ostree-integration",
+      "branch": "master",
+      "tag": "4714897ca70cf73223e36f111cd56d060b11909d"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/gstreamer/gst-plugins-good",
+      "config-opts": [
+        "--with-gtk=3.0",
+        "--disable-tests",
+        "--disable-examples",
+        "--disable-fatal-warnings"
+      ],
+      "name": "gst-plugins-good",
+      "branch": "master",
+      "tag": "84ec78bd862192b87ba8b35732265f1511a1427f"
+    },
+    {
+      "src": "tarball:https://github.com/maxmind/geoip-api-c/releases/download/v1.6.2/GeoIP-1.6.2.tar.gz",
+      "rm-configure": true,
+      "name": "geoip",
+      "config-opts": [
+        "--enable-static"
+      ],
+      "checksum": "8ef059ee3680b39db967248331ec41188f4b45f86a4a77e39247ff41b61efd7c"
+    },
+    {
+      "src": "git:git://git.gnome.org/geocode-glib",
+      "name": "geocode-glib",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/geoclue",
+      "name": "geoclue",
+      "branch": "master",
+      "tag": "3f3cfb4bed3f553690b36d1ef0eb5aff505ef938"
+    },
+    {
+      "src": "git:http://git.chromium.org/webm/libwebp.git",
+      "name": "libwebp",
+      "branch": "master",
+      "tag": "fdd6528ba2c93fc1110109c6bfd1f02c5c075c3f"
+    },
+    {
+      "src": "tarball:http://www.webkitgtk.org/releases/webkitgtk-2.4.6.tar.xz",
+      "name": "webkitgtk",
+      "checksum": "6fef4aa8d4a2668e03ea15472a71396ea7b776bbe56ad9459a4124b823c11457",
+      "config-opts": [
+        "--enable-introspection",
+        "--enable-debug-symbols=min",
+        "--disable-maintainer-mode"
+      ]
+    },
+    {
+      "src": "git:git://git.gnome.org/libgee",
+      "patches": [
+        "gee-builddir.patch"
+      ],
+      "name": "libgee",
+      "branch": "master",
+      "tag": "686c63cc26baf5cfee25a5f8bf9a3cf391ca60cc"
+    },
+    {
+      "src": "git:git://github.com/hughsie/PackageKit.git",
+      "config-opts": [
+        "--disable-strict",
+        "--enable-NetworkManager",
+        "--enable-systemd",
+        "--disable-man-pages",
+        "--disable-bash-completion",
+        "--disable-tests",
+        "--disable-browser-plugin",
+        "--disable-cron",
+        "--disable-systemd-updates"
+      ],
+      "name": "PackageKit",
+      "branch": "master",
+      "tag": "7fb2de2e56d0dd3fad7ed34b6160ec54b3eb7a40"
+    },
+    {
+      "src": "git:git://git.gnome.org/gtksourceview",
+      "config-opts": [
+        "--enable-compile-warnings=maximum",
+        "--disable-maintainer-mode",
+        "--enable-installed-tests"
+      ],
+      "name": "gtksourceview",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/exempi",
+      "tag": "82aa3670838622e6ee645ebecfe2abd93ec56836",
+      "patches": [
+        "exempi-autogen.patch"
+      ],
+      "name": "exempi",
+      "tag": "82aa3670838622e6ee645ebecfe2abd93ec56836"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-packagekit",
+      "name": "gnome-packagekit",
+      "branch": "master",
+      "tag": "fe633fbdb6477ca6904cf94a0d5b56dbc75130ba"
+    },
+    {
+      "src": "git:git://git.gnome.org/librest",
+      "name": "librest",
+      "branch": "master",
+      "tag": "272db68e131a20652c98453b75b9c743cda2b327"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/telepathy/telepathy-glib",
+      "config-opts": [
+        "--enable-vala-bindings",
+        "--disable-fatal-warnings"
+      ],
+      "name": "telepathy-glib",
+      "branch": "master",
+      "tag": "d27684c488ceee4f2f54f549738adab0e2e8165d"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-online-accounts",
+      "config-opts": [
+        "--disable-documentation"
+      ],
+      "name": "gnome-online-accounts",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-bluetooth",
+      "config-opts": [
+        "--disable-documentation",
+        "--disable-scrollkeeper"
+      ],
+      "name": "gnome-bluetooth",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/libmediaart",
+      "config-opts": [
+        "--enable-vala",
+        "--disable-gtk-doc",
+        "--enable-installed-tests"
+      ],
+      "name": "libmediaart",
+      "branch": "master",
+      "tag": "969517fa94c76e300b4cbaeb8d03e23204907917"
+    },
+    {
+      "src": "git:git://git.gnome.org/tracker",
+      "config-opts": [
+        "--enable-miner-firefox=no",
+        "--enable-miner-thunderbird=no",
+        "--enable-miner-evolution=no",
+        "--disable-nautilus-extension",
+        "--disable-tracker-needle",
+        "--disable-tracker-preferences",
+        "--disable-tracker-search-bar",
+        "--disable-tracker-explorer",
+        "--with-unicode-support=libicu"
+      ],
+      "name": "tracker",
+      "branch": "master",
+      "tag": "16b7e357114738c3ac0ef925fcaab1c5f3c625ed"
+    },
+    {
+      "src": "git:git://git.gnome.org/dconf",
+      "config-opts": [
+        "--disable-man",
+        "--disable-editor"
+      ],
+      "name": "dconf",
+      "branch": "master",
+      "tag": "47f27e204b962b127b4666106894467c5858a56f"
+    },
+    {
+      "src": "git:git://git.gnome.org/zenity",
+      "name": "zenity",
+      "branch": "master",
+      "tag": "34e5695efa9366e7fd9c782fb022d46838bc8458"
+    },
+    {
+      "src": "git:git://git.gnome.org/mutter",
+      "irc_room": "gnome-shell",
+      "config-opts": [
+        "--enable-compile-warnings=maximum",
+        "--enable-installed-tests"
+      ],
+      "name": "mutter",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "tarball:https://ftp.mozilla.org/pub/mozilla.org/js/mozjs-24.2.0.tar.bz2",
+      "name": "js24",
+      "component": "minimal",
+      "checksum": "e62f3f331ddd90df1e238c09d61a505c516fe9fd8c5c95336611d191d18437d8",
+      "patches": [
+        "js24-buildapi.patch",
+        "js24-virtualenv.patch"
+      ],
+      "config-opts": [
+        "--enable-threadsafe",
+        "--with-system-nspr",
+        "--disable-tests",
+        "--disable-strip",
+        "--enable-ctypes",
+        "--enable-system-ffi",
+        "--disable-intl-api"
+      ]
+    },
+    {
+      "src": "git:git://git.gnome.org/gjs",
+      "name": "gjs-minimal",
+      "component": "hwtest",
+      "config-opts": [
+        "--without-cairo",
+        "--without-gtk"
+      ],
+      "branch": "master",
+      "tag": "cd970e9721e1b9b96d26c10e3a22146c527a9c22"
+    },
+    {
+      "src": "git:git://git.gnome.org/gjs",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "gjs",
+      "branch": "master",
+      "tag": "cd970e9721e1b9b96d26c10e3a22146c527a9c22"
+    },
+    {
+      "src": "git:git://git.gnome.org/ostree",
+      "component": "minimal",
+      "initramfs-depends": true,
+      "config-opts": [
+        "--with-soup-gnome",
+        "--with-dracut",
+        "--enable-installed-tests"
+      ],
+      "name": "ostree",
+      "branch": "master"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-hwtest",
+      "component": "minimal",
+      "initramfs-depends": true,
+      "name": "gnome-hwtest",
+      "branch": "master",
+      "tag": "308402fab95e1cb25919a0ddf8b4bfcae17ef81c"
+    },
+    {
+      "src": "git:git://github.com/mikechristie/open-iscsi",
+      "component": "minimal",
+      "initramfs-depends": true,
+      "patches": [
+        "iscsi-no-iscsiuio.patch",
+        "iscsi-no-static-build.patch",
+        "iscsi-assume-netlink-number.patch",
+        "iscsi-install-iscsistart.patch",
+        "iscsi-buildsys.patch"
+      ],
+      "name": "open-iscsi",
+      "branch": "master",
+      "tag": "76a441ba0dc0071a19daeac456aa898889437efd"
+    },
+    {
+      "src": "git:git://repo.or.cz/socat.git",
+      "component": "minimal",
+      "patches": [
+        "socat-disable-man-pages.patch",
+        "socat-buildsys.patch"
+      ],
+      "name": "socat",
+      "branch": "master",
+      "tag": "7a348bdfd56f9fbb761b1387698b22b2d0d7f620"
+    },
+    {
+      "src": "git:git://thekelleys.org.uk/dnsmasq.git",
+      "component": "hwtest",
+      "patches": [
+        "dnsmasq-buildsys.patch"
+      ],
+      "name": "dnsmasq",
+      "branch": "master",
+      "tag": "25e27235dd40a45c048ae0df6df98d6f1d59d177"
+    },
+    {
+      "src": "git:git://git.ipxe.org/ipxe.git",
+      "component": "hwtest",
+      "patches": [
+        "ipxe-buildsys.patch",
+        "ipxe-disable-isos.patch"
+      ],
+      "name": "ipxe",
+      "branch": "master",
+      "tag": "a3d86074ccf154f4439b0c5b7e8c12b1b29fd497"
+    },
+    {
+      "src": "git:git://git.savannah.gnu.org/grub.git",
+      "component": "hwtest",
+      "cflags": {
+        "x86_64": ""
+      },
+      "config-opts": [
+        "--with-platform=pc",
+        "--disable-grub-mkfont",
+        "--enable-liblzma=no",
+        "--enable-device-mapper=no",
+        "--enable-libzfs=no"
+      ],
+      "name": "grub",
+      "branch": "master",
+      "tag": "5d90f6e533d82abf89f9e1787f90f17f2fab14aa"
+    },
+    {
+      "src": "git:git://github.com/fujita/tgt",
+      "component": "hwtest",
+      "patches": [
+        "tgt-cflags.patch",
+        "tgt-buildsys.patch",
+        "tgt-disable-man.patch"
+      ],
+      "config-opts": [
+        "--disable-man"
+      ],
+      "name": "tgt",
+      "branch": "master",
+      "tag": "2991c43c566c2df50d591d5fb219243476ceb5ec"
+    },
+    {
+      "src": "tarball:http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.35.tar.xz",
+      "name": "lighttpd",
+      "rm-configure": true,
+      "checksum": "113e9b72ccbd1da5deb0774bf93cf0ca15dc82aad2da0f04e5ab27d37d3f30a3",
+      "component": "hwtest",
+      "config-opts": [
+        "--without-pcre"
+      ]
+    },
+    {
+      "src": "git:git://github.com/ibus/ibus.git",
+      "patches": [
+        "ibus-builddir.patch"
+      ],
+      "config-opts": [
+        "--disable-tests",
+        "--disable-gconf",
+        "--enable-dconf",
+        "--enable-introspection",
+        "--enable-vala",
+        "--disable-ui",
+        "--disable-setup"
+      ],
+      "name": "ibus",
+      "branch": "master",
+      "tag": "6c10ce4ee5d3b8a62879d559834d5a4fae242eef"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgweather",
+      "name": "libgweather",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/clutter-gst",
+      "name": "clutter-gst2",
+      "branch": "clutter-gst-2.0",
+      "tag": "13a3e4818e3d14c9801a9eb6b71d4eec23351065"
+    },
+    {
+      "src": "git:git://git.gnome.org/clutter-gst",
+      "name": "clutter-gst3",
+      "branch": "master",
+      "tag": "08ce0ee0fb0864b73fffaf69cb52a7c0636d59a2"
+    },
+    {
+      "src": "git:git://git.gnome.org/clutter-gtk",
+      "name": "clutter-gtk",
+      "branch": "master",
+      "tag": "4b59c3661770de84fe9b736cff3ed12235df6bfb"
+    },
+    {
+      "src": "git:git://git.gnome.org/libpeas",
+      "name": "libpeas",
+      "branch": "master",
+      "tag": "59e88dfc0e9b724dc6f8d4ed7c02a69fe493c242"
+    },
+    {
+      "src": "git:git://github.com/cgwalters/liboauth-tarballs-as-git",
+      "rm-configure": true,
+      "config-opts": [
+        "--enable-nss"
+      ],
+      "patches": [
+        "liboauth-tarballs-as-git-autogen.patch"
+      ],
+      "name": "liboauth-tarballs-as-git",
+      "branch": "master",
+      "tag": "dcf5223754766593a53032c62dc2355def87c917"
+    },
+    {
+      "src": "git:https://git.gitorious.org/uhttpmock/uhttpmock.git",
+      "name": "uhttpmock",
+      "branch": "master",
+      "tag": "f70ec6b79d5fa6eabea9b5bf53716ebf8aa17c90"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgdata",
+      "name": "libgdata",
+      "branch": "master",
+      "tag": "8d76c05951e2acb1cd440bc6f6bbb215b191b8fd"
+    },
+    {
+      "src": "git:git://git.gnome.org/gmime",
+      "name": "gmime",
+      "branch": "master",
+      "tag": "b79a71772d46cb5f6d79dca62dc8a34c2ebe85e5"
+    },
+    {
+      "src": "git:git://git.gnome.org/totem-pl-parser",
+      "name": "totem-pl-parser",
+      "branch": "master",
+      "tag": "6a54cf7f2d201dd8a1a79bcc5e3983e2a3fa1c72"
+    },
+    {
+      "src": "git:git://git.gnome.org/grilo",
+      "config-opts": [
+        "--disable-vala"
+      ],
+      "name": "grilo",
+      "branch": "master",
+      "tag": "a2f3ef6db36bd959f67ae6195c31af30a4b24047"
+    },
+    {
+      "src": "git:git://git.gnome.org/grilo-plugins",
+      "name": "grilo-plugins",
+      "branch": "master",
+      "tag": "423bb9036022fd203948924d399c1085023126b6"
+    },
+    {
+      "src": "git:git://git.gnome.org/libzapojit",
+      "name": "libzapojit",
+      "branch": "master",
+      "tag": "840627d582534dafff7e05c090fb6e1a65ed2199"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgfbgraph",
+      "name": "libgfbgraph",
+      "branch": "master",
+      "tag": "b6a67cc54cf886b26d79207ed2cb61e339dcfe8b"
+    },
+    {
+      "src": "git:git://git.gnome.org/libchamplain",
+      "name": "libchamplain",
+      "branch": "master",
+      "tag": "294c03a6792d0f9112a66147e267f3d08674d135"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-online-miners",
+      "name": "gnome-online-miners",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://github.com/cgwalters/libical-tarballs-as-git",
+      "name": "libical-tarballs-as-git",
+      "branch": "master",
+      "tag": "6756c556cc643699e76b3b312f5fb24ca18192ba"
+    },
+    {
+      "src": "git:git://git.gnome.org/evolution-data-server",
+      "irc_room": "evolution",
+      "config-opts": [
+        "--enable-installed-tests",
+        "--enable-vala-bindings",
+        "--disable-uoa"
+      ],
+      "name": "evolution-data-server",
+      "branch": "evolution-data-server-3-12"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xdg/default-icon-theme",
+      "patches": [
+        "default-icon-theme-autogen.patch",
+        "default-icon-theme-no-builddir.patch"
+      ],
+      "name": "default-icon-theme",
+      "branch": "master",
+      "tag": "ff88f30178d76977a907719f473f63387e10d629"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xdg/desktop-file-utils",
+      "patches": [
+        "desktop-file-utils-autogen.patch"
+      ],
+      "name": "desktop-file-utils",
+      "branch": "master",
+      "tag": "be0c630a19aa1788ef731def911770ce497d6ba3"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xdg/xdg-user-dirs",
+      "config-opts": [
+        "--disable-documentation"
+      ],
+      "patches": [
+        "xdg-user-dirs-autostart.patch"
+      ],
+      "name": "xdg-user-dirs",
+      "branch": "master",
+      "tag": "1cf7d3fd7ac6514bce9af8c8114f38c51d3de441"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/xdg/shared-mime-info",
+      "config-opts": [
+        "--disable-default-make-check"
+      ],
+      "name": "shared-mime-info",
+      "branch": "master",
+      "tag": "0d005b725e13e13c1098bb3e977b7942d507afb0"
+    },
+    {
+      "src": "git:git://git.gnome.org/cantarell-fonts",
+      "config-opts": [
+        "--disable-source-rebuild"
+      ],
+      "name": "cantarell-fonts",
+      "branch": "master",
+      "tag": "e4344e8ce48008d84ab5f3a0161bca5b6e020dc3"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-backgrounds",
+      "name": "gnome-backgrounds",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/git/accountsservice",
+      "config-opts": [
+        "--enable-admin-group=sudo",
+        "--disable-vala"
+      ],
+      "name": "accountsservice",
+      "branch": "master",
+      "tag": "5c222582b2f049ac00dd0e75f934c2d4c9383072"
+    },
+    {
+      "src": "git:git://git.gnome.org/gdm",
+      "config-opts": [
+        "--disable-documentation",
+        "--disable-split-authentication",
+        "--with-default-pam-config=openembedded",
+        "--without-console-kit",
+        "--with-plymouth",
+        "--with-systemd",
+        "--enable-systemd-journal"
+      ],
+      "name": "gdm",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/telepathy/telepathy-logger",
+      "config-opts": [
+        "--disable-Werror"
+      ],
+      "patches": [
+        "telepathy-logger-autogen.patch"
+      ],
+      "name": "telepathy-logger",
+      "branch": "master",
+      "tag": "20cd431e94e662e099f6437feb5cf1a1e92959a6"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/libnice/libnice",
+      "tag": "5f2a2dd6fc5869689d6bdb72b1ddfb91cd1aa138",
+      "tag-reason": "broken build",
+      "name": "libnice",
+      "tag": "5f2a2dd6fc5869689d6bdb72b1ddfb91cd1aa138"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/telepathy/telepathy-gabble",
+      "config-opts": [
+        "--disable-Werror"
+      ],
+      "name": "telepathy-gabble",
+      "branch": "master",
+      "tag": "3d516218007a5f029932ffc85138a1f620553f1b"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/telepathy/telepathy-idle",
+      "name": "telepathy-idle",
+      "branch": "master",
+      "tag": "12211654baa75db13a05b5c2b3293d1378fcf7a2"
+    },
+    {
+      "src": "git:git://anongit.freedesktop.org/telepathy/telepathy-mission-control",
+      "config-opts": [
+        "--disable-gtk-doc",
+        "--disable-Werror",
+        "--disable-upower"
+      ],
+      "name": "telepathy-mission-control",
+      "branch": "master",
+      "tag": "190de711459a51eb236b773a57b0c188ebf1da6a"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-session",
+      "config-opts": [
+        "--disable-docbook-docs",
+        "--disable-man"
+      ],
+      "name": "gnome-session",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-settings-daemon",
+      "config-opts": [
+        "--disable-packagekit",
+        "--disable-cups",
+        "--enable-systemd",
+        "--disable-man"
+      ],
+      "name": "gnome-settings-daemon",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgtop",
+      "name": "libgtop",
+      "branch": "master",
+      "tag": "b7edd1542ec3f024701fffabc52a9f9772707043"
+    },
+    {
+      "src": "tarball:https://fedorahosted.org/releases/l/i/libpwquality/libpwquality-1.2.2.tar.bz2",
+      "name": "libpwquality",
+      "checksum": "9689627283b43d20ca74ca822404ee486242e3e528fa95bf7016d37ff46e0696",
+      "config-opts": [
+        "--disable-python-bindings"
+      ]
+    },
+    {
+      "src": "git:git://github.com/hughsie/colord-gtk.git",
+      "name": "colord-gtk",
+      "branch": "master",
+      "tag": "e14d364bb38716758e9dfeebd7f453d7be311743"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-control-center",
+      "config-opts": [
+        "--disable-documentation",
+        "--disable-cups"
+      ],
+      "name": "gnome-control-center",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-initial-setup",
+      "config-opts": [
+        "--disable-welcome-tour"
+      ],
+      "name": "gnome-initial-setup",
+      "tag": "3.14.2.1"
+    },
+    {
+      "src": "git:git://git.gnome.org/libwnck",
+      "name": "libwnck",
+      "branch": "master",
+      "tag": "1441d813ae0f110ff4569292ec64b056f17dad0f"
+    },
+    {
+      "src": "git:git://git.gnome.org/vte",
+      "config-opts": [
+        "--disable-vala"
+      ],
+      "name": "vte",
+      "branch": "master",
+      "tag": "9b01f837f7943d893d248e12f2434a0d9e1d0061"
+    },
+    {
+      "src": "git:git://git.kernel.org/pub/scm/utils/dash/dash.git",
+      "name": "dash",
+      "branch": "master",
+      "tag": "b34499f5c851d1a70db95b56bd02eff0329d4a1a"
+    },
+    {
+      "src": "git:git://git.kernel.org/pub/scm/boot/dracut/dracut.git",
+      "tag": "9efb74a32d34533f7ccb201160ea0e40adc13987",
+      "tag-reason": "requires gzip with --rsyncable option",
+      "config-opts": [
+        "--disable-documentation",
+        "--systemdsystemunitdir=/usr/lib/systemd/system"
+      ],
+      "initramfs-depends": true,
+      "name": "dracut",
+      "tag": "9efb74a32d34533f7ccb201160ea0e40adc13987"
+    },
+    {
+      "src": "git:git://git.cairographics.org/git/py2cairo",
+      "patches": [
+        "py2cairo-autogen.patch"
+      ],
+      "name": "py2cairo",
+      "branch": "master",
+      "tag": "2f1f3788fa2d9b693c77645edc44f35e7073aadd"
+    },
+    {
+      "src": "git:git://git.gnome.org/pygobject",
+      "config-opts": [
+        "--with-python=python2"
+      ],
+      "name": "pygobject",
+      "tag": "3.14.0"
+    },
+    {
+      "src": "git:git://git.gnome.org/pyatspi2",
+      "name": "pyatspi2",
+      "tag": "PYATSPI_2_14_0"
+    },
+    {
+      "src": "git:git://git.gnome.org/caribou",
+      "name": "caribou",
+      "branch": "master",
+      "tag": "8cd06980809192c40429413ca9a8258b4f7cf911"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-shell",
+      "irc_room": "gnome-shell",
+      "config-opts": [
+        "--enable-compile-warnings=maximum",
+        "--disable-man"
+      ],
+      "name": "gnome-shell",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-shell-extensions",
+      "config-opts": [
+        "--enable-extensions=classic-mode"
+      ],
+      "name": "gnome-shell-extensions",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://github.com/hughsie/appstream-glib.git",
+      "config-opts": [
+        "--disable-dep11"
+      ],
+      "name": "appstream-glib",
+      "branch": "master",
+      "tag": "appstream_glib_0_2_8"
+    },
+    {
+      "src": "git:https://github.com/hughsie/appdata-tools.git",
+      "name": "appdata-tools",
+      "branch": "master",
+      "tag": "89533193b0f0f0065802f6507c0d560e4c9152b7"
+    },
+    {
+      "src": "git:git://git.fedorahosted.org/git/dogtail.git",
+      "name": "dogtail",
+      "branch": "master",
+      "tag": "9b297ce96a39b78700a908c820bfb92491afe11c"
+    },
+    {
+      "src": "git:git://github.com/r1chardj0n3s/parse.git",
+      "patches": [
+        "parse-buildsys.patch"
+      ],
+      "name": "parse",
+      "branch": "master",
+      "tag": "3a40b5c5b7d3df775cb5d9e259ece0bf5c6c6731"
+    },
+    {
+      "src": "git:git://github.com/vrutkovs/behave.git",
+      "branch": "html_formatter",
+      "tag": "044f3bc27634beac049de546a7cb9d25973d002c",
+      "patches": [
+        "behave-buildsys.patch"
+      ],
+      "name": "behave",
+      "tag": "044f3bc27634beac049de546a7cb9d25973d002c"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-terminal",
+      "config-opts": [
+        "--without-nautilus-extension"
+      ],
+      "name": "gnome-terminal",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-clocks",
+      "name": "gnome-clocks",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/glade",
+      "config-opts": [
+        "--disable-man-pages"
+      ],
+      "component": "devel",
+      "name": "glade",
+      "branch": "master",
+      "tag": "2d2eaf1caaa56bc119689e8019d8ba76e2a4d4a3"
+    },
+    {
+      "src": "git:git://git.gnome.org/jhbuild",
+      "component": "devel",
+      "name": "jhbuild",
+      "branch": "master",
+      "tag": "64933f69e069a0ab5819477f39d32d919b3b4e79"
+    },
+    {
+      "src": "git:git://git.fishsoup.net/git-bz",
+      "config-opts": [
+        "--disable-documentation"
+      ],
+      "component": "devel",
+      "name": "git-bz",
+      "branch": "master",
+      "tag": "5ae7a500636ddc28bcf7a18427f388c8790623b3"
+    },
+    {
+      "src": "git:git://git.gnome.org/nautilus",
+      "name": "nautilus",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gedit",
+      "config-opts": [
+        "--enable-python=no",
+        "--disable-spell"
+      ],
+      "name": "gedit",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-software",
+      "config-opts": [
+        "--disable-man",
+        "--disable-offline-appstream-data",
+        "--enable-installed-tests"
+      ],
+      "name": "gnome-software",
+      "branch": "gnome-3-14",
+      "revision": "849ee757e9a64f14e42fba11bc2557f1c55c0689"
+    },
+    {
+      "src": "git:git://git.gnome.org/epiphany",
+      "tag": "9e8e34a398788754ce76119b502eb8e458f1aec8",
+      "tag-reason": "requires webkitgtk 2.5.1",
+      "name": "epiphany"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-weather",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "gnome-weather",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/polari",
+      "name": "polari",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/baobab",
+      "name": "baobab",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-maps",
+      "name": "gnome-maps",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-sound-recorder",
+      "name": "gnome-sound-recorder",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-logs",
+      "name": "gnome-logs",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gucharmap",
+      "name": "gucharmap",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/seahorse",
+      "name": "seahorse",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/geary",
+      "config-opts": [
+        "--disable-documentation"
+      ],
+      "name": "geary",
+      "branch": "master",
+      "tag": "f9c374110a0d453d5df4ac835aeba683d6771468"
+    },
+    {
+      "src": "git:git://git.gnome.org/totem",
+      "config-opts": [
+        "--disable-vala"
+      ],
+      "name": "totem",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgda",
+      "branch": "LIBGDA_5.2",
+      "name": "libgda",
+      "tag": "30a9359e757673f04a92cc82605d5d90747e9e93"
+    },
+    {
+      "src": "git:git://git.gnome.org/gdl",
+      "name": "gdl",
+      "branch": "master",
+      "tag": "50b978214c9f7107526add9be509a3826e8de225"
+    },
+    {
+      "src": "git:git://git.gnome.org/anjuta",
+      "component": "devel",
+      "name": "anjuta",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-font-viewer",
+      "name": "gnome-font-viewer",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/babl",
+      "name": "babl",
+      "branch": "master",
+      "tag": "1a1177bf7b43eb971ab4ff49b1e4f7913aa73e7e"
+    },
+    {
+      "src": "git:git://git.gnome.org/gegl",
+      "name": "gegl2",
+      "branch": "gegl-0-2",
+      "tag": "b7132396aa44f6d751030ce8d21cb31da534d526"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-photos",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "gnome-photos",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/d-feet",
+      "config-opts": [
+        "--disable-tests"
+      ],
+      "name": "d-feet",
+      "branch": "master",
+      "tag": "a0e6c11e17272802fd452a49f55c0a44a2c34687"
+    },
+    {
+      "src": "git:git://git.gnome.org/evince",
+      "config-opts": [
+        "--enable-introspection"
+      ],
+      "name": "evince",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-documents",
+      "config-opts": [
+        "--disable-documentation"
+      ],
+      "name": "gnome-documents",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "tarball:http://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz",
+      "name": "enchant",
+      "checksum": "2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f"
+    },
+    {
+      "src": "tarball:http://downloads.sourceforge.net/project/gtkspell/3.0.4/gtkspell3-3.0.4.tar.gz",
+      "name": "gtkspell3",
+      "rm-configure": true,
+      "checksum": "fabf8e670c99c1a91996e0e33fa78b7c023f77efb3e11355cf5aa9bcdc43e4a7",
+      "patches": [
+        "gtkspell-autogen.patch"
+      ],
+      "config-opts": [
+        "--disable-maintainer-mode"
+      ]
+    },
+    {
+      "src": "git:git://git.gnome.org/gtkhtml",
+      "name": "gtkhtml",
+      "tag": "GTKHTML_4_8_4"
+    },
+    {
+      "src": "git:git://git.gnome.org/evolution",
+      "irc_room": "evolution",
+      "config-opts": [
+        "--enable-installed-tests",
+        "--disable-bogofilter",
+        "--disable-spamassassin",
+        "--disable-text-highlight",
+        "--disable-pst-import",
+        "--disable-libcryptui",
+        "--disable-autoar"
+      ],
+      "name": "evolution",
+      "branch": "evolution-3-12"
+    },
+    {
+      "src": "git:git://git.gnome.org/evolution-ews",
+      "irc_room": "evolution",
+      "config-opts": [
+        "--with-internal-lzx"
+      ],
+      "name": "evolution-ews",
+      "branch": "evolution-ews-3-12"
+    },
+    {
+      "src": "git:git://git.libssh.org/projects/libssh.git",
+      "tag": "c520d97dd9d58a11284cbd28c9d1fef026d94f45",
+      "patches": [
+        "libssh-cmake-buildapi.patch"
+      ],
+      "name": "libssh",
+      "tag": "c520d97dd9d58a11284cbd28c9d1fef026d94f45"
+    },
+    {
+      "src": "git:git://git.gnome.org/libgssh",
+      "name": "libgssh",
+      "branch": "master",
+      "tag": "0e6c2661c0615738ea0c116eefeffca3f47449ff"
+    },
+    {
+      "src": "git:git://git.gnome.org/hotssh",
+      "name": "hotssh",
+      "branch": "master",
+      "tag": "d67652075e1adbdf2eed8c4751eea4b220a41b90"
+    },
+    {
+      "src": "git:git://git.gnome.org/file-roller",
+      "name": "file-roller",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-desktop-testing",
+      "component": "testing",
+      "name": "gnome-desktop-testing",
+      "branch": "master",
+      "tag": "e0564f96d2f2722f105a40be99f7389902b3e9c5"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-tweak-tool",
+      "name": "gnome-tweak-tool",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/eog",
+      "config-opts": [
+        "--enable-installed-tests"
+      ],
+      "name": "eog",
+      "branch": "gnome-3-14"
+    },
+    {
+      "src": "git:git://git.gnome.org/brasero",
+      "name": "brasero",
+      "branch": "master",
+      "tag": "14f3126ae370242af3f52ec5070f6302f0f4341c"
+    },
+    {
+      "src": "git:git://git.gnome.org/devhelp",
+      "name": "devhelp",
+      "branch": "3.14.0"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-dictionary",
+      "name": "gnome-dictionary",
+      "tag": "3.14.2"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-screenshot",
+      "name": "gnome-screenshot",
+      "branch": "gnome-3-14",
+      "tag": "e5b6612745b5c0dac4d25ca093c95aad95f6e24a"
+    },
+    {
+      "src": "git:git://git.gnome.org/nautilus-sendto",
+      "name": "nautilus-sendto",
+      "branch": "master",
+      "tag": "c69c0c93fcf8bf8a6dd4a8bb64814ab90a69b31b"
+    },
+    {
+      "src": "git:git://git.gnome.org/yelp",
+      "name": "yelp",
+      "tag": "3.14.1"
+    },
+    {
+      "src": "git:git://git.gnome.org/gnome-music",
+      "name": "gnome-music",
+      "branch": "gnome-3-14"
+    }
+  ],
+  "installed-tests-components": [],
+  "installed-tests-xfail": [],
+  "initramfs-build-epoch": {
+    "version": 0
+  },
+  "build-epoch": {
+    "version": 65,
+    "all": false,
+    "component-names": [
+      "libsoup",
+      "gvfs"
+    ]
+  }
 }

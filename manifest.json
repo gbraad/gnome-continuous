@@ -2327,7 +2327,7 @@
       "src": "git:git://git.gnome.org/caribou",
       "name": "caribou",
       "branch": "master",
-      "tag": "8cd06980809192c40429413ca9a8258b4f7cf911"
+      "tag": "CARIBOU_0_4_15"
     },
     {
       "src": "git:git://git.gnome.org/gnome-shell",

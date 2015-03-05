@@ -2407,8 +2407,7 @@
       ],
       "component": "devel",
       "name": "glade",
-      "branch": "master",
-      "tag": "2d2eaf1caaa56bc119689e8019d8ba76e2a4d4a3"
+      "branch": "glade-3-16"
     },
     {
       "src": "git:git://git.gnome.org/jhbuild",
@@ -2449,8 +2448,7 @@
         "--enable-installed-tests"
       ],
       "name": "gnome-software",
-      "branch": "gnome-3-14",
-      "revision": "849ee757e9a64f14e42fba11bc2557f1c55c0689"
+      "branch": "gnome-3-14"
     },
     {
       "src": "git:git://git.gnome.org/epiphany",
